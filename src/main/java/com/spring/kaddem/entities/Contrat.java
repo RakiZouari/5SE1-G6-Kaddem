@@ -30,7 +30,7 @@ public class Contrat implements Serializable {
     @ManyToOne
     // @JsonIgnore
     private  Etudiant etudiant;
-    //palas
+    //Palestine
 
 }
 
