@@ -42,7 +42,7 @@ public class EtudiantServiceImpl implements IEtudiantService{
     if (etudiantOptional.isPresent()) {
         return etudiantOptional.get();
     }else{
-        throw new ExceptionType("Exception message");
+        throw new IllegalArgumentException("Exception message");
     }
     }
 
@@ -109,7 +109,7 @@ public class EtudiantServiceImpl implements IEtudiantService{
 
         return e;
         }else{
-        throw new ExceptionType("Exception message");
+        throw new IllegalArgumentException("Exception message");
     }
     }
 
@@ -121,7 +121,7 @@ public class EtudiantServiceImpl implements IEtudiantService{
     
         return departement.getEtudiants();
         }else{
-        throw new ExceptionType("Exception message");
+        throw new IllegalArgumentException("Exception message");
     }
     }
 
