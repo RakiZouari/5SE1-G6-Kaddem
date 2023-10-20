@@ -41,6 +41,8 @@ public class EtudiantServiceImpl implements IEtudiantService{
 
     if (etudiantOptional.isPresent()) {
         return etudiantOptional.get();
+    }else{
+        throw new ExceptionType("Exception message");
     }
     }
 
@@ -106,7 +108,9 @@ public class EtudiantServiceImpl implements IEtudiantService{
 
 
         return e;
-        }
+        }else{
+        throw new ExceptionType("Exception message");
+    }
     }
 
     @Override
@@ -116,7 +120,9 @@ public class EtudiantServiceImpl implements IEtudiantService{
         Departement departement = departementOptional.get();
     
         return departement.getEtudiants();
-        }
+        }else{
+        throw new ExceptionType("Exception message");
+    }
     }
 
 
