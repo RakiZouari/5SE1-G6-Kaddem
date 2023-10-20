@@ -16,12 +16,13 @@ import java.util.List;
 @AllArgsConstructor
 public class EtudiantServiceImpl implements IEtudiantService{
 
+    @Autowired
     EtudiantRepository etudiantRepository;
-
+    @Autowired
     DepartementRepository departementRepository;
-
+    @Autowired
     ContratRepository contratRepository;
-
+    @Autowired
     EquipeRepository equipeRepository;
     @Override
     public List<Etudiant> retrieveAllEtudiants() {
@@ -29,20 +30,18 @@ public class EtudiantServiceImpl implements IEtudiantService{
     }
 
     @Override
-    public Etudiant addEtudiant(Etudiant e) {
-        etudiantRepository.save(e);
-        return e;
-    }
-
-    @Override
-    public Etudiant updateEtudiant(Etudiant e) {
+    public Etudiant addOrUpdateEtudiant(Etudiant e) {
         etudiantRepository.save(e);
         return e;
     }
 
     @Override
     public Etudiant retrieveEtudiant(Integer idEtudiant) {
-        return etudiantRepository.findById(idEtudiant).get();
+        Optional<Etudiant> etudiantOptional = etudiantRepository.findById(idEtudiant);
+
+    if (etudiantOptional.isPresent()) {
+        return etudiantOptional.get();
+    }
     }
 
     @Override
@@ -52,10 +51,15 @@ public class EtudiantServiceImpl implements IEtudiantService{
 
     @Override
     public void assignEtudiantToDepartement(Integer etudiantId, Integer departementId) {
-        Etudiant e = etudiantRepository.findById(etudiantId).get();
-        Departement d= departementRepository.findById(departementId).get();
-        e.setDepartement(d);
-        etudiantRepository.save(e);
+        Optional<Etudiant> etudiantOptional = etudiantRepository.findById(etudiantId);
+        Optional<Departement> departementOptional = departementRepository.findById(departementId);
+    
+        if (etudiantOptional.isPresent() && departementOptional.isPresent()) {
+            Etudiant etudiant = etudiantOptional.get();
+            Departement departement = departementOptional.get();
+            etudiant.setDepartement(departement);
+            etudiantRepository.save(etudiant);
+        }
     }
 
     @Override
@@ -80,8 +84,13 @@ public class EtudiantServiceImpl implements IEtudiantService{
 
     @Transactional
     public Etudiant addAndAssignEtudiantToEquipeAndContract(Etudiant e, Integer idContrat, Integer idEquipe) {
-        Contrat contrat = contratRepository.findById(idContrat).get();
-        Equipe equipe=equipeRepository.findById(idEquipe).get();
+         Optional<Contrat> contratOptional = contratRepository.findById(idContrat);
+        Optional<Equipe> equipeOptional = equipeRepository.findById(idEquipe);
+    
+        if (contratOptional.isPresent() && equipeOptional.isPresent()) {
+            Contrat contrat = contratOptional.get();
+            Equipe equipe = equipeOptional.get();
+        }
         Etudiant etudiant= etudiantRepository.save(e);
         log.info("contrat: "+contrat.getSpecialite());
         log.info("equipe: "+equipe.getNomEquipe());
@@ -101,7 +110,10 @@ public class EtudiantServiceImpl implements IEtudiantService{
 
     @Override
     public List<Etudiant> getEtudiantsByDepartement(Integer idDepartement) {
-        Departement departement=departementRepository.findById(idDepartement).get();
+        Optional<Departement> departementOptional = departementRepository.findById(idDepartement);
+        if (departementOptional.isPresent()) {
+        Departement departement = departementOptional.get();
+    }
         return departement.getEtudiants();
     }
 
