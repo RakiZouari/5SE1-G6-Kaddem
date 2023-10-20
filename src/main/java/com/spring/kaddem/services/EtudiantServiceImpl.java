@@ -84,13 +84,13 @@ public class EtudiantServiceImpl implements IEtudiantService{
 
     @Transactional
     public Etudiant addAndAssignEtudiantToEquipeAndContract(Etudiant e, Integer idContrat, Integer idEquipe) {
-         Optional<Contrat> contratOptional = contratRepository.findById(idContrat);
+        Optional<Contrat> contratOptional = contratRepository.findById(idContrat);
         Optional<Equipe> equipeOptional = equipeRepository.findById(idEquipe);
     
         if (contratOptional.isPresent() && equipeOptional.isPresent()) {
             Contrat contrat = contratOptional.get();
             Equipe equipe = equipeOptional.get();
-        }
+        
         Etudiant etudiant= etudiantRepository.save(e);
         log.info("contrat: "+contrat.getSpecialite());
         log.info("equipe: "+equipe.getNomEquipe());
@@ -106,6 +106,7 @@ public class EtudiantServiceImpl implements IEtudiantService{
 
 
         return e;
+        }
     }
 
     @Override
@@ -113,8 +114,9 @@ public class EtudiantServiceImpl implements IEtudiantService{
         Optional<Departement> departementOptional = departementRepository.findById(idDepartement);
         if (departementOptional.isPresent()) {
         Departement departement = departementOptional.get();
-    }
+    
         return departement.getEtudiants();
+        }
     }
 
 
