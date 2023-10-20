@@ -1,9 +1,7 @@
 package com.spring.kaddem.services;
 
 import org.springframework.data.repository.query.Param;
-import tn.esprit.spring.khaddem.entities.Etudiant;
-import tn.esprit.spring.khaddem.entities.Niveau;
-import tn.esprit.spring.khaddem.entities.Specialite;
+import com.spring.kaddem.entities.*;
 
 import java.util.List;
 

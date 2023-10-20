@@ -3,10 +3,10 @@ package com.spring.kaddem.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import tn.esprit.spring.khaddem.entities.Etudiant;
-import tn.esprit.spring.khaddem.entities.Niveau;
-import tn.esprit.spring.khaddem.entities.Specialite;
-import tn.esprit.spring.khaddem.services.IEtudiantService;
+import com.spring.kaddem.entities.Etudiant;
+import com.spring.kaddem.entities.Niveau;
+import com.spring.kaddem.entities.Specialite;
+import com.spring.kaddem.services.IEtudiantService;
 
 import java.util.List;
 

@@ -4,11 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import tn.esprit.spring.khaddem.entities.*;
-import tn.esprit.spring.khaddem.repositories.ContratRepository;
-import tn.esprit.spring.khaddem.repositories.DepartementRepository;
-import tn.esprit.spring.khaddem.repositories.EquipeRepository;
-import tn.esprit.spring.khaddem.repositories.EtudiantRepository;
+import com.spring.kaddem.entities.*;
+import com.spring.kaddem.repositories.*;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;

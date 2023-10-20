@@ -5,10 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import tn.esprit.spring.khaddem.entities.Contrat;
-import tn.esprit.spring.khaddem.entities.Etudiant;
-import tn.esprit.spring.khaddem.entities.Niveau;
-import tn.esprit.spring.khaddem.entities.Specialite;
+import com.spring.kaddem.entities.*;
 
 import java.util.List;
 

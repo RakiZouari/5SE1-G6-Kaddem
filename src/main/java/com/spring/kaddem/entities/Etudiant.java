@@ -18,15 +18,12 @@ public class Etudiant  implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idEtudiant;
     private String prenomE;
     private String nomE;
     @Enumerated(EnumType.STRING)
     private  Option op;
-
-
-
 
     @Override
     public String toString() {
@@ -41,18 +38,7 @@ public class Etudiant  implements Serializable {
                 '}';
     }
 
-    public Etudiant() {
-    }
 
-    public Etudiant(Integer idEtudiant, String prenomE, String nomE, Option op, Departement departement, List<Equipe> equipes, List<Contrat> contrats) {
-        this.idEtudiant = idEtudiant;
-        this.prenomE = prenomE;
-        this.nomE = nomE;
-        this.op = op;
-        this.departement = departement;
-        this.equipes = equipes;
-        this.contrats = contrats;
-    }
 
     public Integer getIdEtudiant() {
         return idEtudiant;
@@ -110,9 +96,9 @@ public class Etudiant  implements Serializable {
         this.contrats = contrats;
     }
 
-            @ManyToOne
-            @JsonIgnore
-            private Departement departement;
+    @ManyToOne
+    @JsonIgnore
+    private Departement departement;
     @ManyToMany
     @JsonIgnore
     private List<Equipe> equipes;
