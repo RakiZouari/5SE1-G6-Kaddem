@@ -1,6 +1,5 @@
 package com.spring.kaddem.services;
 
-import org.springframework.data.repository.query.Param;
 import com.spring.kaddem.entities.*;
 
 import java.util.List;
