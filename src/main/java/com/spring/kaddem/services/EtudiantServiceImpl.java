@@ -42,7 +42,7 @@ public class EtudiantServiceImpl implements IEtudiantService{
     if (etudiantOptional.isPresent()) {
         return etudiantOptional.get();
     }else{
-        throw new IllegalArgumentException("Exception message");
+        throw new IllegalArgumentException("etudiant not found");
     }
     }
 
@@ -109,7 +109,7 @@ public class EtudiantServiceImpl implements IEtudiantService{
 
         return e;
         }else{
-        throw new IllegalArgumentException("Exception message");
+        throw new IllegalArgumentException("contrat or equipe not found");
     }
     }
 
@@ -121,7 +121,7 @@ public class EtudiantServiceImpl implements IEtudiantService{
     
         return departement.getEtudiants();
         }else{
-        throw new IllegalArgumentException("Exception message");
+        throw new IllegalArgumentException("departement not found ");
     }
     }
 
