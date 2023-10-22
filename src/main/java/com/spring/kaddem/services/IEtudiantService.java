@@ -7,7 +7,7 @@ import java.util.List;
 public interface IEtudiantService {
 
     List<Etudiant> retrieveAllEtudiants();
-    Etudiant addOrUpdateEtudiant(EtudiantDto e);
+    EtudiantDto addOrUpdateEtudiant(EtudiantDto e);
     Etudiant retrieveEtudiant(Integer idEtudiant);
     void removeEtudiant(Integer idEtudiant);
 
@@ -22,7 +22,7 @@ public interface IEtudiantService {
 
     List<Etudiant> retrieveEtudiantsByContratSpecialiteSQL(String specialite);
 
-    Etudiant addAndAssignEtudiantToEquipeAndContract (EtudiantDto e, Integer idContrat , Integer idEquipe);
+    EtudiantDto addAndAssignEtudiantToEquipeAndContract (EtudiantDto e, Integer idContrat , Integer idEquipe);
 
     List<Etudiant> getEtudiantsByDepartement (Integer idDepartement);
 
