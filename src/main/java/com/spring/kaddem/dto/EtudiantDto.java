@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import com.spring.kaddem.entities.*;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Builder
 @Data
@@ -30,7 +29,6 @@ public class EtudiantDto {
 
     public static Etudiant toEntity(EtudiantDto etudiantDto) {
         if (etudiantDto == null) {
-            //TODO EXCEPTION ERRROR
             return null;
         }
         Departement departement1 = etudiantDto.getDepartement();
@@ -49,7 +47,6 @@ public class EtudiantDto {
   
     public static EtudiantDto toDto(Etudiant etudiant){
         if(etudiant==null){
-            //TODO EXCEPTION ERRROR
             return null;
         }
         Departement departementDtos = etudiant.getDepartement();
