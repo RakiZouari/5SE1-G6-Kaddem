@@ -33,7 +33,7 @@ public class EtudiantDto {
             //TODO EXCEPTION ERRROR
             return null;
         }
-        Departement departement1 = etudiantDto.getDepartement());
+        Departement departement1 = etudiantDto.getDepartement();
         List<Equipe>  equipesList = etudiantDto.getEquipes();
         List<Contrat> contratList = etudiantDto.getContrats();
         return Etudiant.builder()
@@ -52,7 +52,7 @@ public class EtudiantDto {
             //TODO EXCEPTION ERRROR
             return null;
         }
-        Departement departementDtos = etudiant.getDepartement());
+        Departement departementDtos = etudiant.getDepartement();
         List<Equipe>  equipesListDtos = etudiant.getEquipes();
         List<Contrat> contratListDtos = etudiant.getContrats();
         return  EtudiantDto.builder()
