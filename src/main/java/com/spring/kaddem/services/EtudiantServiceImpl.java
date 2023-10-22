@@ -32,7 +32,7 @@ public class EtudiantServiceImpl implements IEtudiantService{
 
     @Override
     public EtudiantDto addOrUpdateEtudiant(EtudiantDto e) {
-        etudiantRepository.save(e);
+        etudiantRepository.save(EtudiantDto.toEntity(e));
         return e;
     }
 
@@ -94,7 +94,7 @@ public class EtudiantServiceImpl implements IEtudiantService{
             Contrat contrat = contratOptional.get();
             Equipe equipe = equipeOptional.get();
         
-        Etudiant etudiant= etudiantRepository.save(e);
+        Etudiant etudiant= etudiantRepository.save(EtudiantDto.toEntity(e));
         log.info("contrat: "+contrat.getSpecialite());
         log.info("equipe: "+equipe.getNomEquipe());
         log.info("etudiant: "+etudiant.getNomE()+" "+etudiant.getPrenomE()+" "+etudiant.getOp());
