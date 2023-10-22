@@ -1,13 +1,13 @@
 package com.spring.kaddem.services;
 
 import com.spring.kaddem.entities.*;
-
+import com.spring.kaddem.dto.EtudiantDto;
 import java.util.List;
 
 public interface IEtudiantService {
 
     List<Etudiant> retrieveAllEtudiants();
-    Etudiant addOrUpdateEtudiant(Etudiant e);
+    Etudiant addOrUpdateEtudiant(EtudiantDto e);
     Etudiant retrieveEtudiant(Integer idEtudiant);
     void removeEtudiant(Integer idEtudiant);
 
@@ -22,7 +22,7 @@ public interface IEtudiantService {
 
     List<Etudiant> retrieveEtudiantsByContratSpecialiteSQL(String specialite);
 
-    Etudiant addAndAssignEtudiantToEquipeAndContract (Etudiant e, Integer idContrat , Integer idEquipe);
+    Etudiant addAndAssignEtudiantToEquipeAndContract (EtudiantDto e, Integer idContrat , Integer idEquipe);
 
     List<Etudiant> getEtudiantsByDepartement (Integer idDepartement);
 
