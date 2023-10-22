@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.spring.kaddem.entities.*;
+import com.spring.kaddem.dto.EtudiantDto;
 import com.spring.kaddem.repositories.*;
 import java.util.Optional;
 import javax.transaction.Transactional;
@@ -30,7 +31,7 @@ public class EtudiantServiceImpl implements IEtudiantService{
     }
 
     @Override
-    public Etudiant addOrUpdateEtudiant(Etudiant e) {
+    public EtudiantDto addOrUpdateEtudiant(EtudiantDto e) {
         etudiantRepository.save(e);
         return e;
     }
@@ -85,7 +86,7 @@ public class EtudiantServiceImpl implements IEtudiantService{
     }
 
     @Transactional
-    public Etudiant addAndAssignEtudiantToEquipeAndContract(Etudiant e, Integer idContrat, Integer idEquipe) {
+    public EtudiantDto addAndAssignEtudiantToEquipeAndContract(EtudiantDto e, Integer idContrat, Integer idEquipe) {
         Optional<Contrat> contratOptional = contratRepository.findById(idContrat);
         Optional<Equipe> equipeOptional = equipeRepository.findById(idEquipe);
     
