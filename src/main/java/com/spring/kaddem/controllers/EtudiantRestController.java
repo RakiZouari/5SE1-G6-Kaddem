@@ -4,6 +4,7 @@ package com.spring.kaddem.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.spring.kaddem.entities.Etudiant;
+import com.spring.kaddem.dto.EtudiantDto;
 import com.spring.kaddem.entities.Niveau;
 import com.spring.kaddem.entities.Specialite;
 import com.spring.kaddem.services.IEtudiantService;
@@ -33,13 +34,13 @@ public class EtudiantRestController {
 
     @PostMapping("/add-etudiant")
     @ResponseBody
-    public Etudiant addEtudiant(@RequestBody Etudiant e) {
+    public Etudiant addEtudiant(@RequestBody EtudiantDto e) {
         return etudiantService.addOrUpdateEtudiant(e); 
     }
 
     @PutMapping("/update-etudiant")
     @ResponseBody
-    public Etudiant updateEtudiant(@RequestBody Etudiant e) {
+    public Etudiant updateEtudiant(@RequestBody EtudiantDto e) {
         return etudiantService.addOrUpdateEtudiant(e);
     }
     @DeleteMapping("/removeEtudiant/{idEtudiant}")
@@ -81,7 +82,7 @@ public class EtudiantRestController {
 
     @PostMapping("/addAndAssignEtudiantToEquipeAndContract/{equipeId}/{contratId}")
     @ResponseBody
-    public void addAndAssignEtudiantToEquipeAndContract(@RequestBody Etudiant etudiant,@PathVariable("contratId") Integer contratId,@PathVariable("equipeId") Integer equipeId) {
+    public void addAndAssignEtudiantToEquipeAndContract(@RequestBody EtudiantDto etudiant,@PathVariable("contratId") Integer contratId,@PathVariable("equipeId") Integer equipeId) {
         etudiantService.addAndAssignEtudiantToEquipeAndContract(etudiant,contratId,equipeId);
     }
 
