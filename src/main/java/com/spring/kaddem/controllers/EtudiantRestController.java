@@ -34,13 +34,13 @@ public class EtudiantRestController {
 
     @PostMapping("/add-etudiant")
     @ResponseBody
-    public Etudiant addEtudiant(@RequestBody EtudiantDto e) {
+    public EtudiantDto addEtudiant(@RequestBody EtudiantDto e) {
         return etudiantService.addOrUpdateEtudiant(e); 
     }
 
     @PutMapping("/update-etudiant")
     @ResponseBody
-    public Etudiant updateEtudiant(@RequestBody EtudiantDto e) {
+    public EtudiantDto updateEtudiant(@RequestBody EtudiantDto e) {
         return etudiantService.addOrUpdateEtudiant(e);
     }
     @DeleteMapping("/removeEtudiant/{idEtudiant}")
