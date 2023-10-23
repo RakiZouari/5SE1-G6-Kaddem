@@ -1,9 +1,9 @@
 package com.spring.kaddem.services;
 
 import com.spring.kaddem.dto.EtudiantDto;
-import com.spring.kaddem.entities.Etudiant;
+import com.spring.kaddem.entities.*;
 import com.spring.kaddem.entities.Option;
-import com.spring.kaddem.repositories.EtudiantRepository;
+import com.spring.kaddem.repositories.*;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,6 +32,12 @@ class EtudiantServiceImplTest {
     private EtudiantServiceImpl etudiantService;
     @MockBean
     private EtudiantRepository etudiantRepository;
+    @MockBean
+    private ContratRepository contratRepository;
+    @MockBean
+    private EquipeRepository equipeRepository; 
+    @MockBean
+    private DepartementRepository departementRepository;
     private Etudiant etudiant;
     private List<Etudiant> etudiants;
 
