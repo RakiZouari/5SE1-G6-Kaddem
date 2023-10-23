@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DepartementRepository extends JpaRepository<Departement, Integer> {
+    //Departement findAllByIdDepartement(Long id ) ;
+    //List<Departement>  findDepartementByEtudiantsExists(Etudiant E) ;
 }
