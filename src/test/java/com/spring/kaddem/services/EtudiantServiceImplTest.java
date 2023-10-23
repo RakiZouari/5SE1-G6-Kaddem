@@ -66,30 +66,49 @@ class EtudiantServiceImplTest {
         assertEquals(etudiants, retrievedetudiants);
 
     }
-
+   
     @Test
     void addEtudiant() {
-        
-        Etudiant newEtudiant = new Etudiant();
-
-        when(etudiantRepository.save(newEtudiant)).thenReturn(newEtudiant);
-        EtudiantDto addedEtudiantDto = etudiantService.addOrUpdateEtudiant(EtudiantDto.toDto(newEtudiant));
-        verify(etudiantRepository).save(newEtudiant);
-        assertEquals(newEtudiant, EtudiantDto.toEntity(addedEtudiantDto));
-        
+        EtudiantDto newEtudiantDto = new EtudiantDto();
+        newEtudiantDto.setPrenomE("John");
+        newEtudiantDto.setNomE("Doe");
+        newEtudiantDto.setOp(Option.GAMIX);
+    
+        when(etudiantRepository.save(any(Etudiant.class))).thenAnswer(invocation -> {
+            Etudiant savedEtudiant = invocation.getArgument(0);
+            savedEtudiant.setIdEtudiant(1); // Set the ID as it would be generated during save
+            return savedEtudiant;
+        });
+    
+        EtudiantDto addedEtudiantDto = etudiantService.addOrUpdateEtudiant(newEtudiantDto);
+    
+        verify(etudiantRepository).save(any(Etudiant.class));
+    
+        assertEquals("John", addedEtudiantDto.getPrenomE());
+        assertEquals("Doe", addedEtudiantDto.getNomE());
+        assertEquals(Option.GAMIX, addedEtudiantDto.getOp());
     }
+    
     @Test
     void UpdateEtudiant() {
-        
-        Etudiant newEtudiant = new Etudiant();
-        newEtudiant.setIdEtudiant(1);
-        newEtudiant.setNomE("BenFoulen");
-        when(etudiantRepository.save(newEtudiant)).thenReturn(newEtudiant);
-        EtudiantDto updatedEtudiantDto = etudiantService.addOrUpdateEtudiant(EtudiantDto.toDto(newEtudiant));
-        verify(etudiantRepository).save(newEtudiant);
-        assertEquals(newEtudiant,  EtudiantDto.toEntity(updatedEtudiantDto));
-        
+        EtudiantDto updatedEtudiantDto = new EtudiantDto();
+        updatedEtudiantDto.setIdEtudiant(1);
+        updatedEtudiantDto.setPrenomE("UpdatedPrenom");
+        updatedEtudiantDto.setNomE("BenFoulen");
+        updatedEtudiantDto.setOp(Option.GAMIX);
+    
+        when(etudiantRepository.save(any(Etudiant.class))).thenAnswer(invocation -> invocation.getArgument(0));
+    
+        EtudiantDto updatedEtudiantDtoResult = etudiantService.addOrUpdateEtudiant(updatedEtudiantDto);
+    
+        verify(etudiantRepository).save(any(Etudiant.class));
+    
+        assertEquals(1, updatedEtudiantDtoResult.getIdEtudiant());
+        assertEquals("UpdatedPrenom", updatedEtudiantDtoResult.getPrenomE());
+        assertEquals("BenFoulen", updatedEtudiantDtoResult.getNomE());
+        assertEquals(Option.GAMIX, updatedEtudiantDtoResult.getOp());
     }
+
 
     @Test
     void retrieveEtudiant() {
