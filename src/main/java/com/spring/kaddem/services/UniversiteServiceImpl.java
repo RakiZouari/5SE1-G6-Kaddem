@@ -25,21 +25,21 @@ public class UniversiteServiceImpl implements  IUniversiteService{
     }
 
     @Override
-    public Universite addUniversite(Universite u) {
-        log.debug("u :"+u.getNomUniv());
-        universiteRepository.save(u);
-        return u;
+    public Universite addUniversite(Universite universite) {
+
+
+        return universiteRepository.save(universite);
     }
 
     @Override
-    public Universite updateUniversite(Universite u) {
-        universiteRepository.save(u);
-        return u;
+    public Universite updateUniversite(Universite universite) {
+
+        return universiteRepository.save(universite);
     }
 
     @Override
     public Universite retrieveUniversite(Integer idUniversite) {
-        return universiteRepository.findById(idUniversite).get();
+        return universiteRepository.findById(idUniversite).orElse(null);
     }
 
     @Transactional
