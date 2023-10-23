@@ -17,7 +17,7 @@ public class DepartementRestController {
     @PostMapping("/addDepartment")
     @ResponseBody
     public void addDepartement(@RequestBody Departement d_ep) {
-        Departement_Service.Ajouter_Departement(d_ep) ;
+        Departement_Service.ajouter_departement(d_ep) ;
     }
 
     @GetMapping(value = "/getDepartment")

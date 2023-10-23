@@ -6,7 +6,7 @@ import com.spring.kaddem.entities.Departement;
 import java.util.List;
 
 public interface IDepartementService {
-    public int Ajouter_Departement(Departement d_ep) ;
+    public int ajouter_departement(Departement d_ep) ;
     public List<Departement> getAllD();
 
     void update (Departement d_ep);
