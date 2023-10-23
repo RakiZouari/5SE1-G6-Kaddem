@@ -13,29 +13,29 @@ import java.util.List;
 public class DepartementRestController {
 
     @Autowired
-    IDepartementService Departement_Service ;
+    IDepartementService departement_service ;
     @PostMapping("/addDepartment")
     @ResponseBody
     public void addDepartement(@RequestBody Departement d_ep) {
-        Departement_Service.ajouter_departement(d_ep) ;
+        departement_service.ajouter_departement(d_ep) ;
     }
 
     @GetMapping(value = "/getDepartment")
     @ResponseBody
     public List<Departement> getAllDE() {
-        return  Departement_Service.getAllD();
+        return  departement_service.getAllD();
     }
 
     @PutMapping("/updateDepatment")
     @ResponseBody
     public void updateEtudiant(@RequestBody Departement d_ep){
-        Departement_Service.update(d_ep);
+        departement_service.update(d_ep);
     }
 
     @DeleteMapping("/deleteEtudiant")
     @ResponseBody
     public void deleteStudent (@RequestBody Departement d_ep){
-        Departement_Service.delete(d_ep);
+        departement_service.delete(d_ep);
     }
 
 }
