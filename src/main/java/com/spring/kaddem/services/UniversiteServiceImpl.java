@@ -45,7 +45,7 @@ public class UniversiteServiceImpl implements  IUniversiteService{
     @Transactional
     public void assignUniversiteToDepartement(Integer universiteId, Integer departementId) {
         Universite universite =universiteRepository.findById(universiteId).orElse(null);
-        Departement departement=departementRepository.findById(departementId).orElse(null);
+        Departement departement=departementRepository.findById(departementId).get();
         universite.getDepartements().add(departement);
         log.info("departements number "+universite.getDepartements().size());
     }
