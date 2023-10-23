@@ -17,9 +17,9 @@ public class DepartementServiceImpl implements IDepartementService{
 
 
     @Override
-    public int ajouter_departement(Departement d_ep) {
-        departementRepository.save(d_ep);
-        return d_ep.getIdDepartement();
+    public int ajouter_departement(Departement d) {
+        departementRepository.save(d);
+        return d.getIdDepartement();
 
     }
 
@@ -29,13 +29,13 @@ public class DepartementServiceImpl implements IDepartementService{
     }
 
     @Override
-    public void update(Departement d_ep) {
-        departementRepository.save(d_ep);
+    public void update(Departement d) {
+        departementRepository.save(d);
     }
 
     @Override
-    public void delete(Departement d_ep) {
-        departementRepository.delete(d_ep);
+    public void delete(Departement d) {
+        departementRepository.delete(d);
     }
 
 
