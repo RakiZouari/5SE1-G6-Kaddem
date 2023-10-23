@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -44,9 +45,19 @@ public class UniversiteServiceImpl implements  IUniversiteService{
 
     @Transactional
     public void assignUniversiteToDepartement(Integer universiteId, Integer departementId) {
-        Universite universite =universiteRepository.findById(universiteId).orElse(null);
-        Departement departement=departementRepository.findById(departementId).get();
-        universite.getDepartements().add(departement);
-        log.info("departements number "+universite.getDepartements().size());
+        Optional<Universite> universiteOptional = universiteRepository.findById(universiteId);
+        Optional<Departement> departementOptional = departementRepository.findById(departementId);
+
+        if (universiteOptional.isPresent() && departementOptional.isPresent()) {
+            Universite universite = universiteOptional.get();
+            Departement departement = departementOptional.get();
+
+            universite.getDepartements().add(departement);
+            universiteRepository.save(universite);
+            log.info("Number of departements in universite: " + universite.getDepartements().size());
+        } else {
+            log.error("Universite or Departement not found for given IDs: " + universiteId + ", " + departementId);
+            // Handle the case where either universite or departement is not found.
+        }
     }
 }
