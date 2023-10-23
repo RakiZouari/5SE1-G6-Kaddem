@@ -126,34 +126,80 @@ class EtudiantServiceImplTest {
     }
 
     @Test
-    void removeEtudiant() {
-    }
+void removeEtudiant() {
+    int etudiantIdToRemove = 1;
+    etudiantService.removeEtudiant(etudiantIdToRemove);
+    verify(etudiantRepository).deleteById(etudiantIdToRemove);
+}
+
+@Test
+void assignEtudiantToDepartement() {
+    int etudiantId = 1;
+    int departementId = 2;
+    etudiantService.assignEtudiantToDepartement(etudiantId, departementId);
+    verify(etudiantRepository).save(any(Etudiant.class));
+}
+
+@Test
+void findByDepartementIdDepartement() {
+    int idDepartement = 1;
+    List<Etudiant> expectedEtudiants = new ArrayList<>();
+    when(etudiantRepository.findByDepartementIdDepartement(idDepartement)).thenReturn(expectedEtudiants);
+    List<Etudiant> retrievedEtudiants = etudiantService.findByDepartementIdDepartement(idDepartement);
+    assertEquals(expectedEtudiants, retrievedEtudiants);
+}
+
+@Test
+void findByEquipesNiveau() {
+    Niveau niveau = Niveau.SENIOR; 
+
+    List<Etudiant> expectedEtudiants = new ArrayList<>();
+    when(etudiantRepository.findByEquipesNiveau(niveau)).thenReturn(expectedEtudiants);
+    List<Etudiant> retrievedEtudiants = etudiantService.findByEquipesNiveau(niveau);
+    assertEquals(expectedEtudiants, retrievedEtudiants);
+}
 
     @Test
-    void assignEtudiantToDepartement() {
-    }
+void retrieveEtudiantsByContratSpecialite() {
+    Specialite specialite = Specialite.CLOUD; 
+    List<Etudiant> expectedEtudiants = new ArrayList<>();
+    when(etudiantRepository.retrieveEtudiantsByContratSpecialite(specialite)).thenReturn(expectedEtudiants);
+    List<Etudiant> retrievedEtudiants = etudiantService.retrieveEtudiantsByContratSpecialite(specialite);
+    assertEquals(expectedEtudiants, retrievedEtudiants);
+}
 
-    @Test
-    void findByDepartementIdDepartement() {
-    }
+@Test
+void retrieveEtudiantsByContratSpecialiteSQL() {
+    String specialite = "CLOUD"; 
 
-    @Test
-    void findByEquipesNiveau() {
-    }
+    List<Etudiant> expectedEtudiants = new ArrayList<>();
+    when(etudiantRepository.retrieveEtudiantsByContratSpecialiteSQL(specialite)).thenReturn(expectedEtudiants);
+    List<Etudiant> retrievedEtudiants = etudiantService.retrieveEtudiantsByContratSpecialiteSQL(specialite);
+    assertEquals(expectedEtudiants, retrievedEtudiants);
+}
 
-    @Test
-    void retrieveEtudiantsByContratSpecialite() {
-    }
+@Test
+void addAndAssignEtudiantToEquipeAndContract() {
+    
+    int idContrat = 1; 
+    int idEquipe = 2; 
+    EtudiantDto etudiantDto = new EtudiantDto();
+    when(contratRepository.findById(idContrat)).thenReturn(Optional.of(new Contrat()));
+    when(equipeRepository.findById(idEquipe)).thenReturn(Optional.of(new Equipe()));
+    EtudiantDto result = etudiantService.addAndAssignEtudiantToEquipeAndContract(etudiantDto, idContrat, idEquipe);
+    verify(etudiantRepository).save(any(Etudiant.class));
+    assertEquals(etudiantDto.getIdEtudiant(), result.getIdEtudiant());
+}
 
-    @Test
-    void retrieveEtudiantsByContratSpecialiteSQL() {
-    }
+@Test
+void getEtudiantsByDepartement() {
+    
+    int idDepartement = 1; 
+    List<Etudiant> expectedEtudiants = new ArrayList<>();
+    when(departementRepository.findById(idDepartement)).thenReturn(Optional.of(new Departement()));
+    when(etudiantRepository.findByDepartementIdDepartement(idDepartement)).thenReturn(expectedEtudiants);
+    List<Etudiant> retrievedEtudiants = etudiantService.getEtudiantsByDepartement(idDepartement);
+    assertEquals(expectedEtudiants, retrievedEtudiants);
+}
 
-    @Test
-    void addAndAssignEtudiantToEquipeAndContract() {
-    }
-
-    @Test
-    void getEtudiantsByDepartement() {
-    }
 }
