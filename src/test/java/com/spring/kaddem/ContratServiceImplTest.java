@@ -26,8 +26,8 @@ class ContratServiceImplTest {
 
     @Mock
     ContratRepository contratRepository;
-
-    @InjectMocks    
+            
+    @InjectMocks
     IContratService contratService;
     //on a initialiser un objet sa pour tester avec
 
