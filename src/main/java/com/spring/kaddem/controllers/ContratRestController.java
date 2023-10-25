@@ -44,15 +44,18 @@ public class ContratRestController {
     // http://localhost:8089/Kaddem/contrat/update-contrat
     @PutMapping("/update-contrat")
     @ResponseBody
-    public Contrat updateEtudiant(@RequestBody Contrat cont) {
-        return contratService.updateContrat(cont);
+    public Contrat updateContrat(@PathVariable Integer idContrat, @RequestBody ContratDTO contratDTO) {
+        return contratService.updateContrat(idContrat, contratDTO);
     }
 
     // http://localhost:8089/Kaddem/contrat/addAndAffectContratToEtudiant/salah/ahmed
     @PostMapping("/addAndAffectContratToEtudiant/{nomE}/{prenomE}")
     @ResponseBody
-    public Contrat addAndAffectContratToEtudiant(@RequestBody Contrat contrat,@PathVariable("nomE") String nomE,@PathVariable("prenomE") String prenomE) {
-        return contratService.addAndAffectContratToEtudiant(contrat,nomE,prenomE);
+    public ContratDTO addAndAffectContratToEtudiant(@RequestBody ContratDTO contratDTO,
+                                                    @PathVariable("nomE") String nomE,
+                                                    @PathVariable("prenomE") String prenomE) {
+
+        return contratService.addAndAffectContratToEtudiant(contratDTO, nomE, prenomE);
     }
 
     //The most common ISO Date Format yyyy-MM-dd — for example, "2000-10-31".

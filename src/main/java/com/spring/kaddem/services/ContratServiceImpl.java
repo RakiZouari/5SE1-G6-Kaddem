@@ -10,9 +10,11 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -30,13 +32,36 @@ public class ContratServiceImpl implements  IContratService{
     }
 
     @Override
-    public Contrat updateContrat(Contrat ce) {
-        return contratRepository.save(ce);
+    public Contrat updateContrat(Integer idContrat, ContratDTO contratDTO) {
+        // Retrieve the existing Contrat entity from the database
+        Optional<Contrat> existingContratOptional = contratRepository.findById(idContrat);
+
+        // Check if the Contrat exists
+        if (existingContratOptional.isPresent()) {
+            Contrat existingContrat = existingContratOptional.get();
+
+            // Update attributes using values from ContratDTO
+            existingContrat.setDateDebutContrat(contratDTO.getDateDebutContrat());
+            existingContrat.setDateFinContrat(contratDTO.getDateFinContrat());
+            existingContrat.setMontantContrat(contratDTO.getMontantContrat());
+            return contratRepository.save(existingContrat);
+        }
+        else {
+            throw new EntityNotFoundException("Contrat with ID " + idContrat + " not found");
+        }
+
     }
 
     @Override
     public Contrat retrieveContrat(Integer idContrat) {
-        return contratRepository.findById(idContrat).get();
+        Optional<Contrat> contratOptional = contratRepository.findById(idContrat);
+
+        if (contratOptional.isPresent()) {
+            return contratOptional.get();
+        } else {
+            // Handle the case where the Contrat with the given ID was not found
+            throw new EntityNotFoundException("Contrat with ID " + idContrat + " not found");
+        }
     }
 
     @Override
@@ -56,33 +81,68 @@ public class ContratServiceImpl implements  IContratService{
     }
 
     @Transactional
-    public Contrat addAndAffectContratToEtudiant(Contrat ce, String nomE, String prenomE) {
-        Long startDate = new Date().getTime();
-        log.info("startDate: "+startDate);
-        log.info("debut methode addAndAffectContratToEtudiant");
-        Etudiant etudiant=etudiantRepository.findByNomEAndPrenomE(nomE,prenomE);
-        log.info("etudiant: "+etudiant.getNomE()+" "+etudiant.getPrenomE());
-        // nb contrats actifs
-        Integer nbContratsActifs= etudiant.getContrats().size();
-        if(nbContratsActifs>5) {
-            log.info("nombre de contrats autorisés est atteint");
-            Long endDate = new Date().getTime();
-            Long executionTime = endDate-startDate;
-            log.info("endDate: "+startDate);
-            log.info("executionTime: "+executionTime+ " ms");
-            return ce;
+    public ContratDTO addAndAffectContratToEtudiant(ContratDTO contratDTO, String nomE, String prenomE) {
+        long startTime = System.currentTimeMillis();
+        log.info("Start Time: " + startTime);
+        log.info("Start of addAndAffectContratToEtudiant method");
+
+        Etudiant etudiant = etudiantRepository.findByNomEAndPrenomE(nomE, prenomE);
+
+        if (etudiant == null) {
+            log.error("Student not found with name: " + nomE + " " + prenomE);
+            throw new EntityNotFoundException("Student not found with name: " + nomE + " " + prenomE);
         }
-        log.info("nb Contrats en cours: "+nbContratsActifs);
-        contratRepository.save(ce);
-        ce.setEtudiant(etudiant);
-        log.info("fin methode addAndAffectContratToEtudiant");
-        Long endDate = new Date().getTime();
-        Long executionTime = endDate-startDate;
 
-        log.info("endDate: "+startDate);
-        log.info("executionTime: "+executionTime+ " ms");
+        // Number of active contracts
+        int nbContratsActifs = etudiant.getContrats().size();
 
-        return ce;
+        if (nbContratsActifs >= 5) {
+            log.info("Number of allowed contracts is reached");
+            log.info("End of addAndAffectContratToEtudiant method");
+            long endTime = System.currentTimeMillis();
+            long executionTime = endTime - startTime;
+            log.info("End Time: " + endTime);
+            log.info("Execution Time: " + executionTime + " ms");
+            return contratDTO;
+        }
+
+        // Convert ContratDTO to Contrat entity if needed
+        Contrat contrat = convertToEntity(contratDTO);
+
+        // Save the contrat
+        contrat.setEtudiant(etudiant);
+        contrat = contratRepository.save(contrat);
+
+        // Convert Contrat entity back to ContratDTO
+        ContratDTO savedContratDTO = convertToDTO(contrat);
+
+        log.info("End of addAndAffectContratToEtudiant method");
+        long endTime = System.currentTimeMillis();
+        long executionTime = endTime - startTime;
+        log.info("End Time: " + endTime);
+        log.info("Execution Time: " + executionTime + " ms");
+
+        return savedContratDTO;
+    }
+
+    private Contrat convertToEntity(ContratDTO contratDTO) {
+        Contrat contrat = new Contrat();
+        contrat.setDateDebutContrat(contratDTO.getDateDebutContrat());
+        contrat.setDateFinContrat(contratDTO.getDateFinContrat());
+        contrat.setMontantContrat(contratDTO.getMontantContrat());
+        // Set other fields if there are more properties in ContratDTO
+
+        return contrat;
+    }
+
+    private ContratDTO convertToDTO(Contrat contrat) {
+        ContratDTO contratDTO = new ContratDTO();
+        contratDTO.setDateDebutContrat(contrat.getDateDebutContrat());
+        contratDTO.setDateFinContrat(contrat.getDateFinContrat());
+        contratDTO.setMontantContrat(contrat.getMontantContrat());
+        // Set other fields if there are more properties in ContratDTO
+
+        return contratDTO;
     }
 
     public 	Integer nbContratsValides(Date startDate, Date endDate){
