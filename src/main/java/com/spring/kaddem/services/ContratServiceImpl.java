@@ -1,5 +1,6 @@
 package com.spring.kaddem.services;
 
+import com.spring.kaddem.dto.ContratDTO;
 import com.spring.kaddem.entities.Contrat;
 import com.spring.kaddem.entities.Etudiant;
 import com.spring.kaddem.entities.Specialite;
@@ -45,8 +46,13 @@ public class ContratServiceImpl implements  IContratService{
     }
 
     @Override
-    public Contrat addContrat(Contrat c) {
-        return contratRepository.save(c);
+    public Contrat addContrat(ContratDTO contratDTO) {
+        Contrat contrat = new Contrat();
+        contrat.setDateDebutContrat(contratDTO.getDateDebutContrat());
+        contrat.setDateFinContrat(contratDTO.getDateFinContrat());
+        contrat.setMontantContrat(contratDTO.getMontantContrat());
+
+        return contratRepository.save(contrat);
     }
 
     @Transactional

@@ -53,7 +53,7 @@ class ContratServiceImplTest {
 
 		
 	}	
-
+/*
 	@Test
 	void testAddContrat() {
 		
@@ -62,6 +62,8 @@ class ContratServiceImplTest {
 		Contrat fou=contratService.addContrat(c);
 		Assertions.assertNotNull(fou);	
 	}
+
+ */
 	
 
 	

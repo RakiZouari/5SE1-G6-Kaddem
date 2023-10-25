@@ -1,6 +1,7 @@
 package com.spring.kaddem.services;
 
 
+import com.spring.kaddem.dto.ContratDTO;
 import com.spring.kaddem.entities.Contrat;
 
 import java.util.Date;
@@ -12,7 +13,7 @@ public interface IContratService {
     Contrat updateContrat(Contrat ce);
     Contrat retrieveContrat(Integer idContrat);
     void removeContrat(Integer idContrat);
-    Contrat addContrat(Contrat c);
+    Contrat addContrat(ContratDTO contratDTO);
 
     Contrat addAndAffectContratToEtudiant (Contrat ce, String nomE ,String prenomE );
 

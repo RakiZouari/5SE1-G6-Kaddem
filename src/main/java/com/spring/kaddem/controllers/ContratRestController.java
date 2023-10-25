@@ -1,6 +1,7 @@
 package com.spring.kaddem.controllers;
 
 
+import com.spring.kaddem.dto.ContratDTO;
 import com.spring.kaddem.entities.Contrat;
 import com.spring.kaddem.services.IContratService;
 import lombok.AllArgsConstructor;
@@ -35,9 +36,9 @@ public class ContratRestController {
     // http://localhost:8089/Kaddem/contrat/add-contrat
     @PostMapping("/add-contrat")
     @ResponseBody
-    public Contrat addContrat(@RequestBody Contrat c) {
+    public Contrat addContrat(@RequestBody ContratDTO contratDTO) {
 
-        return contratService.addContrat(c);
+        return contratService.addContrat(contratDTO);
     }
 
     // http://localhost:8089/Kaddem/contrat/update-contrat
