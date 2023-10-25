@@ -25,20 +25,16 @@ public class ContratServiceImpl implements  IContratService{
 
     @Override
     public List<Contrat> retrieveAllContrats() {
-        log.info("debut methode retrieveAllContrats");
         return contratRepository.findAll();
     }
 
     @Override
     public Contrat updateContrat(Contrat ce) {
-        log.info("debut methode updateContrat");
-        contratRepository.save(ce);
-        return ce;
+        return contratRepository.save(ce);
     }
 
     @Override
     public Contrat retrieveContrat(Integer idContrat) {
-        log.info("debut methode retrieveContrat");
         return contratRepository.findById(idContrat).get();
     }
 
@@ -50,9 +46,7 @@ public class ContratServiceImpl implements  IContratService{
 
     @Override
     public Contrat addContrat(Contrat c) {
-        // start date t1
-        contratRepository.save(c);
-        return c;
+        return contratRepository.save(c);
     }
 
     @Transactional
