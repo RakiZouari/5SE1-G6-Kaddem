@@ -1,0 +1,26 @@
+-------------------------------------------------------------------------------
+Test set: com.spring.kaddem.ContratServiceImplTest
+-------------------------------------------------------------------------------
+Tests run: 2, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 4.8 s <<< FAILURE! - in com.spring.kaddem.ContratServiceImplTest
+testRetrieveAllContrats  Time elapsed: 0.001 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+Cannot instantiate @InjectMocks field named 'contratService'! Cause: the type 'IContratService' is an interface.
+You haven't provided the instance at field declaration so I tried to construct the instance.
+Examples of correct usage of @InjectMocks:
+   @InjectMocks Service service = new Service();
+   @InjectMocks Service service;
+   //and... don't forget about some @Mocks for injection :)
+
+
+testAddContrat  Time elapsed: 0 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+Cannot instantiate @InjectMocks field named 'contratService'! Cause: the type 'IContratService' is an interface.
+You haven't provided the instance at field declaration so I tried to construct the instance.
+Examples of correct usage of @InjectMocks:
+   @InjectMocks Service service = new Service();
+   @InjectMocks Service service;
+   //and... don't forget about some @Mocks for injection :)
+
+
