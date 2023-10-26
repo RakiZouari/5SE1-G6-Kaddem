@@ -26,7 +26,7 @@ import java.util.Optional;
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest
 @Slf4j
-class EtudiantServiceImplTest {/*
+class EtudiantServiceImplTest {
 
     @Autowired
     private EtudiantServiceImpl etudiantService;
@@ -146,7 +146,7 @@ void assignEtudiantToDepartement() {
     etudiantService.assignEtudiantToDepartement(etudiantId, departementId);
     verify(etudiantRepository).save(any(Etudiant.class));
     */
-/*}
+}
 
 @Test
 void findByDepartementIdDepartement() {
@@ -198,7 +198,7 @@ void addAndAssignEtudiantToEquipeAndContract() {
     verify(etudiantRepository).save(any(Etudiant.class));
     assertEquals(etudiantDto.getIdEtudiant(), result.getIdEtudiant());
     */
-/*}
+}
 
 @Test
 void getEtudiantsByDepartement() {
@@ -210,6 +210,6 @@ void getEtudiantsByDepartement() {
     List<Etudiant> retrievedEtudiants = etudiantService.getEtudiantsByDepartement(idDepartement);
     assertEquals(expectedEtudiants, retrievedEtudiants);
     */
-/*}*/
+}
 
 }
