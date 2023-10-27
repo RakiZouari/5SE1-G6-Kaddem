@@ -19,8 +19,10 @@ import java.util.List;
 import java.util.Optional;
 
 import org.mockito.ArgumentMatchers;
+import org.springframework.test.annotation.Rollback;
 
 import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
@@ -44,6 +46,8 @@ class ContratServiceImplTest {
 		MockitoAnnotations.initMocks(this);
 	}
 	@Test
+	@Transactional
+	@Rollback(true)
 	void testRetrieveAllContrats() {
 		// Créez une liste fictive de contrats
 		List<Contrat> contrats = new ArrayList<>();
@@ -60,6 +64,8 @@ class ContratServiceImplTest {
 		assertEquals(2, result.size());
 	}
 	 @Test
+	 @Transactional
+	 @Rollback(true)
 	    void testAddContrat() {
 		// Créez un objet ContratDTO fictif
 		ContratDTO contratDTO = new ContratDTO();
@@ -87,6 +93,8 @@ class ContratServiceImplTest {
 	}
 
 	@Test
+	@Transactional
+	@Rollback(true)
 	    void testUpdateContrat_ExistingContrat() {
 		// Créez un objet ContratDTO fictif
 		ContratDTO contratDTO = new ContratDTO();
@@ -117,6 +125,8 @@ class ContratServiceImplTest {
 	}
 
 	@Test
+	@Transactional
+	@Rollback(true)
 	    void testRetrieveContrat_ExistingContrat() {
 		// Créez un objet Contrat fictif
 		Contrat existingContrat = new Contrat();
@@ -136,6 +146,8 @@ class ContratServiceImplTest {
 	}
 
 	@Test
+	@Transactional
+	@Rollback(true)
 	   void testRetrieveContrat_NonExistingContrat() {
 		// Définissez le comportement du mock ContratRepository pour findById()
 		when(contratRepository.findById(1)).thenReturn(Optional.empty());
@@ -145,6 +157,8 @@ class ContratServiceImplTest {
 	}
 
 	@Test
+	@Transactional
+	@Rollback(true)
 	  void testRemoveContrat() {
 		// Définissez l'ID du contrat à supprimer
 		Integer idContrat = 1;
