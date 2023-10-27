@@ -60,7 +60,7 @@ public class ContratServiceImpl implements  IContratService{
             return contratOptional.get();
         } else {
             // Handle the case where the Contrat with the given ID was not found
-            throw new EntityNotFoundException("Contrat with ID " + idContrat + " not found");
+            throw new EntityNotFoundException(" Contrat not found");
         }
     }
 
@@ -76,6 +76,8 @@ public class ContratServiceImpl implements  IContratService{
         contrat.setDateDebutContrat(contratDTO.getDateDebutContrat());
         contrat.setDateFinContrat(contratDTO.getDateFinContrat());
         contrat.setMontantContrat(contratDTO.getMontantContrat());
+        contrat.setArchived(contratDTO.getArchived());
+        contrat.setSpecialite(contrat.getSpecialite());
 
         return contratRepository.save(contrat);
     }
@@ -148,7 +150,7 @@ public class ContratServiceImpl implements  IContratService{
     public 	Integer nbContratsValides(Date startDate, Date endDate){
         return contratRepository.getnbContratsValides(startDate, endDate);
     }
-
+/*
     public void retrieveAndUpdateStatusContrat(){
         log.info("debut methode retrieveAndUpdateStatusContrat");
         List<Contrat>contrats=contratRepository.findAll();
@@ -182,6 +184,8 @@ public class ContratServiceImpl implements  IContratService{
             log.info("debut methode retrieveAndUpdateStatusContrat");
         }
     }
+
+ */
     public float getChiffreAffaireEntreDeuxDates(Date startDate, Date endDate){
         float timeDifferenceInMilliseconds =(float) endDate.getTime() - startDate.getTime();
         float differenceInDays = (timeDifferenceInMilliseconds / (1000 * 60 * 60 * 24)) % 365;
@@ -223,5 +227,7 @@ public class ContratServiceImpl implements  IContratService{
 
 
     }
+
+
 
 }

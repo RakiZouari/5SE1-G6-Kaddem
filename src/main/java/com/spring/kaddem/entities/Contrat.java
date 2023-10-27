@@ -1,8 +1,5 @@
 package com.spring.kaddem.entities;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -14,15 +11,16 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Contrat implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idContrat;
     @Temporal(TemporalType.DATE)
-    private Date dateDebutContrat;
+    private String dateDebutContrat;
     @Temporal(TemporalType.DATE)
-    private Date dateFinContrat;
+    private String dateFinContrat;
     @Enumerated(EnumType.STRING)
     private Specialite specialite;
     private Boolean archived;

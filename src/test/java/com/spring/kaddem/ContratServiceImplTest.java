@@ -2,6 +2,7 @@ package com.spring.kaddem;
 
 import com.spring.kaddem.dto.ContratDTO;
 import com.spring.kaddem.entities.Contrat;
+import com.spring.kaddem.entities.Specialite;
 import com.spring.kaddem.repositories.ContratRepository;
 import com.spring.kaddem.services.IContratService;
 import lombok.extern.slf4j.Slf4j;
@@ -40,7 +41,65 @@ class ContratServiceImplTest {
 
 	@Autowired
 	IContratService contratService;
+	@Mock
+	private Contrat contrat;
+	private List<Contrat> contrats;
+	@BeforeEach
+	void setUp() {
+		contrat = new Contrat();
+		contrat.setDateDebutContrat("2022/04/22");
+		contrat.setDateFinContrat("2022/06/24");
+		contrat.setMontantContrat(1000);
+		contrat.setArchived(true);
+		contrat.setSpecialite(Specialite.IA);
+	}
+	@BeforeEach
+	void setEtudiants(){
+		contrats=new ArrayList();
+		Contrat contrat1 = new Contrat();
+		contrat1.setDateDebutContrat("2022/04/29");
+		contrat1.setDateFinContrat("2022/06/30");
+		contrat1.setMontantContrat(2000);
+		contrat1.setArchived(true);
+		contrat1.setSpecialite(Specialite.SECURITE);
+		contrats.add(contrat1);
 
+		Contrat contrat2 = new Contrat();
+		contrat2.setDateDebutContrat("2022/04/29");
+		contrat2.setDateFinContrat("2022/06/30");
+		contrat2.setArchived(true);
+		contrat2.setMontantContrat(3000);
+		contrat2.setSpecialite(Specialite.CLOUD);
+		contrats.add(contrat2);
+
+	}
+
+	@Test
+	void addContrat() {
+		ContratDTO newcontratDto = new ContratDTO();
+		newcontratDto.setDateDebutContrat("2022/04/29");
+		newcontratDto.setDateFinContrat("2022/06/30");
+		newcontratDto.setArchived(true);
+		newcontratDto.setMontantContrat(3000);
+		newcontratDto.setSpecialite(Specialite.CLOUD);
+
+		when(contratRepository.save(any(Contrat.class))).thenAnswer(invocation -> {
+			Contrat saveContrat = invocation.getArgument(0);
+			saveContrat.setIdContrat(1); // Set the ID as it would be generated during save
+			return saveContrat;
+		});
+
+		ContratDTO addContrattoDto = ContratDTO.toDto(contratService.addContrat(newcontratDto));
+
+		verify(contratRepository).save(any(Contrat.class));
+
+		assertEquals("2022/04/29", addContrattoDto.getDateDebutContrat());
+		assertEquals("2022/06/30", addContrattoDto.getDateFinContrat());
+		assertEquals(3000, addContrattoDto.getMontantContrat());
+		assertEquals(true, addContrattoDto.getArchived());
+		assertEquals(Specialite.CLOUD, addContrattoDto.getSpecialite());
+	}
+/*
 	@BeforeEach
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
@@ -177,7 +236,7 @@ class ContratServiceImplTest {
 
 
 
-	/*
+
 	//on a initialiser un objet sa pour tester avec
 
 	Contrat f = new Contrat(0,java.sql.Date.valueOf("2020-10-10"),java.sql.Date.valueOf("2022-10-05"), Specialite.IA,null,null,null);
