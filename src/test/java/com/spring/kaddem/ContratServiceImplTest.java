@@ -2,34 +2,28 @@ package com.spring.kaddem;
 
 import com.spring.kaddem.dto.ContratDTO;
 import com.spring.kaddem.entities.Contrat;
+import com.spring.kaddem.entities.Etudiant;
 import com.spring.kaddem.entities.Specialite;
 import com.spring.kaddem.repositories.ContratRepository;
+import com.spring.kaddem.repositories.EtudiantRepository;
 import com.spring.kaddem.services.IContratService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import org.mockito.ArgumentMatchers;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.annotation.Rollback;
 
-import javax.persistence.EntityNotFoundException;
-import javax.transaction.Transactional;
+import org.springframework.boot.test.mock.mockito.MockBean;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -47,8 +41,9 @@ class ContratServiceImplTest {
 	@Autowired
 	IContratService contratService;
 	@MockBean
-	private Contrat contrat;
+	private EtudiantRepository etudiantRepository;
 	@MockBean
+	private Contrat contrat;
 	private List<Contrat> contrats;
 	@BeforeEach
 	void setUp() {
@@ -71,7 +66,7 @@ class ContratServiceImplTest {
 		}
 	}
 	@BeforeEach
-	void setEtudiants(){
+	void setContrats(){
 		contrats = new ArrayList<>();
 
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
@@ -100,7 +95,14 @@ class ContratServiceImplTest {
 
 
 
+	@Test
+	void retrieveAllEtudiants() {
+		setContrats();
+		when(contratRepository.findAll()).thenReturn(contrats);
+		List<Contrat> retrievedetudiants = contratService.retrieveAllContrats();
+		assertEquals(contrats, retrievedetudiants);
 
+	}
 
 
 	@Test
@@ -141,181 +143,116 @@ class ContratServiceImplTest {
 			fail("Failed to parse date: " + e.getMessage());
 		}
 	}
-/*
-	@BeforeEach
-	public void setUp() {
-		MockitoAnnotations.initMocks(this);
-	}
-	@Test
-	@Transactional
-	@Rollback(true)
-	void testRetrieveAllContrats() {
-		// Créez une liste fictive de contrats
-		List<Contrat> contrats = new ArrayList<>();
-		contrats.add(new Contrat());
-		contrats.add(new Contrat());
-
-		// Définissez le comportement du mock ContratRepository
-		when(contratRepository.findAll()).thenReturn(contrats);
-
-		// Appelez la méthode à tester
-		List<Contrat> result = contratService.retrieveAllContrats();
-
-		// Vérifiez le résultat
-		assertEquals(2, result.size());
-	}
-	 @Test
-	 @Transactional
-	 @Rollback(true)
-	    void testAddContrat() {
-		// Créez un objet ContratDTO fictif
-		ContratDTO contratDTO = new ContratDTO();
-		contratDTO.setDateDebutContrat(new Date());
-		contratDTO.setDateFinContrat(new Date());
-		contratDTO.setMontantContrat(1000);
-
-		// Créez un objet Contrat fictif
-		Contrat contrat = new Contrat();
-		contrat.setDateDebutContrat(contratDTO.getDateDebutContrat());
-		contrat.setDateFinContrat(contratDTO.getDateFinContrat());
-		contrat.setMontantContrat(contratDTO.getMontantContrat());
-
-		// Définissez le comportement du mock ContratRepository
-		when(contratRepository.save(any(Contrat.class))).thenReturn(contrat);
-
-		// Appelez la méthode à tester
-		Contrat resultContrat = contratService.addContrat(contratDTO);
-
-		// Vérifiez le résultat
-		assertEquals(contrat, resultContrat);
-
-		// Vérifiez que la méthode save de ContratRepository a été appelée avec le bon objet Contrat
-		verify(contratRepository).save(argThat(savedContrat -> savedContrat.equals(contratDTO)));
-	}
 
 	@Test
-	@Transactional
-	@Rollback(true)
-	    void testUpdateContrat_ExistingContrat() {
-		// Créez un objet ContratDTO fictif
-		ContratDTO contratDTO = new ContratDTO();
-		contratDTO.setDateDebutContrat(new Date());
-		contratDTO.setDateFinContrat(new Date());
-		contratDTO.setMontantContrat(2000);
+	void updateContrat() {
+		// Create a ContratDTO object with updated values
+		ContratDTO updatedContratDto = new ContratDTO();
+		String startDateStr = "2022/05/15";
+		String endDateStr = "2022/07/20";
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 
-		// Créez un objet Contrat fictif existant
-		Contrat existingContrat = new Contrat();
-		existingContrat.setIdContrat(1); // ID de l'objet existant
-		existingContrat.setDateDebutContrat(new Date());
-		existingContrat.setDateFinContrat(new Date());
-		existingContrat.setMontantContrat(1000);
+		try {
+			Date startDate = dateFormat.parse(startDateStr);
+			Date endDate = dateFormat.parse(endDateStr);
+			updatedContratDto.setIdContrat(1);
+			updatedContratDto.setDateDebutContrat(startDate);
+			updatedContratDto.setDateFinContrat(endDate);
+			updatedContratDto.setArchived(false); // Set to false to simulate an update
+			updatedContratDto.setMontantContrat(2500); // Updated montantContrat value
+			updatedContratDto.setSpecialite(Specialite.RESEAU); // Updated specialite value
 
-		// Définissez le comportement du mock ContratRepository pour findById()
-		when(contratRepository.findById(1)).thenReturn(Optional.of(existingContrat));
+			// Mock the behavior of contratRepository.save() to return the updated Contrat object
+			when(contratRepository.save(any(Contrat.class))).thenReturn(contrat);
 
-		// Définissez le comportement du mock ContratRepository pour save()
-		when(contratRepository.save(any(Contrat.class))).thenReturn(existingContrat);
+			// Call the updateContrat method
+			ContratDTO updatedContrat = contratService.addUpdateContrat(updatedContratDto);
 
-		// Appelez la méthode à tester
-		Contrat updatedContrat = contratService.updateContrat(1, contratDTO);
+			verify(contratRepository).save(any(Contrat.class));
 
-		// Vérifiez le résultat
-		assertEquals(contratDTO.getDateDebutContrat(), updatedContrat.getDateDebutContrat());
-		assertEquals(contratDTO.getDateFinContrat(), updatedContrat.getDateFinContrat());
-		assertEquals(contratDTO.getMontantContrat(), updatedContrat.getMontantContrat());
-	}
-
-	@Test
-	@Transactional
-	@Rollback(true)
-	    void testRetrieveContrat_ExistingContrat() {
-		// Créez un objet Contrat fictif
-		Contrat existingContrat = new Contrat();
-		existingContrat.setIdContrat(1); // ID de l'objet existant
-		existingContrat.setDateDebutContrat(new Date());
-		existingContrat.setDateFinContrat(new Date());
-		existingContrat.setMontantContrat(1000);
-
-		// Définissez le comportement du mock ContratRepository pour findById()
-		when(contratRepository.findById(1)).thenReturn(Optional.of(existingContrat));
-
-		// Appelez la méthode à tester
-		Contrat retrievedContrat = contratService.retrieveContrat(1);
-
-		// Vérifiez le résultat
-		assertEquals(existingContrat, retrievedContrat);
-	}
-
-	@Test
-	@Transactional
-	@Rollback(true)
-	   void testRetrieveContrat_NonExistingContrat() {
-		// Définissez le comportement du mock ContratRepository pour findById()
-		when(contratRepository.findById(1)).thenReturn(Optional.empty());
-
-		// Appelez la méthode à tester et vérifiez qu'elle lance une exception EntityNotFoundException
-		assertThrows(EntityNotFoundException.class, () -> contratService.retrieveContrat(1));
-	}
-
-	@Test
-	@Transactional
-	@Rollback(true)
-	  void testRemoveContrat() {
-		// Définissez l'ID du contrat à supprimer
-		Integer idContrat = 1;
-
-		// Appelez la méthode à tester
-		contratService.removeContrat(idContrat);
-
-		// Vérifiez que la méthode deleteById de ContratRepository a été appelée avec le bon ID
-		verify(contratRepository).deleteById(idContrat);
-	}
-
-
-
-
-
-
-
-
-
-	//on a initialiser un objet sa pour tester avec
-
-	Contrat f = new Contrat(0,java.sql.Date.valueOf("2020-10-10"),java.sql.Date.valueOf("2022-10-05"), Specialite.IA,null,null,null);
-	List<Contrat> contratsInit = new ArrayList<Contrat>() {
-		{
-		add (new Contrat(3,java.sql.Date.valueOf("2020-10-10"),java.sql.Date.valueOf("2019-10-05"), Specialite.CLOUD,null,null,null));
-		add (new Contrat(4,java.sql.Date.valueOf("2020-10-10"),java.sql.Date.valueOf("2018-10-20"), Specialite.RESEAU,null,null,null));
-		add (new Contrat(5,java.sql.Date.valueOf("2020-10-10"),java.sql.Date.valueOf("2017-05-10"), Specialite.SECURITE,null,null,null));
-
+			// Perform assertions with the updated ContratDTO object
+			assertEquals(1, updatedContrat.getIdContrat());
+			assertEquals(startDate, updatedContrat.getDateDebutContrat());
+			assertEquals(endDate, updatedContrat.getDateFinContrat());
+			assertEquals(2500, updatedContrat.getMontantContrat());
+			assertFalse(updatedContrat.getArchived()); // Expecting archived to be false after the update
+			assertEquals(Specialite.RESEAU, updatedContrat.getSpecialite());
+		} catch (ParseException e) {
+			fail("Failed to parse date: " + e.getMessage());
 		}
-	};
-	
-	
+
+	}
 	@Test
-	void testRetrieveAllContrats() {
-
-		
-		Mockito.doReturn(contratsInit).when(contratRepository).findAll();
-        List<Contrat> contrats = contratService.retrieveAllContrats();
-		Assertions.assertNotNull(contrats);
+	void retrieveContrat() {
 
 
-		
-	}	
+		Contrat contrat1 = new Contrat();
+		contrat1.setIdContrat(1);
+		when(contratRepository.findById(1)).thenReturn(Optional.of(contrat1));
+		Contrat retrievedContrat = contratService.retrieveContrat(1);
+		verify(contratRepository).findById(1);
+		assertEquals(contrat1, retrievedContrat);
 
+	}
 	@Test
-	void testAddContrat() {
-		
-		Contrat c = new Contrat();
-		Mockito.when(contratRepository.save(Mockito.any(Contrat.class))).thenReturn(c);
-		Contrat fou=contratService.addContrat(c);
-		Assertions.assertNotNull(fou);	
+	void removeEtudiant() {
+		int ContratIdToRemove = 1;
+		contratService.removeContrat(ContratIdToRemove);
+		verify(contratRepository).deleteById(ContratIdToRemove);
 	}
 
- */
-	
+	@Test
+	void testAddAndAffectContratToEtudiant() {
 
-	
+		String nomE = "John";
+		String prenomE = "Doe";
+
+		Etudiant etudiant = new Etudiant();
+
+		ContratDTO contratDto = new ContratDTO();
+		String startDateStr = "2022/04/29";
+		String endDateStr = "2022/06/30";
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+		try {
+			Date startDate = dateFormat.parse(startDateStr);
+			Date endDate = dateFormat.parse(endDateStr);
+
+			contratDto.setDateDebutContrat(startDate);
+			contratDto.setDateFinContrat(endDate);
+			contratDto.setArchived(true);
+			contratDto.setMontantContrat(3000);
+			contratDto.setSpecialite(Specialite.CLOUD);
+
+			when(etudiantRepository.findByNomEAndPrenomE(nomE, prenomE)).thenReturn(etudiant);
+			when(contratRepository.save(any(Contrat.class))).thenAnswer(invocation -> {
+				Contrat saveContrat = invocation.getArgument(0);
+				saveContrat.setIdContrat(1); // Set the ID as it would be generated during save
+				return saveContrat;
+			});
+
+			ContratDTO result = contratService.addAndAffectContratToEtudiant(contratDto, nomE, prenomE);
+
+			verify(contratRepository).save(any(Contrat.class));
+			String formattedStartDate = dateFormat.format(result.getDateDebutContrat());
+			String formattedEndDate = dateFormat.format(result.getDateFinContrat());
+
+			// Perform assertions with the formatted dates
+			assertEquals("2022/04/29", formattedStartDate);
+			assertEquals("2022/06/30", formattedEndDate);
+			assertEquals(3000, result.getMontantContrat());
+			assertTrue(result.getArchived());
+			assertEquals(Specialite.CLOUD, result.getSpecialite());
+		} catch (ParseException e) {
+			fail("Failed to parse date: " + e.getMessage());
+		}
+	}
+
+
+
+
+
+
+
+
 
 }
