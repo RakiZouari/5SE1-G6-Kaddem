@@ -31,10 +31,9 @@ import org.springframework.test.annotation.Rollback;
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -129,14 +128,17 @@ class ContratServiceImplTest {
 		ContratDTO addContratDto = contratService.addUpdateContrat(newcontratDto);
 
 		verify(contratRepository).save(any(Contrat.class));
-		assertEquals("2022/04/29", addContratDto.getDateDebutContrat());
-		assertEquals("2022/06/30", addContratDto.getDateFinContrat());
-		assertEquals(3000, addContratDto.getMontantContrat());
-		assertEquals(true, addContratDto.getArchived());
-		assertEquals(Specialite.CLOUD, addContratDto.getSpecialite());
+			String formattedStartDate = dateFormat.format(addContratDto.getDateDebutContrat());
+			String formattedEndDate = dateFormat.format(addContratDto.getDateFinContrat());
+
+			// Perform assertions with the formatted dates
+			assertEquals("2022/04/29", formattedStartDate);
+			assertEquals("2022/06/30", formattedEndDate);
+			assertEquals(3000, addContratDto.getMontantContrat());
+			assertTrue(addContratDto.getArchived());
+			assertEquals(Specialite.CLOUD, addContratDto.getSpecialite());
 		} catch (ParseException e) {
-			// Gère l'exception si la chaîne de date n'est pas dans le bon format
-			e.printStackTrace();
+			fail("Failed to parse date: " + e.getMessage());
 		}
 	}
 /*
