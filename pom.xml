@@ -13,6 +13,10 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>Kaddem</name>
     <description>Kaddem</description>
+        <distributionManagement>
+        <id>deploymentRepo</id>
+        <url>http://localhost:8081/repository/maven-releases/</url>
+    </distributionManagement>
     <properties>
         <java.version>1.8</java.version>
              <!-- JaCoCo Properties -->
