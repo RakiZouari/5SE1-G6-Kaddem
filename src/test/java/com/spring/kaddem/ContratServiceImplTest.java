@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.mockito.ArgumentMatchers;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.annotation.Rollback;
 
 import javax.persistence.EntityNotFoundException;
@@ -41,13 +42,14 @@ import static org.mockito.Mockito.when;
 @Slf4j
 class ContratServiceImplTest {
 
-    @Mock
+    @MockBean
 	ContratRepository contratRepository;
 
 	@Autowired
 	IContratService contratService;
-	@Mock
+	@MockBean
 	private Contrat contrat;
+	@MockBean
 	private List<Contrat> contrats;
 	@BeforeEach
 	void setUp() {
