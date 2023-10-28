@@ -17,9 +17,8 @@ import java.util.List;
 @Builder
 public class ContratDTO {
     private Integer idContrat;
-    @Lob
-    private String dateDebutContrat;
-    private String dateFinContrat;
+    private Date dateDebutContrat;
+    private Date dateFinContrat;
     private Specialite specialite;
     private Boolean archived;
     private Integer montantContrat;

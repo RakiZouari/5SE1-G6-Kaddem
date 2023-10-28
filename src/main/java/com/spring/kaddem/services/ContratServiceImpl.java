@@ -31,26 +31,6 @@ public class ContratServiceImpl implements  IContratService{
         return contratRepository.findAll();
     }
 
-    @Override
-    public Contrat updateContrat(Integer idContrat, ContratDTO contratDTO) {
-        // Retrieve the existing Contrat entity from the database
-        Optional<Contrat> existingContratOptional = contratRepository.findById(idContrat);
-
-        // Check if the Contrat exists
-        if (existingContratOptional.isPresent()) {
-            Contrat existingContrat = existingContratOptional.get();
-
-            // Update attributes using values from ContratDTO
-            existingContrat.setDateDebutContrat(contratDTO.getDateDebutContrat());
-            existingContrat.setDateFinContrat(contratDTO.getDateFinContrat());
-            existingContrat.setMontantContrat(contratDTO.getMontantContrat());
-            return contratRepository.save(existingContrat);
-        }
-        else {
-            throw new EntityNotFoundException("Contrat with ID " + idContrat + " not found");
-        }
-
-    }
 
     @Override
     public Contrat retrieveContrat(Integer idContrat) {
@@ -71,15 +51,11 @@ public class ContratServiceImpl implements  IContratService{
     }
 
     @Override
-    public Contrat addContrat(ContratDTO contratDTO) {
-        Contrat contrat = new Contrat();
-        contrat.setDateDebutContrat(contratDTO.getDateDebutContrat());
-        contrat.setDateFinContrat(contratDTO.getDateFinContrat());
-        contrat.setMontantContrat(contratDTO.getMontantContrat());
-        contrat.setArchived(contratDTO.getArchived());
-        contrat.setSpecialite(contrat.getSpecialite());
+    public ContratDTO addUpdateContrat(ContratDTO c) {
 
-        return contratRepository.save(contrat);
+        contratRepository.save(ContratDTO.toEntity(c));
+
+        return c;
     }
 
     @Transactional

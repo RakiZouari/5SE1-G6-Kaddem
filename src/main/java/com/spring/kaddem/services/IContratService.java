@@ -11,10 +11,9 @@ public interface IContratService {
 
     List<Contrat> retrieveAllContrats();
 
-    Contrat updateContrat(Integer idContrat, ContratDTO contratDTO);
     Contrat retrieveContrat(Integer idContrat);
     void removeContrat(Integer idContrat);
-    Contrat addContrat(ContratDTO contratDTO);
+    ContratDTO addUpdateContrat(ContratDTO c);
 
     ContratDTO addAndAffectContratToEtudiant(ContratDTO contratDTO, String nomE, String prenomE);
 

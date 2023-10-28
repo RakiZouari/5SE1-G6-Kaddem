@@ -14,6 +14,11 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -47,57 +52,90 @@ class ContratServiceImplTest {
 	@BeforeEach
 	void setUp() {
 		contrat = new Contrat();
-		contrat.setDateDebutContrat("2022/04/22");
-		contrat.setDateFinContrat("2022/06/24");
-		contrat.setMontantContrat(1000);
-		contrat.setArchived(true);
-		contrat.setSpecialite(Specialite.IA);
+
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+
+		try {
+			Date dateDebutContrat = dateFormat.parse("2022/04/22");
+			Date dateFinContrat = dateFormat.parse("2022/06/24");
+
+			contrat.setDateDebutContrat(dateDebutContrat);
+			contrat.setDateFinContrat(dateFinContrat);
+			contrat.setMontantContrat(1000);
+			contrat.setArchived(true);
+			contrat.setSpecialite(Specialite.IA);
+		} catch (ParseException e) {
+			// Handle the ParseException, e.g., log it or throw a custom exception
+			e.printStackTrace();
+		}
 	}
 	@BeforeEach
 	void setEtudiants(){
-		contrats=new ArrayList();
-		Contrat contrat1 = new Contrat();
-		contrat1.setDateDebutContrat("2022/04/29");
-		contrat1.setDateFinContrat("2022/06/30");
-		contrat1.setMontantContrat(2000);
-		contrat1.setArchived(true);
-		contrat1.setSpecialite(Specialite.SECURITE);
-		contrats.add(contrat1);
+		contrats = new ArrayList<>();
 
-		Contrat contrat2 = new Contrat();
-		contrat2.setDateDebutContrat("2022/04/29");
-		contrat2.setDateFinContrat("2022/06/30");
-		contrat2.setArchived(true);
-		contrat2.setMontantContrat(3000);
-		contrat2.setSpecialite(Specialite.CLOUD);
-		contrats.add(contrat2);
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 
+		try {
+			Contrat contrat1 = new Contrat();
+			contrat1.setDateDebutContrat(dateFormat.parse("2022/04/29"));
+			contrat1.setDateFinContrat(dateFormat.parse("2022/06/30"));
+			contrat1.setMontantContrat(2000);
+			contrat1.setArchived(true);
+			contrat1.setSpecialite(Specialite.SECURITE);
+			contrats.add(contrat1);
+
+			Contrat contrat2 = new Contrat();
+			contrat2.setDateDebutContrat(dateFormat.parse("2022/04/29"));
+			contrat2.setDateFinContrat(dateFormat.parse("2022/06/30"));
+			contrat2.setMontantContrat(3000);
+			contrat2.setArchived(true);
+			contrat2.setSpecialite(Specialite.CLOUD);
+			contrats.add(contrat2);
+		} catch (ParseException e) {
+			// Handle the ParseException, e.g., log it or throw a custom exception
+			e.printStackTrace();
+		}
 	}
+
+
+
+
+
 
 	@Test
 	void addContrat() {
 		ContratDTO newcontratDto = new ContratDTO();
-		newcontratDto.setDateDebutContrat("2022/04/29");
-		newcontratDto.setDateFinContrat("2022/06/30");
-		newcontratDto.setArchived(true);
-		newcontratDto.setMontantContrat(3000);
-		newcontratDto.setSpecialite(Specialite.CLOUD);
+		String startDateStr = "2022/04/29";
+		String endDateStr = "2022/06/30";
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+		try {
+			Date startDate = dateFormat.parse(startDateStr);
+			Date endDate = dateFormat.parse(endDateStr);
 
-		when(contratRepository.save(any(Contrat.class))).thenAnswer(invocation -> {
-			Contrat saveContrat = invocation.getArgument(0);
-			saveContrat.setIdContrat(1); // Set the ID as it would be generated during save
-			return saveContrat;
-		});
+			newcontratDto.setDateDebutContrat(startDate);
+			newcontratDto.setDateFinContrat(endDate);
+			newcontratDto.setArchived(true);
+			newcontratDto.setMontantContrat(3000);
+			newcontratDto.setSpecialite(Specialite.CLOUD);
 
-		ContratDTO addContrattoDto = ContratDTO.toDto(contratService.addContrat(newcontratDto));
+			when(contratRepository.save(any(Contrat.class))).thenAnswer(invocation -> {
+				Contrat saveContrat = invocation.getArgument(0);
+				saveContrat.setIdContrat(1); // Set the ID as it would be generated during save
+				return saveContrat;
+			});
+
+		ContratDTO addContratDto = contratService.addUpdateContrat(newcontratDto);
 
 		verify(contratRepository).save(any(Contrat.class));
-
-		assertEquals("2022/04/29", addContrattoDto.getDateDebutContrat());
-		assertEquals("2022/06/30", addContrattoDto.getDateFinContrat());
-		assertEquals(3000, addContrattoDto.getMontantContrat());
-		assertEquals(true, addContrattoDto.getArchived());
-		assertEquals(Specialite.CLOUD, addContrattoDto.getSpecialite());
+		assertEquals("2022/04/29", addContratDto.getDateDebutContrat());
+		assertEquals("2022/06/30", addContratDto.getDateFinContrat());
+		assertEquals(3000, addContratDto.getMontantContrat());
+		assertEquals(true, addContratDto.getArchived());
+		assertEquals(Specialite.CLOUD, addContratDto.getSpecialite());
+		} catch (ParseException e) {
+			// Gère l'exception si la chaîne de date n'est pas dans le bon format
+			e.printStackTrace();
+		}
 	}
 /*
 	@BeforeEach

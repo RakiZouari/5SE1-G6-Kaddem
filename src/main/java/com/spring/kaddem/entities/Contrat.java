@@ -17,10 +17,10 @@ public class Contrat implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idContrat;
-
-    private String dateDebutContrat;
-
-    private String dateFinContrat;
+    @Temporal(TemporalType.DATE)
+    private Date dateDebutContrat;
+    @Temporal(TemporalType.DATE)
+    private Date dateFinContrat;
     @Enumerated(EnumType.STRING)
     private Specialite specialite;
     private Boolean archived;

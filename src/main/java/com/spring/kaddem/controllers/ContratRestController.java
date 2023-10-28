@@ -36,16 +36,16 @@ public class ContratRestController {
     // http://localhost:8089/Kaddem/contrat/add-contrat
     @PostMapping("/add-contrat")
     @ResponseBody
-    public Contrat addContrat(@RequestBody ContratDTO contratDTO) {
+    public ContratDTO addContrat(@RequestBody ContratDTO contratDTO) {
 
-        return contratService.addContrat(contratDTO);
+        return contratService.addUpdateContrat(contratDTO);
     }
 
     // http://localhost:8089/Kaddem/contrat/update-contrat
     @PutMapping("/update-contrat")
     @ResponseBody
-    public Contrat updateContrat(@PathVariable Integer idContrat, @RequestBody ContratDTO contratDTO) {
-        return contratService.updateContrat(idContrat, contratDTO);
+    public ContratDTO updateContrat(@RequestBody ContratDTO contratDTO) {
+        return contratService.addUpdateContrat(contratDTO);
     }
 
     // http://localhost:8089/Kaddem/contrat/addAndAffectContratToEtudiant/salah/ahmed
