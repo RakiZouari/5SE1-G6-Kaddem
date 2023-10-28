@@ -231,7 +231,9 @@ class ContratServiceImplTest {
 			});
 
 			ContratDTO result = contratService.addAndAffectContratToEtudiant(contratDto, nomE, prenomE);
-
+			log.debug("Before line 233: etudiant = " + etudiant);
+// Line 233
+			log.debug("After line 233: result = " + result);
 			verify(contratRepository).save(any(Contrat.class));
 			String formattedStartDate = dateFormat.format(result.getDateDebutContrat());
 			String formattedEndDate = dateFormat.format(result.getDateFinContrat());
