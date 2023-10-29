@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -140,12 +141,22 @@ void removeEtudiant() {
 
 @Test
 void assignEtudiantToDepartement() {
-    /*
-    int etudiantId = 1;
-    int departementId = 2;
-    etudiantService.assignEtudiantToDepartement(etudiantId, departementId);
-    verify(etudiantRepository).save(any(Etudiant.class));
-    */
+    MockitoAnnotations.initMocks(this);
+
+        Etudiant etudiant = new Etudiant();
+        etudiant.setIdEtudiant(1);
+        Departement departement = new Departement();
+        departement.setIdDepartement(2);
+
+        when(etudiantRepository.findById(etudiant.getIdEtudiant())).thenReturn(Optional.of(etudiant));
+        when(departementRepository.findById(departement.getIdDepartement())).thenReturn(Optional.of(departement));
+
+        etudiantService.assignEtudiantToDepartement(etudiant.getIdEtudiant(), departement.getIdDepartement());
+
+        verify(etudiantRepository).findById(etudiant.getIdEtudiant());
+        verify(departementRepository).findById(departement.getIdDepartement());
+
+        assertEquals(departement, etudiant.getDepartement());
 }
 
 @Test
@@ -202,14 +213,30 @@ void addAndAssignEtudiantToEquipeAndContract() {
 
 @Test
 void getEtudiantsByDepartement() {
-    /*
-    int idDepartement = 1; 
-    List<Etudiant> expectedEtudiants = new ArrayList<>();
-    when(departementRepository.findById(idDepartement)).thenReturn(Optional.of(new Departement()));
-    when(etudiantRepository.findByDepartementIdDepartement(idDepartement)).thenReturn(expectedEtudiants);
-    List<Etudiant> retrievedEtudiants = etudiantService.getEtudiantsByDepartement(idDepartement);
-    assertEquals(expectedEtudiants, retrievedEtudiants);
-    */
+    MockitoAnnotations.initMocks(this);
+
+        Departement departement = new Departement();
+        departement.setIdDepartement(1);
+
+        Etudiant etudiant1 = new Etudiant();
+        etudiant1.setIdEtudiant(2);
+        Etudiant etudiant2 = new Etudiant();
+        etudiant2.setIdEtudiant(3);
+
+        List<Etudiant> etudiants = new ArrayList<>();
+        etudiants.add(etudiant1);
+        etudiants.add(etudiant2);
+        departement.setEtudiants(etudiants);
+
+        when(departementRepository.findById(departement.getIdDepartement())).thenReturn(Optional.of(departement));
+
+        List<Etudiant> result = etudiantService.getEtudiantsByDepartement(departement.getIdDepartement());
+
+        verify(departementRepository).findById(departement.getIdDepartement());
+
+        assertEquals(2, result.size());
+        assertEquals(2, result.get(0).getIdEtudiant());
+        assertEquals(3, result.get(1).getIdEtudiant());
 }
 
 }
