@@ -1,6 +1,7 @@
 package com.spring.kaddem.services;
 
 import com.spring.kaddem.entities.Departement;
+import com.spring.kaddem.entities.DepartementDTO;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -20,13 +21,11 @@ class DepartementServiceImplTest {
     private DepartementServiceImpl departementService;
     @Test
     void ajouterdepartement() {
-        Departement departement = new Departement();
-        departement.setName("Département de test");
-        int id = departementService.ajouterdepartement(departement);
+        DepartementDTO departmentDTO = new DepartementDTO("Département de test", "Test Department");
+        int id = departementService.ajouterdepartement(departmentDTO);
         assertNotNull(id);
         assertTrue(id > 0);
     }
-
 
     @Test
     void getAllD() {
