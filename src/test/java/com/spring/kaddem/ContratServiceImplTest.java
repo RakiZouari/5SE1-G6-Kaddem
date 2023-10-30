@@ -246,7 +246,7 @@ class ContratServiceImplTest {
 			fail("Failed to parse date: " + e.getMessage());
 		}
 	}
-	
+
  */
 
 
