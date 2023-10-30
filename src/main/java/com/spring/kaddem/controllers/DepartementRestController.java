@@ -1,6 +1,7 @@
 package com.spring.kaddem.controllers;
 
 import com.spring.kaddem.entities.Departement;
+import com.spring.kaddem.entities.DepartementDTO;
 import com.spring.kaddem.services.IDepartementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +17,7 @@ public class DepartementRestController {
     IDepartementService departementservice ;
     @PostMapping("/addDepartment")
     @ResponseBody
-    public void addDepartement(@RequestBody Departement d) {
+    public void addDepartement(@RequestBody DepartementDTO d) {
         departementservice.ajouterdepartement(d) ;
     }
 
