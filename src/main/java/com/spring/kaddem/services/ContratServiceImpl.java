@@ -94,11 +94,11 @@ public class ContratServiceImpl implements  IContratService{
         // Convert Contrat entity back to ContratDTO
         ContratDTO savedContratDTO = convertToDTO(contrat);
 
-       // log.info("End of addAndAffectContratToEtudiant method");
-       // long endTime = System.currentTimeMillis();
-      //  long executionTime = endTime - startTime;
-       // log.info("End Time: " + endTime);
-        //log.info("Execution Time: " + executionTime + " ms");
+        log.info("End of addAndAffectContratToEtudiant method");
+        long endTime = System.currentTimeMillis();
+        long executionTime = endTime - startTime;
+        log.info("End Time: " + endTime);
+        log.info("Execution Time: " + executionTime + " ms");
 
         return savedContratDTO;
     }
