@@ -11,7 +11,7 @@ public interface IDepartementService {
     public List<Departement> getAllD();
 
     boolean update (DepartementDTO d);
-    void delete(DepartementDTO d);
+    boolean delete(DepartementDTO d);
 
 
 

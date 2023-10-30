@@ -56,12 +56,24 @@ class DepartementServiceImplTest {
 
         assertNotNull(updatedDepartment);
         assertEquals("Updated Name", updatedDepartment.getName());
-        assertEquals("Updated Description", updatedDepartment.getNomDepart()); 
+        assertEquals("Updated Description", updatedDepartment.getNomDepart());
     }
 
 
 
     @Test
     void delete() {
+        // Create a department
+        DepartementDTO departmentDTO = new DepartementDTO("Département de test", "Test Department");
+        int id = departementService.ajouterdepartement(departmentDTO);
+
+        boolean deleted = departementService.delete(departmentDTO);
+
+        assertTrue(deleted);
+
+        Departement deletedDepartment = departementService.getDepartmentById(id);
+
+        assertNull(deletedDepartment);
     }
+
 }

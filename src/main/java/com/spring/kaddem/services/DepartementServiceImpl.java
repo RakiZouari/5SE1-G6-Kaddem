@@ -45,12 +45,13 @@ public class DepartementServiceImpl implements IDepartementService{
         return false;
     }
     @Override
-    public void delete(DepartementDTO d){
+    public boolean delete(DepartementDTO d){
             Departement department = departementRepository.findById(d.getIDepartementID()).orElse(null);
             if (department != null) {
                 departementRepository.delete(department);
             }
-        }
+        return false;
+    }
     public Departement getDepartmentById(int departmentId) {
 
         Optional<Departement> department = departementRepository.findById(departmentId);
