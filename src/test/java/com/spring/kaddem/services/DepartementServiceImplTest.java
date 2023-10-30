@@ -9,8 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 
 @ExtendWith(SpringExtension.class)
@@ -23,17 +24,42 @@ class DepartementServiceImplTest {
     void ajouterdepartement() {
         DepartementDTO departmentDTO = new DepartementDTO("Département de test", "Test Department");
         int id = departementService.ajouterdepartement(departmentDTO);
-        assertNotNull(id);
         assertTrue(id > 0);
     }
 
     @Test
     void getAllD() {
+        List<Departement> departments = departementService.getAllD();
+        assertNotNull(departments);
+        assertTrue(departments.size() > 0);
+
     }
+
 
     @Test
     void update() {
+
+        DepartementDTO departmentDTO = new DepartementDTO("Département de test", "Test Department");
+        int id = departementService.ajouterdepartement(departmentDTO);
+
+
+        departmentDTO.setName("Updated Name");
+        departmentDTO.setNomDepart("Updated Description");
+
+
+        boolean updated = departementService.update(departmentDTO);
+
+        assertTrue(updated);
+
+
+        Departement updatedDepartment = departementService.getDepartmentById(id);
+
+        assertNotNull(updatedDepartment);
+        assertEquals("Updated Name", updatedDepartment.getName());
+        assertEquals("Updated Description", updatedDepartment.getNomDepart()); 
     }
+
+
 
     @Test
     void delete() {

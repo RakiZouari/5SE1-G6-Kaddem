@@ -10,7 +10,7 @@ public interface IDepartementService {
     public int ajouterdepartement(DepartementDTO departmentDTO);
     public List<Departement> getAllD();
 
-    void update (DepartementDTO d);
+    boolean update (DepartementDTO d);
     void delete(DepartementDTO d);
 
 

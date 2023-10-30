@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -34,13 +35,14 @@ public class DepartementServiceImpl implements IDepartementService{
     }
 
     @Override
-    public void update(DepartementDTO d) {
+    public boolean update(DepartementDTO d) {
         Departement department = departementRepository.findById(d.getIDepartementID()).orElse(null);
         if (department != null) {
             department.setNomDepart(d.getNomDepart());
             department.setName(d.getName());
             departementRepository.save(department);
         }
+        return false;
     }
     @Override
     public void delete(DepartementDTO d){
@@ -49,6 +51,16 @@ public class DepartementServiceImpl implements IDepartementService{
                 departementRepository.delete(department);
             }
         }
+    public Departement getDepartmentById(int departmentId) {
+
+        Optional<Departement> department = departementRepository.findById(departmentId);
+
+        if (department.isPresent()) {
+            return department.get();
+        } else {
+            return null;
+        }
+    }
 
 
 }
