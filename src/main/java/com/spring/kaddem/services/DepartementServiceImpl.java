@@ -34,14 +34,21 @@ public class DepartementServiceImpl implements IDepartementService{
     }
 
     @Override
-    public void update(Departement d) {
-        departementRepository.save(d);
+    public void update(DepartementDTO d) {
+        Departement department = departementRepository.findById(d.getIDepartementID()).orElse(null);
+        if (department != null) {
+            department.setNomDepart(d.getNomDepart());
+            department.setName(d.getName());
+            departementRepository.save(department);
+        }
     }
-
     @Override
-    public void delete(Departement d) {
-        departementRepository.delete(d);
-    }
+    public void delete(DepartementDTO d){
+            Departement department = departementRepository.findById(d.getIDepartementID()).orElse(null);
+            if (department != null) {
+                departementRepository.delete(department);
+            }
+        }
 
 
 }

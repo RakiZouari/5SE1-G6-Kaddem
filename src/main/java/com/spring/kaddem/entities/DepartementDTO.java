@@ -1,6 +1,7 @@
 package com.spring.kaddem.entities;
 
 public class DepartementDTO {
+    private  int IDepartementID;
     private String nomDepart;
     private String name;
 
@@ -26,5 +27,9 @@ public class DepartementDTO {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getIDepartementID() {
+        return IDepartementID;
     }
 }

@@ -29,13 +29,13 @@ public class DepartementRestController {
 
     @PutMapping("/updateDepatment")
     @ResponseBody
-    public void updateEtudiant(@RequestBody Departement d){
+    public void updateEtudiant(@RequestBody DepartementDTO d){
         departementservice.update(d);
     }
 
     @DeleteMapping("/deleteEtudiant")
     @ResponseBody
-    public void deleteStudent (@RequestBody Departement d){
+    public void deleteStudent (@RequestBody DepartementDTO d){
         departementservice.delete(d);
     }
 
