@@ -71,7 +71,7 @@ public class ContratRestController {
     //  @Scheduled(cron="45 * * * * *")//(cron="0 0 13 * * ?")(fixedRate =21600)
     @PutMapping(value = "/majStatusContrat")
     public void majStatusContrat (){
-       // contratService.retrieveAndUpdateStatusContrat();
+
     }
 
     //public float getChiffreAffaireEntreDeuxDate(Date startDate, Date endDate)
