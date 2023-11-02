@@ -15,14 +15,13 @@
     <description>Kaddem</description>
         
     <properties>
-        <java.version>1.8</java.version>
-             <!-- JaCoCo Properties -->
+        <java.version>8</java.version>
+        <!-- JaCoCo Properties -->
         <jacoco.version>0.8.11</jacoco.version>
-         <jacoco.destfile>${project.basedir}/../target/coverage-reports/jacoco.exec</jacoco.destfile>
         <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
         <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
-        <sonar.jacoco.reportPath>${project.basedir}/../target/coverage-reports</sonar.jacoco.reportPath>
-         <sonar.language>java</sonar.language>
+        <sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
+        <sonar.language>java</sonar.language>
     </properties>
     <dependencies>
         <dependency>
@@ -44,7 +43,7 @@
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
-             <!-- https://mvnrepository.com/artifact/org.jacoco/jacoco-maven-plugin -->
+          <!-- https://mvnrepository.com/artifact/org.jacoco/jacoco-maven-plugin -->
         <dependency>
             <groupId>org.jacoco</groupId>
             <artifactId>jacoco-maven-plugin</artifactId>
