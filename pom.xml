@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.spring</groupId>
     <artifactId>Kaddem</artifactId>
-    <version>1.1</version>
+    <version>1.2</version>
     <name>Kaddem</name>
     <description>Kaddem</description>
         
