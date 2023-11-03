@@ -98,21 +98,14 @@ public class EtudiantServiceImpl implements IEtudiantService{
             Equipe equipe = equipeOptional.get();
         
         Etudiant etudiant= etudiantRepository.save(EtudiantDto.toEntity(e));
-        e.setIdEtudiant(etudiant.getIdEtudiant()); 
-        e.setNomE(etudiant.getNomE());
-        e.setOp(etudiant.getOp());
         log.info("contrat: "+contrat.getSpecialite());
         log.info("equipe: "+equipe.getNomEquipe());
         log.info("etudiant: "+etudiant.getNomE()+" "+etudiant.getPrenomE()+" "+etudiant.getOp());
         List<Equipe> equipesMisesAjour = new ArrayList<>();
         contrat.setEtudiant(etudiant);
-        if(etudiant.getEquipes()!=null) {
-            equipesMisesAjour=etudiant.getEquipes();
-        }
         equipesMisesAjour.add(equipe);
         log.info("taille apres ajout : "+equipesMisesAjour.size());
         etudiant.setEquipes(equipesMisesAjour);
-
 
         return e;
         }else{
