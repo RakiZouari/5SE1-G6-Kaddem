@@ -245,5 +245,89 @@ void getEtudiantsByDepartement() {
         assertEquals(2, result.get(0).getIdEtudiant());
         assertEquals(3, result.get(1).getIdEtudiant());
 }
+    @Test
+void testAssignEtudiantToDepartement_WhenEtudiantAndDepartementExist() {
+    Etudiant etudiant = new Etudiant();
+    etudiant.setIdEtudiant(1);
+    Departement departement = new Departement();
+    departement.setIdDepartement(2);
+
+    when(etudiantRepository.findById(etudiant.getIdEtudiant())).thenReturn(Optional.of(etudiant));
+    when(departementRepository.findById(departement.getIdDepartement())).thenReturn(Optional.of(departement));
+
+    etudiantService.assignEtudiantToDepartement(etudiant.getIdEtudiant(), departement.getIdDepartement());
+
+    verify(etudiantRepository).findById(etudiant.getIdEtudiant());
+    verify(departementRepository).findById(departement.getIdDepartement());
+
+    assertEquals(departement, etudiant.getDepartement());
+}
+
+@Test
+void testAssignEtudiantToDepartement_WhenEtudiantOrDepartementDoesNotExist() {
+    when(etudiantRepository.findById(any())).thenReturn(Optional.empty());
+    when(departementRepository.findById(any())).thenReturn(Optional.empty());
+
+    assertThrows(IllegalArgumentException.class, () -> {
+        etudiantService.assignEtudiantToDepartement(1, 2);
+    });
+
+    verify(etudiantRepository).findById(1);
+    verify(departementRepository).findById(2);
+}
+    @Test
+void testRetrieveEtudiant_WhenEtudiantExists() {
+    Etudiant etudiant = new Etudiant();
+    etudiant.setIdEtudiant(1);
+    
+    when(etudiantRepository.findById(1)).thenReturn(Optional.of(etudiant));
+
+    Etudiant retrievedEtudiant = etudiantService.retrieveEtudiant(1);
+
+    verify(etudiantRepository).findById(1);
+    assertEquals(etudiant, retrievedEtudiant);
+}
+
+@Test
+void testRetrieveEtudiant_WhenEtudiantDoesNotExist() {
+    when(etudiantRepository.findById(1)).thenReturn(Optional.empty());
+
+    assertThrows(IllegalArgumentException.class, () -> {
+        etudiantService.retrieveEtudiant(1);
+    });
+
+    verify(etudiantRepository).findById(1);
+}
+
+@Test
+void testRetrieveEtudiantsByContratSpecialite_WithExistingSpecialite() {
+    Specialite specialite = Specialite.CLOUD;
+    
+    List<Etudiant> expectedEtudiants = new ArrayList<>();
+    Etudiant etudiant1 = new Etudiant();
+    etudiant1.setIdEtudiant(1);
+    expectedEtudiants.add(etudiant1);
+    
+    when(etudiantRepository.retrieveEtudiantsByContratSpecialite(specialite)).thenReturn(expectedEtudiants);
+
+    List<Etudiant> retrievedEtudiants = etudiantService.retrieveEtudiantsByContratSpecialite(specialite);
+
+    verify(etudiantRepository).retrieveEtudiantsByContratSpecialite(specialite);
+    assertEquals(expectedEtudiants, retrievedEtudiants);
+}
+
+@Test
+void testRetrieveEtudiantsByContratSpecialite_WithNonExistingSpecialite() {
+    Specialite specialite = Specialite.CLOUD;
+    
+    when(etudiantRepository.retrieveEtudiantsByContratSpecialite(specialite)).thenReturn(new ArrayList<>());
+
+    List<Etudiant> retrievedEtudiants = etudiantService.retrieveEtudiantsByContratSpecialite(specialite);
+
+    verify(etudiantRepository).retrieveEtudiantsByContratSpecialite(specialite);
+    assertTrue(retrievedEtudiants.isEmpty());
+}
+
+
 
 }
