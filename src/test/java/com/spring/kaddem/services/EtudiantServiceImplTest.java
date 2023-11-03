@@ -44,7 +44,6 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*; 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*; 
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup; 
-import org.springframework.test.context.web.WebApplicationContext;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper; 
@@ -72,8 +71,6 @@ class EtudiantServiceImplTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @Autowired
-    private WebApplicationContext webApplicationContext;
 
     @BeforeEach
     void setUp() {
@@ -82,7 +79,7 @@ class EtudiantServiceImplTest {
     etudiant.setNomE("khlif");
     etudiant.setOp(Option.GAMIX);
     Mockito.reset(etudiantRepository, departementRepository);
-    mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+    MockitoAnnotations.initMocks(this);    
     }
     @BeforeEach
     void setEtudiants(){
