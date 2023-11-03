@@ -479,8 +479,28 @@ void testAddAndAssignEtudiantToEquipeAndContract_BothNotFound() {
         etudiant.setIdEtudiant(1);
         etudiant.setPrenomE("John");
         etudiant.setNomE("Doe");
+        etudiant.setOp(Option.GAMIX);
+
+        Departement departement = new Departement();
+        departement.setIdDepartement(1);
+        departement.setNomDepart("IT");
+        etudiant.setDepartement(departement);
+
+        Equipe equipe1 = new Equipe();
+        equipe1.setIdEquipe(1);
+        equipe1.setNomEquipe("Team1");
+        equipe1.setNiveau(Niveau.SENIOR);
+
+        Contrat contrat1 = new Contrat();
+        contrat1.setIdContrat(1);
+        contrat1.setDateDebutContrat(null);
+        contrat1.setDateFinContrat(null);
+        contrat1.setSpecialite(Specialite.SECURITE);
+        contrat1.setArchived(false);
+        contrat1.setMontantContrat(1000);
+        
         String result = etudiant.toString();
-        String expected = "Etudiant{idEtudiant=1, prenomE='John', nomE='Doe', op=null}";
+        String expected = "Etudiant{idEtudiant=1, prenomE='John', nomE='Doe', op=GAMIX}";
         assertEquals(expected, result);
     }
 }
