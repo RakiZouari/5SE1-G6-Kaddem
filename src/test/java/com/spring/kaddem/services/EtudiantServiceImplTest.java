@@ -365,14 +365,10 @@ void testAssignEtudiantToDepartement_BothPresent() {
 @Test
 void testAssignEtudiantToDepartement_EtudiantNotFound() {
     int etudiantId = 1;
-    Departement departement = new Departement();
-    departement.setIdDepartement(2);
-
     when(etudiantRepository.findById(etudiantId)).thenReturn(Optional.empty());
-    when(departementRepository.findById(departement.getIdDepartement())).thenReturn(Optional.of(departement));
 
     assertThrows(IllegalArgumentException.class, () -> {
-        etudiantService.assignEtudiantToDepartement(etudiantId, departement.getIdDepartement());
+        etudiantService.assignEtudiantToDepartement(etudiantId, 2);
     });
 
     verify(etudiantRepository).findById(etudiantId);
@@ -380,12 +376,12 @@ void testAssignEtudiantToDepartement_EtudiantNotFound() {
 
 @Test
 void testAssignEtudiantToDepartement_DepartementNotFound() {
+    int departementId = 2;
+    when(departementRepository.findById(departementId)).thenReturn(Optional.empty());
+
     Etudiant etudiant = new Etudiant();
     etudiant.setIdEtudiant(1);
-    int departementId = 2;
-
     when(etudiantRepository.findById(etudiant.getIdEtudiant())).thenReturn(Optional.of(etudiant));
-    when(departementRepository.findById(departementId)).thenReturn(Optional.empty());
 
     assertThrows(IllegalArgumentException.class, () -> {
         etudiantService.assignEtudiantToDepartement(etudiant.getIdEtudiant(), departementId);
@@ -394,7 +390,6 @@ void testAssignEtudiantToDepartement_DepartementNotFound() {
     verify(etudiantRepository).findById(etudiant.getIdEtudiant());
     verify(departementRepository).findById(departementId);
 }
-
 @Test
 void testAssignEtudiantToDepartement_BothNotFound() {
     int etudiantId = 1;
@@ -479,37 +474,13 @@ void testAddAndAssignEtudiantToEquipeAndContract_BothNotFound() {
     verify(etudiantRepository, never()).save(any(Etudiant.class));
 }
     @Test
-    public void testToString() {
+    void testToString() {
         Etudiant etudiant = new Etudiant();
         etudiant.setIdEtudiant(1);
         etudiant.setPrenomE("John");
         etudiant.setNomE("Doe");
-
-        Departement departement = new Departement();
-        departement.setIdDepartement(1);
-        departement.setNomDepart("IT");
-        etudiant.setDepartement(departement);
-
-        Equipe equipe1 = new Equipe();
-        equipe1.setIdEquipe(1);
-        equipe1.setNomEquipe("Team1");
-        equipe1.setNiveau(Niveau.SENIOR);
-
-        Contrat contrat1 = new Contrat();
-        contrat1.setIdContrat(1);
-        contrat1.setDateDebutContrat(null);
-        contrat1.setDateFinContrat(null);
-        contrat1.setSpecialite(Specialite.SECURITE);
-        contrat1.setArchived(false);
-        contrat1.setMontantContrat(1000);
-
-        // Call the toString method
         String result = etudiant.toString();
-
-        // Define your expected string representation based on the sample data and relationships
         String expected = "Etudiant{idEtudiant=1, prenomE='John', nomE='Doe', op=null}";
-
-        // Assert that the result matches the expected string
         assertEquals(expected, result);
     }
 }
