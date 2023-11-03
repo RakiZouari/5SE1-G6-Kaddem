@@ -30,10 +30,30 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+import static org.hamcrest.Matchers.hasSize; 
+import static org.mockito.ArgumentMatchers.any; 
+import static org.mockito.Mockito.verify; 
+import static org.mockito.Mockito.when; 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*; 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*; 
+import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup; 
+
+import com.fasterxml.jackson.databind.ObjectMapper; 
+import com.spring.kaddem.controllers.EtudiantRestController;
 
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest
 @Slf4j
+@RunWith(SpringRunner.class)
+@WebMvcTest(EtudiantRestController.class)
 class EtudiantServiceImplTest {
 
     @Autowired
@@ -49,6 +69,9 @@ class EtudiantServiceImplTest {
     private Etudiant etudiant;
     private List<Etudiant> etudiants;
 
+    @Autowired
+    private MockMvc mockMvc;
+
     @BeforeEach
     void setUp() {
         etudiant = new Etudiant();
@@ -56,6 +79,7 @@ class EtudiantServiceImplTest {
         etudiant.setNomE("khlif");
         etudiant.setOp(Option.GAMIX);
         Mockito.reset(etudiantRepository, departementRepository);
+        mockMvc = standaloneSetup(new EtudiantRestController(etudiantService)).build();
     }
     @BeforeEach
     void setEtudiants(){
@@ -537,5 +561,72 @@ void testAddAndAssignEtudiantToEquipeAndContract_BothNotFound() {
     public void testToEntityWithNullEtudiantDto() {
         Etudiant etudiant = EtudiantDto.toEntity(null);
         assertNull(etudiant);
+    }
+    @Test
+    public void testGetEtudiants() throws Exception {
+        Etudiant etudiant1 = new Etudiant();
+        etudiant1.setIdEtudiant(1);
+        etudiant1.setPrenomE("John");
+        etudiant1.setNomE("Doe");
+
+        Etudiant etudiant2 = new Etudiant();
+        etudiant2.setIdEtudiant(2);
+        etudiant2.setPrenomE("Alice");
+        etudiant2.setNomE("Smith");
+
+        when(etudiantService.retrieveAllEtudiants()).thenReturn(Arrays.asList(etudiant1, etudiant2));
+
+        mockMvc.perform(get("/etudiant/retrieve-all-etudiants")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$[0].idEtudiant").value(1))
+                .andExpect(jsonPath("$[0].prenomE").value("John"))
+                .andExpect(jsonPath("$[0].nomE").value("Doe"))
+                .andExpect(jsonPath("$[1].idEtudiant").value(2))
+                .andExpect(jsonPath("$[1].prenomE").value("Alice"))
+                .andExpect(jsonPath("$[1].nomE").value("Smith"));
+    }
+
+    @Test
+    public void testAddEtudiant() throws Exception {
+        EtudiantDto etudiantDto = new EtudiantDto();
+        etudiantDto.setIdEtudiant(1);
+        etudiantDto.setPrenomE("John");
+        etudiantDto.setNomE("Doe");
+
+        Etudiant etudiant = new Etudiant();
+        etudiant.setIdEtudiant(1);
+        etudiant.setPrenomE("John");
+        etudiant.setNomE("Doe");
+
+        when(etudiantService.addOrUpdateEtudiant(any(EtudiantDto.class))).thenReturn(etudiant);
+
+        mockMvc.perform(post("/etudiant/add-etudiant")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(etudiantDto)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("idEtudiant").value(1))
+                .andExpect(jsonPath("prenomE").value("John"))
+                .andExpect(jsonPath("nomE").value("Doe"));
+    }
+
+    @Test
+    public void testRemoveEtudiant() throws Exception {
+        int etudiantId = 1;
+
+        mockMvc.perform(delete("/etudiant/removeEtudiant/{id}", etudiantId)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        verify(etudiantService).removeEtudiant(etudiantId);
+    }
+    private String asJsonString(final Object obj) {
+        try {
+            final ObjectMapper mapper = new ObjectMapper();
+            return mapper.writeValueAsString(obj);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }
