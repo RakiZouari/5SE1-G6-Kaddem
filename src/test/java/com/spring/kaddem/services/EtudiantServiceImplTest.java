@@ -482,8 +482,10 @@ void testAddAndAssignEtudiantToEquipeAndContract_BothNotFound() {
 void testAddAndAssignEtudiantToEquipeAndContract_EtudiantEquipesNotNull() {
     int idContrat = 1;
     int idEquipe = 2;
+    
     EtudiantDto etudiantDto = new EtudiantDto();
-    Etudiant et = new Etudiant();
+    etudiantDto.setPrenomE("John");
+    etudiantDto.setNomE("Doe");
     
     when(contratRepository.findById(idContrat)).thenReturn(Optional.of(new Contrat()));
     when(equipeRepository.findById(idEquipe)).thenReturn(Optional.of(new Equipe()));
@@ -494,19 +496,20 @@ void testAddAndAssignEtudiantToEquipeAndContract_EtudiantEquipesNotNull() {
     
     List<Equipe> equipes = new ArrayList<>();
     equipes.add(equipe);
-    
     etudiant.setEquipes(equipes);
     
-    when(etudiantRepository.save(any(Etudiant.class))).thenReturn(et);
+    when(etudiantRepository.save(any(Etudiant.class))).thenReturn(etudiant);
     
     when(etudiantRepository.findById(etudiant.getIdEtudiant())).thenReturn(Optional.of(etudiant));
     
     EtudiantDto result = etudiantService.addAndAssignEtudiantToEquipeAndContract(etudiantDto, idContrat, idEquipe);
-
+    
     verify(etudiantRepository).save(any(Etudiant.class));
-
+    
     assertEquals(1, result.getIdEtudiant());
     assertEquals(1, result.getEquipes().size());
+    assertEquals("John", result.getPrenomE());
+    assertEquals("Doe", result.getNomE());
 }
 
 }
