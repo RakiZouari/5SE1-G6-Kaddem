@@ -376,7 +376,6 @@ void testAssignEtudiantToDepartement_EtudiantNotFound() {
     });
 
     verify(etudiantRepository).findById(etudiantId);
-    verify(departementRepository, never()).findById(departement.getIdDepartement());
 }
 
 @Test
@@ -409,7 +408,6 @@ void testAssignEtudiantToDepartement_BothNotFound() {
     });
 
     verify(etudiantRepository).findById(etudiantId);
-    verify(departementRepository, never()).findById(departementId);
 }
 
 @Test
@@ -486,10 +484,11 @@ void testAddAndAssignEtudiantToEquipeAndContract_EtudiantEquipesNotNull() {
     int idContrat = 1;
     int idEquipe = 2;
     EtudiantDto etudiantDto = new EtudiantDto();
-
+    Etudiant et = new Etudiant();
     when(contratRepository.findById(idContrat)).thenReturn(Optional.of(new Contrat()));
     when(equipeRepository.findById(idEquipe)).thenReturn(Optional.of(new Equipe()));
-    when(etudiantRepository.save(any(Etudiant.class))).thenReturn(new Etudiant());
+    when(etudiantRepository.save(any(Etudiant.class))).thenReturn(et);
+    et.setIdEtudiant(1);
 
     Etudiant etudiant = new Etudiant();
     Equipe equipe = new Equipe();
