@@ -70,14 +70,17 @@ class EtudiantServiceImplTest {
     @Autowired
     private MockMvc mockMvc;
 
+    @Autowired
+    private WebApplicationContext webApplicationContext;
+
     @BeforeEach
     void setUp() {
-        etudiant = new Etudiant();
-        etudiant.setPrenomE("ismail");
-        etudiant.setNomE("khlif");
-        etudiant.setOp(Option.GAMIX);
-        Mockito.reset(etudiantRepository, departementRepository);
-        mockMvc = standaloneSetup(new EtudiantRestController(etudiantService)).build();
+    etudiant = new Etudiant();
+    etudiant.setPrenomE("ismail");
+    etudiant.setNomE("khlif");
+    etudiant.setOp(Option.GAMIX);
+    Mockito.reset(etudiantRepository, departementRepository);
+    mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
     }
     @BeforeEach
     void setEtudiants(){
@@ -588,26 +591,28 @@ void testAddAndAssignEtudiantToEquipeAndContract_BothNotFound() {
 
     @Test
     public void testAddEtudiant() throws Exception {
-        EtudiantDto etudiantDto = new EtudiantDto();
-        etudiantDto.setIdEtudiant(1);
-        etudiantDto.setPrenomE("John");
-        etudiantDto.setNomE("Doe");
+    EtudiantDto etudiantDto = new EtudiantDto();
+    etudiantDto.setIdEtudiant(1);
+    etudiantDto.setPrenomE("John");
+    etudiantDto.setNomE("Doe");
 
-        Etudiant etudiant = new Etudiant();
-        etudiant.setIdEtudiant(1);
-        etudiant.setPrenomE("John");
-        etudiant.setNomE("Doe");
+    Etudiant etudiant = new Etudiant();
+    etudiant.setIdEtudiant(1);
+    etudiant.setPrenomE("John");
+    etudiant.setNomE("Doe");
 
-        when(etudiantService.addOrUpdateEtudiant(any(EtudiantDto.class))).thenReturn(etudiant);
+    when(etudiantService.addOrUpdateEtudiant(any(EtudiantDto.class)))
+            .thenReturn(EtudiantDto.toDto(etudiant)); // Convert Etudiant to EtudiantDto
 
-        mockMvc.perform(post("/etudiant/add-etudiant")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(asJsonString(etudiantDto)))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("idEtudiant").value(1))
-                .andExpect(jsonPath("prenomE").value("John"))
-                .andExpect(jsonPath("nomE").value("Doe"));
+    mockMvc.perform(post("/etudiant/add-etudiant")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(asJsonString(etudiantDto)))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("idEtudiant").value(1))
+            .andExpect(jsonPath("prenomE").value("John"))
+            .andExpect(jsonPath("nomE").value("Doe"));
     }
+
 
     @Test
     public void testRemoveEtudiant() throws Exception {
