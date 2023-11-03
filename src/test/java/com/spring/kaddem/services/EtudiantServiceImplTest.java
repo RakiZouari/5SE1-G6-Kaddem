@@ -480,20 +480,38 @@ void testAddAndAssignEtudiantToEquipeAndContract_BothNotFound() {
 }
     @Test
     public void testToString() {
-        // Create an Etudiant instance with sample data
         Etudiant etudiant = new Etudiant();
         etudiant.setIdEtudiant(1);
         etudiant.setPrenomE("John");
         etudiant.setNomE("Doe");
 
+        Departement departement = new Departement();
+        departement.setIdDepartement(1);
+        departement.setNomDepart("IT");
+        etudiant.setDepartement(departement);
+
         Equipe equipe1 = new Equipe();
         equipe1.setIdEquipe(1);
+        equipe1.setNomEquipe("Team1");
+        equipe1.setNiveau(Niveau.SENIOR);
+        etudiant.getEquipes().add(equipe1);
+
         Contrat contrat1 = new Contrat();
         contrat1.setIdContrat(1);
-        etudiant.getEquipes().add(equipe1);
+        contrat1.setDateDebutContrat(null);
+        contrat1.setDateFinContrat(null);
+        contrat1.setSpecialite(Specialite.SECURITE);
+        contrat1.setArchived(false);
+        contrat1.setMontantContrat(1000);
         etudiant.getContrats().add(contrat1);
+
+        // Call the toString method
         String result = etudiant.toString();
-        String expected = "Etudiant{idEtudiant=1, prenomE='John', nomE='Doe', equipes=[Equipe{id=1, ...}], contrats=[Contrat{id=1, ...}], ...}";
+
+        // Define your expected string representation based on the sample data and relationships
+        String expected = "Etudiant{idEtudiant=1, prenomE='John', nomE='Doe', op=null, departement=Departement{idDepartement=1, nomDepart='IT'}, equipes=[Equipe{idEquipe=1, nomEquipe='Team1', niveau=SENIOR}], contrats=[Contrat{idContrat=1, dateDebutContrat=null, dateFinContrat=null, specialite=SECURITE, archived=false, montantContrat=1000}]}";
+
+        // Assert that the result matches the expected string
         assertEquals(expected, result);
     }
 }
