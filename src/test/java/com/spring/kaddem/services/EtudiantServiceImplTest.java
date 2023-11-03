@@ -52,6 +52,7 @@ class EtudiantServiceImplTest {
         etudiant.setPrenomE("ismail");
         etudiant.setNomE("khlif");
         etudiant.setOp(Option.GAMIX);
+        Mockito.reset(etudiantRepository, departementRepository);
     }
     @BeforeEach
     void setEtudiants(){
@@ -487,11 +488,7 @@ void testAddAndAssignEtudiantToEquipeAndContract_EtudiantEquipesNotNull() {
 
     when(contratRepository.findById(idContrat)).thenReturn(Optional.of(new Contrat()));
     when(equipeRepository.findById(idEquipe)).thenReturn(Optional.of(new Equipe()));
-    when(etudiantRepository.save(any(Etudiant.class))).thenAnswer(invocation -> {
-        Etudiant savedEtudiant = invocation.getArgument(0);
-        savedEtudiant.setIdEtudiant(1);
-        return savedEtudiant;
-    });
+    when(etudiantRepository.save(any(Etudiant.class)).thenReturn(new Etudiant());
 
     Etudiant etudiant = new Etudiant();
     Equipe equipe = new Equipe();
