@@ -204,7 +204,7 @@ void addAndAssignEtudiantToEquipeAndContract() {
     EtudiantDto etudiantDto = new EtudiantDto();
     when(contratRepository.findById(idContrat)).thenReturn(Optional.of(new Contrat()));
     when(equipeRepository.findById(idEquipe)).thenReturn(Optional.of(new Equipe()));
-    when(etudiantRepository.save(any(Etudiant.class)).thenAnswer(invocation -> {
+    when(etudiantRepository.save(any(Etudiant.class))).thenAnswer(invocation -> {
         Etudiant savedEtudiant = invocation.getArgument(0);
         savedEtudiant.setIdEtudiant(1); 
         return savedEtudiant;
@@ -212,8 +212,10 @@ void addAndAssignEtudiantToEquipeAndContract() {
 
     EtudiantDto result = etudiantService.addAndAssignEtudiantToEquipeAndContract(etudiantDto, idContrat, idEquipe);
     verify(etudiantRepository).save(any(Etudiant.class));
+
     assertEquals(1, result.getIdEtudiant());
 }
+
 
 
 @Test
