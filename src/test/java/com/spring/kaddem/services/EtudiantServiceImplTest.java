@@ -377,19 +377,19 @@ void testAssignEtudiantToDepartement_EtudiantNotFound() {
 @Test
 void testAssignEtudiantToDepartement_DepartementNotFound() {
     int departementId = 2;
+
     when(departementRepository.findById(departementId)).thenReturn(Optional.empty());
 
     Etudiant etudiant = new Etudiant();
     etudiant.setIdEtudiant(1);
     when(etudiantRepository.findById(etudiant.getIdEtudiant())).thenReturn(Optional.of(etudiant));
 
-    assertThrows(IllegalArgumentException.class, () -> {
-        etudiantService.assignEtudiantToDepartement(etudiant.getIdEtudiant(), departementId);
-    });
+    assertThrows(IllegalArgumentException.class, () -> etudiantService.assignEtudiantToDepartement(etudiant.getIdEtudiant(), departementId));
 
     verify(etudiantRepository).findById(etudiant.getIdEtudiant());
     verify(departementRepository).findById(departementId);
 }
+
 @Test
 void testAssignEtudiantToDepartement_BothNotFound() {
     int etudiantId = 1;
