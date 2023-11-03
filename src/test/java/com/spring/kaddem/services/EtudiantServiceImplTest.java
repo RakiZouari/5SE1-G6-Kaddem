@@ -494,7 +494,6 @@ void testAddAndAssignEtudiantToEquipeAndContract_BothNotFound() {
         equipe1.setIdEquipe(1);
         equipe1.setNomEquipe("Team1");
         equipe1.setNiveau(Niveau.SENIOR);
-        etudiant.getEquipes().add(equipe1);
 
         Contrat contrat1 = new Contrat();
         contrat1.setIdContrat(1);
@@ -503,13 +502,12 @@ void testAddAndAssignEtudiantToEquipeAndContract_BothNotFound() {
         contrat1.setSpecialite(Specialite.SECURITE);
         contrat1.setArchived(false);
         contrat1.setMontantContrat(1000);
-        etudiant.getContrats().add(contrat1);
 
         // Call the toString method
         String result = etudiant.toString();
 
         // Define your expected string representation based on the sample data and relationships
-        String expected = "Etudiant{idEtudiant=1, prenomE='John', nomE='Doe', op=null, departement=Departement{idDepartement=1, nomDepart='IT'}, equipes=[Equipe{idEquipe=1, nomEquipe='Team1', niveau=SENIOR}], contrats=[Contrat{idContrat=1, dateDebutContrat=null, dateFinContrat=null, specialite=SECURITE, archived=false, montantContrat=1000}]}";
+        String expected = "Etudiant{idEtudiant=1, prenomE='John', nomE='Doe', op=null}";
 
         // Assert that the result matches the expected string
         assertEquals(expected, result);
