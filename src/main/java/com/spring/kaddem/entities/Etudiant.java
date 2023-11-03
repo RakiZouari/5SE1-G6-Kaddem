@@ -33,9 +33,6 @@ public class Etudiant  implements Serializable {
                 ", prenomE='" + prenomE + '\'' +
                 ", nomE='" + nomE + '\'' +
                 ", op=" + op +
-                ", departement=" + departement +
-                ", equipes=" + equipes +
-                ", contrats=" + contrats +
                 '}';
     }
 
