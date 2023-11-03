@@ -16,6 +16,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import static org.mockito.Mockito.*;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
@@ -469,7 +470,7 @@ void testAddAndAssignEtudiantToEquipeAndContract_Success() {
         Etudiant savedEtudiant = invocation.getArgument(0);
         savedEtudiant.setIdEtudiant(1);
         return savedEtudiant;
-    }));
+    });
 
     EtudiantDto result = etudiantService.addAndAssignEtudiantToEquipeAndContract(etudiantDto, idContrat, idEquipe);
 
@@ -538,7 +539,7 @@ void testAddAndAssignEtudiantToEquipeAndContract_EtudiantEquipesNotNull() {
         Etudiant savedEtudiant = invocation.getArgument(0);
         savedEtudiant.setIdEtudiant(1);
         return savedEtudiant;
-    }));
+    });
 
     Etudiant etudiant = new Etudiant();
     Equipe equipe = new Equipe();
