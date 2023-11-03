@@ -43,10 +43,10 @@ public class Etudiant  implements Serializable {
     private Departement departement;
     @ManyToMany
     @JsonIgnore
-    private List<Equipe> equipes;
+    private List<Equipe> equipes = new ArrayList<>();
     @OneToMany(mappedBy = "etudiant")
     @JsonIgnore
-    private List<Contrat> contrats;
+    private List<Contrat> contrats = new ArrayList<>();
 
 
 }
