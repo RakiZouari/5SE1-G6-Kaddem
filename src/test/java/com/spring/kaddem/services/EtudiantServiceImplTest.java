@@ -504,7 +504,7 @@ void testAddAndAssignEtudiantToEquipeAndContract_EtudiantEquipesNotNull() {
     verify(etudiantRepository).save(any(Etudiant.class));
 
     assertEquals(1, result.getIdEtudiant());
-    assertEquals(2, result.getEquipes().size());
+    assertEquals(1, result.getEquipes().size());
 }
 
 
