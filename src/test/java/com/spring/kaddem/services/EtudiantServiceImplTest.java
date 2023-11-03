@@ -469,7 +469,7 @@ void testAddAndAssignEtudiantToEquipeAndContract_Success() {
         Etudiant savedEtudiant = invocation.getArgument(0);
         savedEtudiant.setIdEtudiant(1);
         return savedEtudiant;
-    });
+    }));
 
     EtudiantDto result = etudiantService.addAndAssignEtudiantToEquipeAndContract(etudiantDto, idContrat, idEquipe);
 
@@ -538,7 +538,7 @@ void testAddAndAssignEtudiantToEquipeAndContract_EtudiantEquipesNotNull() {
         Etudiant savedEtudiant = invocation.getArgument(0);
         savedEtudiant.setIdEtudiant(1);
         return savedEtudiant;
-    });
+    }));
 
     Etudiant etudiant = new Etudiant();
     Equipe equipe = new Equipe();
