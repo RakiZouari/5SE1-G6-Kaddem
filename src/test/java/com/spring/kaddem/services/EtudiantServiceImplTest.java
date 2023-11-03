@@ -58,7 +58,7 @@ class EtudiantServiceImplTest {
         etudiants = new ArrayList<>();
         Etudiant etudiant1 = new Etudiant();
         etudiant1.setPrenomE("John");
-        etudiant1.setNomE("Doe"); });
+        etudiant1.setNomE("Doe"); 
         etudiant1.setOp(Option.GAMIX);
         etudiants.add(etudiant1);
 
