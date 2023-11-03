@@ -199,17 +199,22 @@ void retrieveEtudiantsByContratSpecialiteSQL() {
 
 @Test
 void addAndAssignEtudiantToEquipeAndContract() {
-    
-    int idContrat = 1; 
-    int idEquipe = 2; 
+    int idContrat = 1;
+    int idEquipe = 2;
     EtudiantDto etudiantDto = new EtudiantDto();
     when(contratRepository.findById(idContrat)).thenReturn(Optional.of(new Contrat()));
     when(equipeRepository.findById(idEquipe)).thenReturn(Optional.of(new Equipe()));
+    when(etudiantRepository.save(any(Etudiant.class)).thenAnswer(invocation -> {
+        Etudiant savedEtudiant = invocation.getArgument(0);
+        savedEtudiant.setIdEtudiant(1); 
+        return savedEtudiant;
+    });
+
     EtudiantDto result = etudiantService.addAndAssignEtudiantToEquipeAndContract(etudiantDto, idContrat, idEquipe);
     verify(etudiantRepository).save(any(Etudiant.class));
-    assertEquals(etudiantDto.getIdEtudiant(), result.getIdEtudiant());
-    
+    assertEquals(1, result.getIdEtudiant());
 }
+
 
 @Test
 void getEtudiantsByDepartement() {
