@@ -28,7 +28,7 @@ public class Contrat implements Serializable {
     private Boolean archived;
     private Integer montantContrat;
     @ManyToOne
-    // @JsonIgnore
+    @JsonIgnore
     private  Etudiant etudiant;
 
 }
