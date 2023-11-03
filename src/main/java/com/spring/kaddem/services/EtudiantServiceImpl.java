@@ -96,7 +96,7 @@ public class EtudiantServiceImpl implements IEtudiantService{
             Equipe equipe = equipeOptional.get();
         
         Etudiant etudiant= etudiantRepository.save(EtudiantDto.toEntity(e));
-        e.setIdEtudiant(etudiant.getId()); 
+        e.setIdEtudiant(etudiant.getIdEtudiant()); 
         log.info("contrat: "+contrat.getSpecialite());
         log.info("equipe: "+equipe.getNomEquipe());
         log.info("etudiant: "+etudiant.getNomE()+" "+etudiant.getPrenomE()+" "+etudiant.getOp());
