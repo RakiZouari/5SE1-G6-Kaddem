@@ -30,9 +30,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -52,8 +51,7 @@ import com.spring.kaddem.controllers.EtudiantRestController;
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest
 @Slf4j
-@RunWith(SpringRunner.class)
-@WebMvcTest(EtudiantRestController.class)
+@AutoConfigureMockMvc
 class EtudiantServiceImplTest {
 
     @Autowired
