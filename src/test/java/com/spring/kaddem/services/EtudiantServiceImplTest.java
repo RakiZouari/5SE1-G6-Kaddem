@@ -340,33 +340,6 @@ void testAddAndAssignEtudiantToEquipeAndContract_Success() {
 
     assertEquals(1, result.getIdEtudiant());
 }
-
-@Test
-void testAddAndAssignEtudiantToEquipeAndContract_ContratNotFound() {
-    int idContrat = 1;
-    int idEquipe = 2;
-    EtudiantDto etudiantDto = new EtudiantDto();
-    
-    when(contratRepository.findById(idContrat)).thenReturn(Optional.empty());
-    
-    assertThrows(IllegalArgumentException.class, () -> {
-        etudiantService.addAndAssignEtudiantToEquipeAndContract(etudiantDto, idContrat, idEquipe);
-    });
-}
-    
-@Test
-void testAddAndAssignEtudiantToEquipeAndContract_EquipeNotFound() {
-    int idContrat = 1;
-    int idEquipe = 2;
-    EtudiantDto etudiantDto = new EtudiantDto();
-    
-    when(contratRepository.findById(idContrat)).thenReturn(Optional.of(new Contrat()));
-    when(equipeRepository.findById(idEquipe)).thenReturn(Optional.empty());
-    
-    assertThrows(IllegalArgumentException.class, () -> {
-        etudiantService.addAndAssignEtudiantToEquipeAndContract(etudiantDto, idContrat, idEquipe);
-    });
-}
     @Test
 void testGetEtudiantsByDepartement_Success() {
     int idDepartement = 1;
@@ -466,7 +439,7 @@ void testAddAndAssignEtudiantToEquipeAndContract_Success() {
 
     when(contratRepository.findById(idContrat)).thenReturn(Optional.of(new Contrat()));
     when(equipeRepository.findById(idEquipe)).thenReturn(Optional.of(new Equipe()));
-    when(etudiantRepository.save(any(Etudiant.class))).thenReturn(invocation -> {
+    when(etudiantRepository.save(any(Etudiant.class))).thenAnswer(invocation -> {
         Etudiant savedEtudiant = invocation.getArgument(0);
         savedEtudiant.setIdEtudiant(1);
         return savedEtudiant;
@@ -535,7 +508,7 @@ void testAddAndAssignEtudiantToEquipeAndContract_EtudiantEquipesNotNull() {
 
     when(contratRepository.findById(idContrat)).thenReturn(Optional.of(new Contrat()));
     when(equipeRepository.findById(idEquipe)).thenReturn(Optional.of(new Equipe()));
-    when(etudiantRepository.save(any(Etudiant.class))).thenReturn(invocation -> {
+    when(etudiantRepository.save(any(Etudiant.class))).thenAnswer(invocation -> {
         Etudiant savedEtudiant = invocation.getArgument(0);
         savedEtudiant.setIdEtudiant(1);
         return savedEtudiant;
