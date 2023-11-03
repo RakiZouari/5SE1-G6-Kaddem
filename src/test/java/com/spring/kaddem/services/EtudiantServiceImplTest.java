@@ -389,6 +389,174 @@ void testGetEtudiantsByDepartement_DepartementNotFound() {
         etudiantService.getEtudiantsByDepartement(idDepartement);
     });
 }
+    @Test
+void testAssignEtudiantToDepartement_BothPresent() {
+    Etudiant etudiant = new Etudiant();
+    etudiant.setIdEtudiant(1);
+    Departement departement = new Departement();
+    departement.setIdDepartement(2);
+
+    when(etudiantRepository.findById(etudiant.getIdEtudiant())).thenReturn(Optional.of(etudiant));
+    when(departementRepository.findById(departement.getIdDepartement())).thenReturn(Optional.of(departement));
+
+    etudiantService.assignEtudiantToDepartement(etudiant.getIdEtudiant(), departement.getIdDepartement());
+
+    verify(etudiantRepository).findById(etudiant.getIdEtudiant());
+    verify(departementRepository).findById(departement.getIdDepartement());
+
+    assertEquals(departement, etudiant.getDepartement());
+}
+
+@Test
+void testAssignEtudiantToDepartement_EtudiantNotFound() {
+    int etudiantId = 1;
+    Departement departement = new Departement();
+    departement.setIdDepartement(2);
+
+    when(etudiantRepository.findById(etudiantId)).thenReturn(Optional.empty());
+    when(departementRepository.findById(departement.getIdDepartement())).thenReturn(Optional.of(departement));
+
+    assertThrows(IllegalArgumentException.class, () -> {
+        etudiantService.assignEtudiantToDepartement(etudiantId, departement.getIdDepartement());
+    });
+
+    verify(etudiantRepository).findById(etudiantId);
+    verify(departementRepository, never()).findById(departement.getIdDepartement());
+}
+
+@Test
+void testAssignEtudiantToDepartement_DepartementNotFound() {
+    Etudiant etudiant = new Etudiant();
+    etudiant.setIdEtudiant(1);
+    int departementId = 2;
+
+    when(etudiantRepository.findById(etudiant.getIdEtudiant())).thenReturn(Optional.of(etudiant));
+    when(departementRepository.findById(departementId)).thenReturn(Optional.empty());
+
+    assertThrows(IllegalArgumentException.class, () -> {
+        etudiantService.assignEtudiantToDepartement(etudiant.getIdEtudiant(), departementId);
+    });
+
+    verify(etudiantRepository).findById(etudiant.getIdEtudiant());
+    verify(departementRepository).findById(departementId);
+}
+
+@Test
+void testAssignEtudiantToDepartement_BothNotFound() {
+    int etudiantId = 1;
+    int departementId = 2;
+
+    when(etudiantRepository.findById(etudiantId)).thenReturn(Optional.empty());
+    when(departementRepository.findById(departementId)).thenReturn(Optional.empty());
+
+    assertThrows(IllegalArgumentException.class, () -> {
+        etudiantService.assignEtudiantToDepartement(etudiantId, departementId);
+    });
+
+    verify(etudiantRepository).findById(etudiantId);
+    verify(departementRepository, never()).findById(departementId);
+}
+
+@Test
+void testAddAndAssignEtudiantToEquipeAndContract_Success() {
+    int idContrat = 1;
+    int idEquipe = 2;
+    EtudiantDto etudiantDto = new EtudiantDto();
+
+    when(contratRepository.findById(idContrat)).thenReturn(Optional.of(new Contrat()));
+    when(equipeRepository.findById(idEquipe)).thenReturn(Optional.of(new Equipe()));
+    when(etudiantRepository.save(any(Etudiant.class)).thenReturn(invocation -> {
+        Etudiant savedEtudiant = invocation.getArgument(0);
+        savedEtudiant.setIdEtudiant(1);
+        return savedEtudiant;
+    });
+
+    EtudiantDto result = etudiantService.addAndAssignEtudiantToEquipeAndContract(etudiantDto, idContrat, idEquipe);
+
+    verify(etudiantRepository).save(any(Etudiant.class));
+
+    assertEquals(1, result.getIdEtudiant());
+}
+
+@Test
+void testAddAndAssignEtudiantToEquipeAndContract_ContratNotFound() {
+    int idContrat = 1;
+    int idEquipe = 2;
+    EtudiantDto etudiantDto = new EtudiantDto();
+
+    when(contratRepository.findById(idContrat)).thenReturn(Optional.empty());
+    when(equipeRepository.findById(idEquipe)).thenReturn(Optional.of(new Equipe()));
+
+    assertThrows(IllegalArgumentException.class, () -> {
+        etudiantService.addAndAssignEtudiantToEquipeAndContract(etudiantDto, idContrat, idEquipe);
+    });
+
+    verify(etudiantRepository, never()).save(any(Etudiant.class));
+}
+
+@Test
+void testAddAndAssignEtudiantToEquipeAndContract_EquipeNotFound() {
+    int idContrat = 1;
+    int idEquipe = 2;
+    EtudiantDto etudiantDto = new EtudiantDto();
+
+    when(contratRepository.findById(idContrat)).thenReturn(Optional.of(new Contrat()));
+    when(equipeRepository.findById(idEquipe)).thenReturn(Optional.empty());
+
+    assertThrows(IllegalArgumentException.class, () -> {
+        etudiantService.addAndAssignEtudiantToEquipeAndContract(etudiantDto, idContrat, idEquipe);
+    });
+
+    verify(etudiantRepository, never()).save(any(Etudiant.class));
+}
+
+@Test
+void testAddAndAssignEtudiantToEquipeAndContract_BothNotFound() {
+    int idContrat = 1;
+    int idEquipe = 2;
+    EtudiantDto etudiantDto = new EtudiantDto();
+
+    when(contratRepository.findById(idContrat)).thenReturn(Optional.empty());
+    when(equipeRepository.findById(idEquipe)).thenReturn(Optional.empty());
+
+    assertThrows(IllegalArgumentException.class, () -> {
+        etudiantService.addAndAssignEtudiantToEquipeAndContract(etudiantDto, idContrat, idEquipe);
+    });
+
+    verify(etudiantRepository, never()).save(any(Etudiant.class));
+}
+
+@Test
+void testAddAndAssignEtudiantToEquipeAndContract_EtudiantEquipesNotNull() {
+    int idContrat = 1;
+    int idEquipe = 2;
+    EtudiantDto etudiantDto = new EtudiantDto();
+
+    when(contratRepository.findById(idContrat)).thenReturn(Optional.of(new Contrat()));
+    when(equipeRepository.findById(idEquipe)).thenReturn(Optional.of(new Equipe()));
+    when(etudiantRepository.save(any(Etudiant.class)).thenReturn(invocation -> {
+        Etudiant savedEtudiant = invocation.getArgument(0);
+        savedEtudiant.setIdEtudiant(1);
+        return savedEtudiant;
+    });
+
+    Etudiant etudiant = new Etudiant();
+    Equipe equipe = new Equipe();
+    equipe.setIdEquipe(idEquipe);
+    List<Equipe> equipes = new ArrayList<>();
+    equipes.add(equipe);
+    etudiant.setEquipes(equipes);
+
+    when(etudiantRepository.findById(etudiant.getIdEtudiant())).thenReturn(Optional.of(etudiant));
+
+    EtudiantDto result = etudiantService.addAndAssignEtudiantToEquipeAndContract(etudiantDto, idContrat, idEquipe);
+
+    verify(etudiantRepository).save(any(Etudiant.class));
+
+    assertEquals(1, result.getIdEtudiant());
+    assertEquals(2, result.getEquipes().size());
+}
+
 
 
 }
