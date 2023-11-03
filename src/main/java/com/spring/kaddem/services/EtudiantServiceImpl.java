@@ -63,7 +63,9 @@ public class EtudiantServiceImpl implements IEtudiantService{
             Departement departement = departementOptional.get();
             etudiant.setDepartement(departement);
             etudiantRepository.save(etudiant);
-        }
+        }else{
+        throw new IllegalArgumentException("etudiant or department not found");
+    }
     }
 
     @Override
