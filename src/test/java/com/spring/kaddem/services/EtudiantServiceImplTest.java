@@ -478,4 +478,22 @@ void testAddAndAssignEtudiantToEquipeAndContract_BothNotFound() {
 
     verify(etudiantRepository, never()).save(any(Etudiant.class));
 }
+    @Test
+    public void testToString() {
+        // Create an Etudiant instance with sample data
+        Etudiant etudiant = new Etudiant();
+        etudiant.setIdEtudiant(1);
+        etudiant.setPrenomE("John");
+        etudiant.setNomE("Doe");
+
+        Equipe equipe1 = new Equipe();
+        equipe1.setIdEquipe(1);
+        Contrat contrat1 = new Contrat();
+        contrat1.setIdContrat(1);
+        etudiant.getEquipes().add(equipe1);
+        etudiant.getContrats().add(contrat1);
+        String result = etudiant.toString();
+        String expected = "Etudiant{idEtudiant=1, prenomE='John', nomE='Doe', equipes=[Equipe{id=1, ...}], contrats=[Contrat{id=1, ...}], ...}";
+        assertEquals(expected, result);
+    }
 }
