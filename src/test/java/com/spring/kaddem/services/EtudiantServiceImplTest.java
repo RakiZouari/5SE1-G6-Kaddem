@@ -54,6 +54,8 @@ import com.spring.kaddem.controllers.EtudiantRestController;
 @Slf4j
 @AutoConfigureMockMvc
 class EtudiantServiceImplTest {
+    @MockBean
+    private EtudiantServiceImpl etudiantServicee;
 
     @Autowired
     private EtudiantServiceImpl etudiantService;
@@ -621,7 +623,7 @@ void testAddAndAssignEtudiantToEquipeAndContract_BothNotFound() {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
 
-        verify(etudiantService).removeEtudiant(etudiantId);
+        verify(etudiantServicee).removeEtudiant(etudiantId);
     }
     private String asJsonString(final Object obj) {
         try {
