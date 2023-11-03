@@ -199,7 +199,7 @@ void retrieveEtudiantsByContratSpecialiteSQL() {
 
 @Test
 void addAndAssignEtudiantToEquipeAndContract() {
-    /*
+    
     int idContrat = 1; 
     int idEquipe = 2; 
     EtudiantDto etudiantDto = new EtudiantDto();
@@ -208,7 +208,7 @@ void addAndAssignEtudiantToEquipeAndContract() {
     EtudiantDto result = etudiantService.addAndAssignEtudiantToEquipeAndContract(etudiantDto, idContrat, idEquipe);
     verify(etudiantRepository).save(any(Etudiant.class));
     assertEquals(etudiantDto.getIdEtudiant(), result.getIdEtudiant());
-    */
+    
 }
 
 @Test
