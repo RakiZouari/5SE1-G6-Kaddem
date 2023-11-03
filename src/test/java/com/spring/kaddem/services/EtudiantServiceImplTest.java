@@ -503,4 +503,37 @@ void testAddAndAssignEtudiantToEquipeAndContract_BothNotFound() {
         String expected = "Etudiant{idEtudiant=1, prenomE='John', nomE='Doe', op=GAMIX}";
         assertEquals(expected, result);
     }
+    @Test
+    public void testToDtoWithNonNullEtudiant() {
+        Etudiant etudiant = Etudiant.builder()
+                .idEtudiant(1)
+                .prenomE("John")
+                .nomE("Doe")
+                .op(Option.GAMIX)
+                .departement(new Departement())
+                .equipes(Arrays.asList(new Equipe()))
+                .contrats(Arrays.asList(new Contrat()))
+                .build();
+
+        EtudiantDto etudiantDto = EtudiantDto.toDto(etudiant);
+
+        assertEquals(etudiant.getIdEtudiant(), etudiantDto.getIdEtudiant());
+        assertEquals(etudiant.getPrenomE(), etudiantDto.getPrenomE());
+        assertEquals(etudiant.getNomE(), etudiantDto.getNomE());
+        assertEquals(etudiant.getOp(), etudiantDto.getOp());
+        assertEquals(etudiant.getDepartement(), etudiantDto.getDepartement());
+        assertEquals(etudiant.getEquipes(), etudiantDto.getEquipes());
+        assertEquals(etudiant.getContrats(), etudiantDto.getContrats());
+    }
+
+    @Test
+    public void testToDtoWithNullEtudiant() {
+        EtudiantDto etudiantDto = EtudiantDto.toDto(null);
+        assertNull(etudiantDto);
+    }
+    @Test
+    public void testToEntityWithNullEtudiantDto() {
+        Etudiant etudiant = EtudiantDto.toEntity(null);
+        assertNull(etudiant);
+    }
 }
