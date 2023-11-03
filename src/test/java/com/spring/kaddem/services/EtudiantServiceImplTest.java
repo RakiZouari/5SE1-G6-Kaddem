@@ -44,6 +44,8 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*; 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*; 
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup; 
+import org.springframework.test.context.web.WebApplicationContext;
+
 
 import com.fasterxml.jackson.databind.ObjectMapper; 
 import com.spring.kaddem.controllers.EtudiantRestController;
