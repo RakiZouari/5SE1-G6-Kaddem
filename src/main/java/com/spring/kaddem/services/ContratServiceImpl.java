@@ -39,7 +39,7 @@ public class ContratServiceImpl implements  IContratService{
         if (contratOptional.isPresent()) {
             return contratOptional.get();
         } else {
-           
+
             throw new EntityNotFoundException(" Contrat not found");
         }
     }
