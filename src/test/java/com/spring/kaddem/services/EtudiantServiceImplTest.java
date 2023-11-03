@@ -268,8 +268,8 @@ void testAssignEtudiantToDepartement_WhenEtudiantAndDepartementExist() {
 
 @Test
 void testAssignEtudiantToDepartement_WhenEtudiantOrDepartementDoesNotExist() {
-    when(etudiantRepository.findById(any())).thenReturn(Optional.empty());
-    when(departementRepository.findById(any())).thenReturn(Optional.empty());
+    when(etudiantRepository.findById(1)).thenReturn(Optional.empty());
+    when(departementRepository.findById(2)).thenReturn(Optional.empty());
 
     assertThrows(IllegalArgumentException.class, () -> {
         etudiantService.assignEtudiantToDepartement(1, 2);
