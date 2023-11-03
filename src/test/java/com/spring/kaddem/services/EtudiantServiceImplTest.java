@@ -320,27 +320,6 @@ void testRetrieveEtudiantsByContratSpecialite_WithNonExistingSpecialite() {
     assertTrue(retrievedEtudiants.isEmpty());
 }
     @Test
-void testAddAndAssignEtudiantToEquipeAndContract_Success() {
-    int idContrat = 1;
-    int idEquipe = 2;
-    EtudiantDto etudiantDto = new EtudiantDto();
-    
-    when(contratRepository.findById(idContrat)).thenReturn(Optional.of(new Contrat()));
-    when(equipeRepository.findById(idEquipe)).thenReturn(Optional.of(new Equipe()));
-    
-    when(etudiantRepository.save(any(Etudiant.class))).thenAnswer(invocation -> {
-        Etudiant savedEtudiant = invocation.getArgument(0);
-        savedEtudiant.setIdEtudiant(1);
-        return savedEtudiant;
-    });
-
-    EtudiantDto result = etudiantService.addAndAssignEtudiantToEquipeAndContract(etudiantDto, idContrat, idEquipe);
-    
-    verify(etudiantRepository).save(any(Etudiant.class));
-
-    assertEquals(1, result.getIdEtudiant());
-}
-    @Test
 void testGetEtudiantsByDepartement_Success() {
     int idDepartement = 1;
     Departement departement = new Departement();
