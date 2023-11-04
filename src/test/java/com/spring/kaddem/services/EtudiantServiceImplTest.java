@@ -742,8 +742,8 @@ void testAddAndAssignEtudiantToEquipeAndContract_BothNotFound() {
         Departement departement = new Departement();
         departement.setIdDepartement(2);
 
-        doNothing().when(etudiantService.assignEtudiantToDepartement(eq(1), eq(2)));
-
+        Mockito.doNothing().when(etudiantService).assignEtudiantToDepartement(1, 2);
+        
         mockMvc.perform(MockMvcRequestBuilders.put("/etudiant/assignEtudiantToDepartement/1/2")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
