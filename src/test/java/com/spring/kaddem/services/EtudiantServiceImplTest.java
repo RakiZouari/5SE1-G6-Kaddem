@@ -695,7 +695,7 @@ void testAssignEtudiantToDepartement() {
         Specialite specialite = Specialite.CLOUD;
         List<Etudiant> etudiants = Arrays.asList(new Etudiant(), new Etudiant());
         when(etudiantService.retrieveEtudiantsByContratSpecialite(specialite)).thenReturn(etudiants);
-        mockMvc.perform(get("/retrieveEtudiantsByContratSpecialite/{specialite}", specialite))
+        mockMvc.perform(get("/etudiant/retrieveEtudiantsByContratSpecialite/{specialite}", specialite))
                .andExpect(status().isOk())
                .andExpect(content().contentType("application/json"))
                .andExpect(jsonPath("$", hasSize(etudiants.size())));
@@ -705,7 +705,7 @@ void testAssignEtudiantToDepartement() {
         String specialite = "CLOUD";
         List<Etudiant> etudiants = Arrays.asList(new Etudiant(), new Etudiant());
         when(etudiantService.retrieveEtudiantsByContratSpecialiteSQL(specialite)).thenReturn(etudiants);
-        mockMvc.perform(get("/retrieveEtudiantsByContratSpecialiteSQL/{specialite}", specialite))
+        mockMvc.perform(get("/etudiant/retrieveEtudiantsByContratSpecialiteSQL/{specialite}", specialite))
                .andExpect(status().isOk())
                .andExpect(content().contentType("application/json"))
                .andExpect(jsonPath("$", hasSize(etudiants.size())));
