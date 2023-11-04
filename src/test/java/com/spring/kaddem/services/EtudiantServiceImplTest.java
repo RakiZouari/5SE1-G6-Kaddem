@@ -715,10 +715,10 @@ void testAddAndAssignEtudiantToEquipeAndContract_BothNotFound() {
     }
      @Test
     void testAddAndAssignEtudiantToEquipeAndContract() throws Exception {
-        Etudiant etudiant = new Etudiant();
-        etudiant.setIdEtudiant(1);
-        etudiant.setPrenomE("John");
-        etudiant.setNomE("Doe");
+        EtudiantDto etudiantDto = new EtudiantDto();
+        etudiantDto.setIdEtudiant(1);
+        etudiantDto.setPrenomE("John");
+        etudiantDto.setNomE("Doe");
 
         Equipe equipe = new Equipe();
         equipe.setIdEquipe(2);
@@ -726,7 +726,7 @@ void testAddAndAssignEtudiantToEquipeAndContract_BothNotFound() {
         Contrat contrat = new Contrat();
         contrat.setIdContrat(1);
 
-        EtudiantDto result = etudiantService.addAndAssignEtudiantToEquipeAndContract(etudiantDto, idContrat, idEquipe);
+        EtudiantDto result = etudiantService.addAndAssignEtudiantToEquipeAndContract(etudiantDto, 2, 1);
 
         mockMvc.perform(MockMvcRequestBuilders.post("/etudiant/addAndAssignEtudiantToEquipeAndContract/1/2")
                 .contentType(MediaType.APPLICATION_JSON)
