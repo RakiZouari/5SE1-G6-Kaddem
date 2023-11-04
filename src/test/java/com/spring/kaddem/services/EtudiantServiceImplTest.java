@@ -539,7 +539,7 @@ void testAddAndAssignEtudiantToEquipeAndContract_BothNotFound() {
         assertEquals(expected, result);
     }
     @Test
-    public void testToDtoWithNonNullEtudiant() {
+    void testToDtoWithNonNullEtudiant() {
         Etudiant etudiant = Etudiant.builder()
                 .idEtudiant(1)
                 .prenomE("John")
@@ -562,17 +562,17 @@ void testAddAndAssignEtudiantToEquipeAndContract_BothNotFound() {
     }
 
     @Test
-    public void testToDtoWithNullEtudiant() {
+    void testToDtoWithNullEtudiant() {
         EtudiantDto etudiantDto = EtudiantDto.toDto(null);
         assertNull(etudiantDto);
     }
     @Test
-    public void testToEntityWithNullEtudiantDto() {
+    void testToEntityWithNullEtudiantDto() {
         Etudiant etudiant = EtudiantDto.toEntity(null);
         assertNull(etudiant);
     }
     @Test
-    public void testGetEtudiants() throws Exception {
+    void testGetEtudiants() throws Exception {
         Etudiant etudiant1 = new Etudiant();
         etudiant1.setIdEtudiant(1);
         etudiant1.setPrenomE("John");
@@ -598,7 +598,7 @@ void testAddAndAssignEtudiantToEquipeAndContract_BothNotFound() {
     }
 
     @Test
-    public void testAddEtudiant() throws Exception {
+    void testAddOrUpdateEtudiant() throws Exception {
     EtudiantDto etudiantDto = new EtudiantDto();
     etudiantDto.setIdEtudiant(1);
     etudiantDto.setPrenomE("John");
@@ -610,7 +610,7 @@ void testAddAndAssignEtudiantToEquipeAndContract_BothNotFound() {
     etudiant.setNomE("Doe");
 
     when(etudiantService.addOrUpdateEtudiant(any(EtudiantDto.class)))
-            .thenReturn(EtudiantDto.toDto(etudiant)); // Convert Etudiant to EtudiantDto
+            .thenReturn(EtudiantDto.toDto(etudiant)); 
 
     mockMvc.perform(post("/etudiant/add-etudiant")
             .contentType(MediaType.APPLICATION_JSON)
@@ -619,6 +619,40 @@ void testAddAndAssignEtudiantToEquipeAndContract_BothNotFound() {
             .andExpect(jsonPath("idEtudiant").value(1))
             .andExpect(jsonPath("prenomE").value("John"))
             .andExpect(jsonPath("nomE").value("Doe"));
+    
+    etudiantDto.setPrenomE("Ismail");
+    mockMvc.perform(post("/etudiant/update-etudiant")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(asJsonString(etudiantDto)))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("idEtudiant").value(1))
+            .andExpect(jsonPath("prenomE").value("Ismail"))
+            .andExpect(jsonPath("nomE").value("Doe"));
+    
+    }
+    @Test
+    void testRetrieveEtudiantWithValidId() {
+        int etudiantId = 1;
+        Etudiant expectedEtudiant = new Etudiant();
+        expectedEtudiant.setIdEtudiant(etudiantId);
+        when(etudiantRepository.findById(etudiantId)).thenReturn(Optional.of(expectedEtudiant));
+
+        Etudiant retrievedEtudiant = etudiantService.retrieveEtudiant(etudiantId);
+
+        verify(etudiantRepository).findById(etudiantId);
+        assertEquals(expectedEtudiant, retrievedEtudiant);
+    }
+
+    @Test
+    void testRetrieveEtudiantWithInvalidId() {
+        int etudiantId = 1;
+        when(etudiantRepository.findById(etudiantId)).thenReturn(Optional.empty());
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            etudiantService.retrieveEtudiant(etudiantId);
+        });
+
+        verify(etudiantRepository).findById(etudiantId);
     }
 
 
