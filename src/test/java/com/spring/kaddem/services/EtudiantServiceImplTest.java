@@ -726,7 +726,11 @@ void testAddAndAssignEtudiantToEquipeAndContract_BothNotFound() {
         contrat1.setIdContrat(2);
         when(contratRepository.findById(2)).thenReturn(Optional.of(contrat1));
         when(equipeRepository.findById(1)).thenReturn(Optional.of(equipe1)); 
-        
+        when(etudiantRepository.save(any(Etudiant.class))).thenAnswer(invocation -> {
+            Etudiant savedEtudiant = invocation.getArgument(0);
+            savedEtudiant.setIdEtudiant(1);
+            return savedEtudiant;
+        });
         EtudiantDto result = etudiantService.addAndAssignEtudiantToEquipeAndContract(etudiantDto, 2, 1);
         
         mockMvc.perform(MockMvcRequestBuilders.post("/etudiant/addAndAssignEtudiantToEquipeAndContract/1/2")
