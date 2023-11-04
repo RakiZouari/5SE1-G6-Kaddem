@@ -731,7 +731,7 @@ void testAddAndAssignEtudiantToEquipeAndContract_BothNotFound() {
         mockMvc.perform(MockMvcRequestBuilders.post("/etudiant/addAndAssignEtudiantToEquipeAndContract/1/2")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"idEtudiant\": 1, \"prenomE\": \"John\", \"nomE\": \"Doe\"}"))
-                .andExpect(MockMvcResultMatchers.status().isOk());
+                .andExpect(status().isOk());
     }
 
     @Test
@@ -746,7 +746,7 @@ void testAddAndAssignEtudiantToEquipeAndContract_BothNotFound() {
 
         mockMvc.perform(MockMvcRequestBuilders.put("/etudiant/assignEtudiantToDepartement/1/2")
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isOk());
+                .andExpect(status().isOk());
     }
   
 }
