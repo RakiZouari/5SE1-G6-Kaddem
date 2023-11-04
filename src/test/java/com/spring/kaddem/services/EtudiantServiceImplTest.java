@@ -710,5 +710,19 @@ void testAssignEtudiantToDepartement() {
                .andExpect(content().contentType("application/json"))
                .andExpect(jsonPath("$", hasSize(etudiants.size())));
     }
+     @Test
+    public void testAddAndAssignEtudiantToEquipeAndContract() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post("/etudiant/addAndAssignEtudiantToEquipeAndContract/1/2")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"idEtudiant\": 1, \"prenomE\": \"John\", \"nomE\": \"Doe\"}"))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    public void testAssignEtudiantToDepartement() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.put("/etudiant/assignEtudiantToDepartement/1/2")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
   
 }
