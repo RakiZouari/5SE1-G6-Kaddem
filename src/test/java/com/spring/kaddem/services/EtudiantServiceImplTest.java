@@ -712,6 +712,19 @@ void testAssignEtudiantToDepartement() {
     }
      @Test
     public void testAddAndAssignEtudiantToEquipeAndContract() throws Exception {
+        Etudiant etudiant = new Etudiant();
+        etudiant.setIdEtudiant(1);
+        etudiant.setPrenomE("John");
+        etudiant.setNomE("Doe");
+
+        Equipe equipe = new Equipe();
+        equipe.setIdEquipe(2);
+
+        Contrat contrat = new Contrat();
+        contrat.setIdContrat(1);
+
+        when(etudiantService.addAndAssignEtudiantToEquipeAndContract(any(EtudiantDto.class), eq(2), eq(1))).thenReturn(new EtudiantDto());
+
         mockMvc.perform(MockMvcRequestBuilders.post("/etudiant/addAndAssignEtudiantToEquipeAndContract/1/2")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"idEtudiant\": 1, \"prenomE\": \"John\", \"nomE\": \"Doe\"}"))
@@ -719,7 +732,15 @@ void testAssignEtudiantToDepartement() {
     }
 
     @Test
-    public void testAssignEtudiantToDepartement() throws Exception {
+    public void testAssignEtudiantToDepartementController() throws Exception {
+        Etudiant etudiant = new Etudiant();
+        etudiant.setIdEtudiant(1);
+
+        Departement departement = new Departement();
+        departement.setIdDepartement(2);
+
+        when(etudiantService.assignEtudiantToDepartement(eq(1), eq(2))).thenReturn(new EtudiantDto());
+
         mockMvc.perform(MockMvcRequestBuilders.put("/etudiant/assignEtudiantToDepartement/1/2")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk());
