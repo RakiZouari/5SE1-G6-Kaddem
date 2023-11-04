@@ -640,7 +640,7 @@ void testAddAndAssignEtudiantToEquipeAndContract_BothNotFound() {
         mockMvc.perform(get("/etudiant/retrieve-etudiant/{etudiantId}", etudiantId)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("idEtudiant").value(etudiantId)) 
+                .andExpect(jsonPath("idEtudiant").value(etudiantId)); 
     }
 
     @Test
