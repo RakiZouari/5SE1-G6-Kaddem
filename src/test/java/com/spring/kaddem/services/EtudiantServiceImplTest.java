@@ -618,7 +618,7 @@ void testAddAndAssignEtudiantToEquipeAndContract_BothNotFound() {
             .andExpect(jsonPath("idEtudiant").value(1))
             .andExpect(jsonPath("prenomE").value("John"))
             .andExpect(jsonPath("nomE").value("Doe"));
-    
+
     etudiantDto.setPrenomE("Ismail");
     mockMvc.perform(put("/etudiant/update-etudiant")
             .contentType(MediaType.APPLICATION_JSON)
@@ -627,7 +627,6 @@ void testAddAndAssignEtudiantToEquipeAndContract_BothNotFound() {
             .andExpect(jsonPath("idEtudiant").value(1))
             .andExpect(jsonPath("prenomE").value("Ismail"))
             .andExpect(jsonPath("nomE").value("Doe"));
-    
     }
     @Test
 void testRetrieveEtudiantWithValidId() {
@@ -635,13 +634,9 @@ void testRetrieveEtudiantWithValidId() {
     etudiant.setIdEtudiant(1);
     etudiant.setPrenomE("John");
     etudiant.setNomE("Doe");
-
     when(etudiantRepository.findById(1)).thenReturn(Optional.of(etudiant));
-
     EtudiantServiceImpl etudiantService = new EtudiantServiceImpl(etudiantRepository, departementRepository, contratRepository, equipeRepository);
-
     Etudiant retrievedEtudiant = etudiantService.retrieveEtudiant(1);
-
     assertEquals(etudiant, retrievedEtudiant);
 }
 
@@ -650,11 +645,9 @@ void testRetrieveEtudiantWithValidId() {
     void testRetrieveEtudiantWithInvalidId() {
         int etudiantId = 1;
         when(etudiantRepository.findById(etudiantId)).thenReturn(Optional.empty());
-
         assertThrows(IllegalArgumentException.class, () -> {
             etudiantService.retrieveEtudiant(etudiantId);
         });
-
         verify(etudiantRepository).findById(etudiantId);
     }
     @Test
@@ -663,12 +656,9 @@ void testAssignEtudiantToDepartement() {
     etudiant.setIdEtudiant(1);
     Departement departement = new Departement();
     departement.setIdDepartement(2);
-
     when(etudiantRepository.findById(1)).thenReturn(Optional.of(etudiant));
     when(departementRepository.findById(2)).thenReturn(Optional.of(departement));
-
     EtudiantServiceImpl etudiantService = new EtudiantServiceImpl(etudiantRepository, departementRepository, contratRepository, equipeRepository);
-
     etudiantService.assignEtudiantToDepartement(1, 2);
     assertEquals(departement, etudiant.getDepartement());
 }
@@ -678,7 +668,6 @@ void testAssignEtudiantToDepartement() {
         int departementId = 1;
         List<Etudiant> etudiantList = new ArrayList<>();
         when(etudiantService.findByDepartementIdDepartement(departementId)).thenReturn(etudiantList);
-
         mockMvc.perform(get("/etudiant/findByDepartement/{departement-id}", departementId)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
@@ -687,7 +676,6 @@ void testAssignEtudiantToDepartement() {
     @Test
     void testFindByEquipesNiveau() throws Exception {
         Niveau niveau = Niveau.SENIOR;
-
         Etudiant etudiant1 = new Etudiant();
         etudiant1.setIdEtudiant(1);
         Etudiant etudiant2 = new Etudiant();
@@ -695,16 +683,32 @@ void testAssignEtudiantToDepartement() {
         List<Etudiant> etudiantList = new ArrayList<>();
         etudiantList.add(etudiant1);
         etudiantList.add(etudiant2);
-
         when(etudiantService.findByEquipesNiveau(niveau)).thenReturn(etudiantList);
-
         mockMvc.perform(get("/etudiant/findByEquipesNiveau/{niveau}", niveau)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].idEtudiant").value(1))
                 .andExpect(jsonPath("$[1].idEtudiant").value(2));
     }
-
-
+@Test
+    public void testRetrieveEtudiantsByContratSpecialite() throws Exception {
+        Specialite specialite = Specialite.CLOUD;
+        List<Etudiant> etudiants = Arrays.asList(new Etudiant(), new Etudiant());
+        when(etudiantService.retrieveEtudiantsByContratSpecialite(specialite)).thenReturn(etudiants);
+        mockMvc.perform(get("/retrieveEtudiantsByContratSpecialite/{specialite}", specialite))
+               .andExpect(status().isOk())
+               .andExpect(content().contentType("application/json"))
+               .andExpect(jsonPath("$", hasSize(etudiants.size())));
+    }
+    @Test
+    public void testRetrieveEtudiantsByContratSpecialiteSQL() throws Exception {
+        String specialite = "CLOUD";
+        List<Etudiant> etudiants = Arrays.asList(new Etudiant(), new Etudiant());
+        when(etudiantService.retrieveEtudiantsByContratSpecialiteSQL(specialite)).thenReturn(etudiants);
+        mockMvc.perform(get("/retrieveEtudiantsByContratSpecialiteSQL/{specialite}", specialite))
+               .andExpect(status().isOk())
+               .andExpect(content().contentType("application/json"))
+               .andExpect(jsonPath("$", hasSize(etudiants.size()));
+    }
   
 }
