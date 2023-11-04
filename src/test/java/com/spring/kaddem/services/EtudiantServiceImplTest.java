@@ -55,7 +55,7 @@ import com.spring.kaddem.controllers.EtudiantRestController;
 @AutoConfigureMockMvc
 class EtudiantServiceImplTest {
     
-    @Autowired
+    @MockBean
     private EtudiantServiceImpl etudiantService;
     @MockBean
     private EtudiantRepository etudiantRepository;
