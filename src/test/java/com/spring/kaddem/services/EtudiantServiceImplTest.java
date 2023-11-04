@@ -33,6 +33,7 @@ import java.util.Optional;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 
 import org.mockito.Mock;
+import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
@@ -55,15 +56,15 @@ import com.spring.kaddem.controllers.EtudiantRestController;
 @AutoConfigureMockMvc
 class EtudiantServiceImplTest {
     
-    @MockBean
+    @InjectMocks
     private EtudiantServiceImpl etudiantService;
-    @Autowired
+    @Mock
     private EtudiantRepository etudiantRepository;
-    @Autowired
+    @Mock
     private ContratRepository contratRepository;
-    @Autowired
+    @Mock
     private EquipeRepository equipeRepository; 
-    @Autowired
+    @Mock
     private DepartementRepository departementRepository;
     private Etudiant etudiant;
     private List<Etudiant> etudiants;
@@ -78,7 +79,7 @@ class EtudiantServiceImplTest {
     etudiant.setPrenomE("ismail");
     etudiant.setNomE("khlif");
     etudiant.setOp(Option.GAMIX);
-    //Mockito.reset(etudiantRepository, departementRepository);
+    Mockito.reset(etudiantRepository, departementRepository);
     MockitoAnnotations.initMocks(this);    
     }
     @BeforeEach
