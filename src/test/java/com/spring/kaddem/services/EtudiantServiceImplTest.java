@@ -755,5 +755,79 @@ void testAddAndAssignEtudiantToEquipeAndContract_BothNotFound() {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
+    @Test
+    void testGetEtudiantsByDepartement() throws Exception {
+        int departementId = 1;
+        Etudiant etudiant1 = new Etudiant();
+        etudiant1.setIdEtudiant(1);
+        Etudiant etudiant2 = new Etudiant();
+        etudiant2.setIdEtudiant(2);
+
+        when(etudiantService.getEtudiantsByDepartement(departementId)).thenReturn(List.of(etudiant1, etudiant2));
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/getEtudiantsByDepartement/{idDepartement}", departementId)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json"))
+                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$[0].idEtudiant").value(1))
+                .andExpect(jsonPath("$[1].idEtudiant").value(2));
+    }
+
+    @Test
+    void testRetrieveEtudiant() throws Exception {
+        int etudiantId = 1;
+        Etudiant etudiant = new Etudiant();
+        etudiant.setIdEtudiant(etudiantId);
+        etudiant.setPrenomE("John");
+        etudiant.setNomE("Doe");
+
+        when(etudiantService.retrieveEtudiant(etudiantId)).thenReturn(etudiant);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/retrieve-etudiant/{etudiantId}", etudiantId)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json"))
+                .andExpect(jsonPath("idEtudiant").value(1))
+                .andExpect(jsonPath("prenomE").value("John"))
+                .andExpect(jsonPath("nomE").value("Doe"));
+    }
+    @Test
+    void testGetEtudiantsByDepartementController() throws Exception {
+        int departementId = 1;
+        Etudiant etudiant1 = new Etudiant();
+        etudiant1.setIdEtudiant(1);
+        Etudiant etudiant2 = new Etudiant();
+        etudiant2.setIdEtudiant(2);
+
+        when(etudiantService.getEtudiantsByDepartement(departementId)).thenReturn(List.of(etudiant1, etudiant2));
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/getEtudiantsByDepartement/{idDepartement}", departementId)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json"))
+                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$[0].idEtudiant").value(1))
+                .andExpect(jsonPath("$[1].idEtudiant").value(2));
+    }
+
+    @Test
+    void testRetrieveEtudiantController() throws Exception {
+        int etudiantId = 1;
+        Etudiant etudiant = new Etudiant();
+        etudiant.setIdEtudiant(etudiantId);
+        etudiant.setPrenomE("John");
+        etudiant.setNomE("Doe");
+
+        when(etudiantService.retrieveEtudiant(etudiantId)).thenReturn(etudiant);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/retrieve-etudiant/{etudiantId}", etudiantId)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json"))
+                .andExpect(jsonPath("idEtudiant").value(1))
+                .andExpect(jsonPath("prenomE").value("John"))
+                .andExpect(jsonPath("nomE").value("Doe"));
+    }
   
 }
