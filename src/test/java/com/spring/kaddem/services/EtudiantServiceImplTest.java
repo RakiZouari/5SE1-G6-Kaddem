@@ -449,7 +449,7 @@ void testAddAndAssignEtudiantToEquipeAndContract_Success() {
     EtudiantDto etudiantDto = new EtudiantDto();
 
     when(contratRepository.findById(idContrat)).thenReturn(Optional.of(new Contrat()));
-    when(equipeRepository.findById(idEquipe)).thenReturn(Optional.of());
+    when(equipeRepository.findById(idEquipe)).thenReturn(Optional.of(new Equipe()));
     when(etudiantRepository.save(any(Etudiant.class))).thenAnswer(invocation -> {
         Etudiant savedEtudiant = invocation.getArgument(0);
         savedEtudiant.setIdEtudiant(1);
@@ -470,8 +470,7 @@ void testAddAndAssignEtudiantToEquipeAndContract_ContratNotFound() {
     EtudiantDto etudiantDto = new EtudiantDto();
 
     when(contratRepository.findById(idContrat)).thenReturn(Optional.empty());
-    when(equipeRepository.findById(idEquipe)).thenReturn(Optional.of());
-
+    when(equipeRepository.findById(idEquipe)).thenReturn(Optional.of(new Equipe()));
     assertThrows(IllegalArgumentException.class, () -> {
         etudiantService.addAndAssignEtudiantToEquipeAndContract(etudiantDto, idContrat, idEquipe);
     });
