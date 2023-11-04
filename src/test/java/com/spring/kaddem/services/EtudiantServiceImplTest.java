@@ -765,7 +765,7 @@ void testAddAndAssignEtudiantToEquipeAndContract_BothNotFound() {
         when(etudiantRepository.findById(1)).thenReturn(Optional.of(etudiant1)); 
         when(departementRepository.findById(2)).thenReturn(Optional.of(departement)); 
         etudiantService.assignEtudiantToDepartement(1, 2);
-        when(etudiantService.getEtudiantsByDepartement(departementId)).thenReturn(List.of(etudiant1);
+        when(etudiantService.getEtudiantsByDepartement(departementId)).thenReturn(List.of(etudiant1));
         
 
         mockMvc.perform(MockMvcRequestBuilders.get("/getEtudiantsByDepartement/{idDepartement}", departementId)
