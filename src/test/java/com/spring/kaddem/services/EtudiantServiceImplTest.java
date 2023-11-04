@@ -726,7 +726,7 @@ void testAddAndAssignEtudiantToEquipeAndContract_BothNotFound() {
         Contrat contrat = new Contrat();
         contrat.setIdContrat(1);
 
-        when(etudiantService.addAndAssignEtudiantToEquipeAndContract(any(EtudiantDto.class), eq(2), eq(1))).thenReturn(new EtudiantDto());
+        when(etudiantService.addAndAssignEtudiantToEquipeAndContract(any(EtudiantDto.class),2,1)).thenReturn(new EtudiantDto());
 
         mockMvc.perform(MockMvcRequestBuilders.post("/etudiant/addAndAssignEtudiantToEquipeAndContract/1/2")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -742,7 +742,7 @@ void testAddAndAssignEtudiantToEquipeAndContract_BothNotFound() {
         Departement departement = new Departement();
         departement.setIdDepartement(2);
 
-        Mockito.doNothing().when(etudiantService).assignEtudiantToDepartement(1, 2);
+        doNothing().when(etudiantService).assignEtudiantToDepartement(1, 2);
         
         mockMvc.perform(MockMvcRequestBuilders.put("/etudiant/assignEtudiantToDepartement/1/2")
                 .contentType(MediaType.APPLICATION_JSON))
