@@ -719,13 +719,9 @@ void testAddAndAssignEtudiantToEquipeAndContract_BothNotFound() {
         etudiantDto.setIdEtudiant(1);
         etudiantDto.setPrenomE("John");
         etudiantDto.setNomE("Doe");
-
+        EtudiantDto result = etudiantService.addAndAssignEtudiantToEquipeAndContract(etudiantDto, 2, 1);
         when(contratRepository.findById(1)).thenReturn(Optional.of(new Contrat()));
         when(equipeRepository.findById(2)).thenReturn(Optional.of(new Equipe())); 
-
-
-        EtudiantDto result = etudiantService.addAndAssignEtudiantToEquipeAndContract(etudiantDto, 2, 1);
-
         mockMvc.perform(MockMvcRequestBuilders.post("/etudiant/addAndAssignEtudiantToEquipeAndContract/1/2")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"idEtudiant\": 1, \"prenomE\": \"John\", \"nomE\": \"Doe\"}"))
