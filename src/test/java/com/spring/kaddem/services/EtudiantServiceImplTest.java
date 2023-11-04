@@ -708,7 +708,7 @@ void testAssignEtudiantToDepartement() {
         mockMvc.perform(get("/retrieveEtudiantsByContratSpecialiteSQL/{specialite}", specialite))
                .andExpect(status().isOk())
                .andExpect(content().contentType("application/json"))
-               .andExpect(jsonPath("$", hasSize(etudiants.size()));
+               .andExpect(jsonPath("$", hasSize(etudiants.size())));
     }
   
 }
