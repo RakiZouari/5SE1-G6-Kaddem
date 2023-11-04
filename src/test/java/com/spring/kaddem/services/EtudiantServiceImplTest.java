@@ -631,16 +631,22 @@ void testAddAndAssignEtudiantToEquipeAndContract_BothNotFound() {
     
     }
     @Test
-    void testRetrieveEtudiantWithValidId() {
+    void testRetrieveEtudiantWithValidId() throws Exception {
         int etudiantId = 1;
         Etudiant expectedEtudiant = new Etudiant();
         expectedEtudiant.setIdEtudiant(etudiantId);
-        when(etudiantRepository.findById(etudiantId)).thenReturn(Optional.of(expectedEtudiant));
-
-        Etudiant retrievedEtudiant = etudiantService.retrieveEtudiant(etudiantId);
-
-        verify(etudiantRepository).findById(etudiantId);
-        assertEquals(expectedEtudiant, retrievedEtudiant);
+        expectedEtudiant.setPrenomE("John");
+        expectedEtudiant.setNomE("Doe");
+        expectedEtudiant.setOp(Option.GAMIX);  
+        when(etudiantService.retrieveEtudiant(etudiantId)).thenReturn(expectedEtudiant);
+        mockMvc.perform(get("/etudiant/retrieve-etudiant/{etudiantId}", etudiantId)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("idEtudiant").value(etudiantId))
+                .andExpect(jsonPath("prenomE").value("John")) 
+                .andExpect(jsonPath("nomE").value("Doe")) 
+                .andExpect(jsonPath("op").value("GAMIX"));  
+               verify(etudiantService).retrieveEtudiant(etudiantId);
     }
 
     @Test
@@ -653,6 +659,65 @@ void testAddAndAssignEtudiantToEquipeAndContract_BothNotFound() {
         });
 
         verify(etudiantRepository).findById(etudiantId);
+    }
+    @Test
+    void testAssignEtudiantToDepartement() throws Exception {
+        int etudiantId = 1;
+        int departementId = 2;
+
+        doNothing().when(etudiantService).assignEtudiantToDepartement(etudiantId, departementId);
+
+        mockMvc.perform(put("/etudiant/assignEtudiantToDepartement/{etudiantId}/{departementId}", etudiantId, departementId)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        verify(etudiantService).assignEtudiantToDepartement(etudiantId, departementId);
+    }
+
+    @Test
+    void testFindByDepartement() throws Exception {
+        int departementId = 1;
+        Etudiant etudiant1 = new Etudiant();
+        etudiant1.setIdEtudiant(1);
+
+        Etudiant etudiant2 = new Etudiant();
+        etudiant2.setIdEtudiant(2);
+
+        List<Etudiant> etudiantList = new ArrayList<>();
+        etudiantList.add(etudiant1);
+        etudiantList.add(etudiant2);
+
+        when(etudiantService.findByDepartementIdDepartement(departementId)).thenReturn(etudiantList);
+
+        mockMvc.perform(get("/etudiant/findByDepartement/{departement-id}", departementId)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].idEtudiant").value(1))
+                .andExpect(jsonPath("$[1].idEtudiant").value(2));
+
+        verify(etudiantService).findByDepartementIdDepartement(departementId);
+    }
+
+    @Test
+    void testFindByEquipesNiveau() throws Exception {
+        Niveau niveau = Niveau.SENIOR;
+
+        Etudiant etudiant1 = new Etudiant();
+        etudiant1.setIdEtudiant(1);
+        Etudiant etudiant2 = new Etudiant();
+        etudiant2.setIdEtudiant(2);
+        List<Etudiant> etudiantList = new ArrayList<>();
+        etudiantList.add(etudiant1);
+        etudiantList.add(etudiant2);
+
+        when(etudiantService.findByEquipesNiveau(niveau)).thenReturn(etudiantList);
+
+        mockMvc.perform(get("/etudiant/findByEquipesNiveau/{niveau}", niveau)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].idEtudiant").value(1))
+                .andExpect(jsonPath("$[1].idEtudiant").value(2));
+        verify(etudiantService).findByEquipesNiveau(niveau);
     }
 
 
