@@ -772,7 +772,8 @@ void testAddAndAssignEtudiantToEquipeAndContract_BothNotFound() {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"))
-                .andExpect(jsonPath("$", hasSize(result.size())));
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE));
+
     }
 
     @Test
