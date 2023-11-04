@@ -33,7 +33,6 @@ import java.util.Optional;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 
 import org.mockito.Mock;
-import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
@@ -56,7 +55,7 @@ import com.spring.kaddem.controllers.EtudiantRestController;
 @AutoConfigureMockMvc
 class EtudiantServiceImplTest {
     
-    @InjectMocks
+    @Mock
     private EtudiantServiceImpl etudiantService;
     @Mock
     private EtudiantRepository etudiantRepository;
