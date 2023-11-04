@@ -731,7 +731,7 @@ void testAddAndAssignEtudiantToEquipeAndContract_BothNotFound() {
         EtudiantDto result = etudiantService.addAndAssignEtudiantToEquipeAndContract(etudiantDto, 2, 1);
         
         mockMvc.perform(MockMvcRequestBuilders.post("/etudiant/addAndAssignEtudiantToEquipeAndContract/1/2")
-                .contentType(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
 
