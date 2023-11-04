@@ -630,16 +630,23 @@ void testAddAndAssignEtudiantToEquipeAndContract_BothNotFound() {
     
     }
     @Test
-    void testRetrieveEtudiantWithValidId() throws Exception {
-        int etudiantId = 1;
-        Etudiant expectedEtudiant = new Etudiant();
-       
-        when(etudiantService.retrieveEtudiant(etudiantId)).thenReturn(expectedEtudiant);
-    
-        mockMvc.perform(get("/etudiant/retrieve-etudiant/{etudiantId}", etudiantId)
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
-}
+    void testRetrieveEtudiantWithValidId() {
+        // Create a mock Etudiant object
+        Etudiant etudiant = new Etudiant();
+        etudiant.setIdEtudiant(1);
+        etudiant.setPrenomE("John");
+        etudiant.setNomE("Doe");
+
+        EtudiantRepository etudiantRepository = mock(EtudiantRepository.class);
+        when(etudiantRepository.findById(1)).thenReturn(Optional.of(etudiant));
+
+        EtudiantServiceImpl etudiantService = new EtudiantServiceImpl(etudiantRepository);
+
+        Etudiant retrievedEtudiant = etudiantService.retrieveEtudiant(1);
+
+        assertEquals(etudiant, retrievedEtudiant);
+    }
+
 
     @Test
     void testRetrieveEtudiantWithInvalidId() {
@@ -653,13 +660,23 @@ void testAddAndAssignEtudiantToEquipeAndContract_BothNotFound() {
         verify(etudiantRepository).findById(etudiantId);
     }
     @Test
-    void testAssignEtudiantToDepartement() throws Exception {
-        int etudiantId = 1;
-        int departementId = 2;
+    void testAssignEtudiantToDepartement() {
+        Etudiant etudiant = new Etudiant();
+        etudiant.setIdEtudiant(1);
 
-        mockMvc.perform(put("/etudiant/assignEtudiantToDepartement/{etudiantId}/{departementId}", etudiantId, departementId)
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+        Departement departement = new Departement();
+        departement.setIdDepartement(2);
+
+        EtudiantRepository etudiantRepository = mock(EtudiantRepository.class);
+        when(etudiantRepository.findById(1)).thenReturn(Optional.of(etudiant));
+        
+        DepartementRepository departementRepository = mock(DepartementRepository.class);
+        when(departementRepository.findById(2)).thenReturn(Optional.of(departement));
+
+        EtudiantServiceImpl etudiantService = new EtudiantServiceImpl(etudiantRepository, departementRepository);
+
+        etudiantService.assignEtudiantToDepartement(1, 2);
+        assertEquals(departement, etudiant.getDepartement());
     }
 
     @Test
