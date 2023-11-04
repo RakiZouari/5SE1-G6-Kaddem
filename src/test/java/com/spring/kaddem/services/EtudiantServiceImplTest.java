@@ -57,13 +57,13 @@ class EtudiantServiceImplTest {
     
     @MockBean
     private EtudiantServiceImpl etudiantService;
-    @MockBean
+    @Autowired
     private EtudiantRepository etudiantRepository;
-    @MockBean
+    @Autowired
     private ContratRepository contratRepository;
-    @MockBean
+    @Autowired
     private EquipeRepository equipeRepository; 
-    @MockBean
+    @Autowired
     private DepartementRepository departementRepository;
     private Etudiant etudiant;
     private List<Etudiant> etudiants;
