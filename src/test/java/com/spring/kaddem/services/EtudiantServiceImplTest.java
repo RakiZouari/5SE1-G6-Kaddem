@@ -449,7 +449,7 @@ void testAddAndAssignEtudiantToEquipeAndContract_Success() {
     EtudiantDto etudiantDto = new EtudiantDto();
 
     when(contratRepository.findById(idContrat)).thenReturn(Optional.of(new Contrat()));
-    when(equipeRepository.findById(idEquipe)).thenReturn(Optional.of(new Equipe()));
+    when(equipeRepository.findById(idEquipe)).thenReturn(Optional.of());
     when(etudiantRepository.save(any(Etudiant.class))).thenAnswer(invocation -> {
         Etudiant savedEtudiant = invocation.getArgument(0);
         savedEtudiant.setIdEtudiant(1);
@@ -470,7 +470,7 @@ void testAddAndAssignEtudiantToEquipeAndContract_ContratNotFound() {
     EtudiantDto etudiantDto = new EtudiantDto();
 
     when(contratRepository.findById(idContrat)).thenReturn(Optional.empty());
-    when(equipeRepository.findById(idEquipe)).thenReturn(Optional.of(new Equipe()));
+    when(equipeRepository.findById(idEquipe)).thenReturn(Optional.of());
 
     assertThrows(IllegalArgumentException.class, () -> {
         etudiantService.addAndAssignEtudiantToEquipeAndContract(etudiantDto, idContrat, idEquipe);
@@ -719,12 +719,19 @@ void testAddAndAssignEtudiantToEquipeAndContract_BothNotFound() {
         etudiantDto.setIdEtudiant(1);
         etudiantDto.setPrenomE("John");
         etudiantDto.setNomE("Doe");
+
+        Equipe equipe1 = new Equipe();
+        equipe1.setIdEquipe(1);
+
+        Contrat contrat1 = new Contrat();
+        contrat1.setIdContrat(2);
+        when(contratRepository.findById(2)).thenReturn(Optional.of(contrat1));
+        when(equipeRepository.findById(1)).thenReturn(Optional.of(equipe1)); 
+        
         EtudiantDto result = etudiantService.addAndAssignEtudiantToEquipeAndContract(etudiantDto, 2, 1);
-        when(contratRepository.findById(1)).thenReturn(Optional.of(new Contrat()));
-        when(equipeRepository.findById(2)).thenReturn(Optional.of(new Equipe())); 
+        
         mockMvc.perform(MockMvcRequestBuilders.post("/etudiant/addAndAssignEtudiantToEquipeAndContract/1/2")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"idEtudiant\": 1, \"prenomE\": \"John\", \"nomE\": \"Doe\"}"))
                 .andExpect(status().isOk());
     }
 
