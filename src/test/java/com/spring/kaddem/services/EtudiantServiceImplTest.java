@@ -720,11 +720,9 @@ void testAddAndAssignEtudiantToEquipeAndContract_BothNotFound() {
         etudiantDto.setPrenomE("John");
         etudiantDto.setNomE("Doe");
 
-        Equipe equipe = new Equipe();
-        equipe.setIdEquipe(2);
+        when(contratRepository.findById(1)).thenReturn(Optional.of(new Contrat()));
+        when(equipeRepository.findById(2)).thenReturn(Optional.of(new Equipe())); 
 
-        Contrat contrat = new Contrat();
-        contrat.setIdContrat(1);
 
         EtudiantDto result = etudiantService.addAndAssignEtudiantToEquipeAndContract(etudiantDto, 2, 1);
 
@@ -741,6 +739,8 @@ void testAddAndAssignEtudiantToEquipeAndContract_BothNotFound() {
 
         Departement departement = new Departement();
         departement.setIdDepartement(2);
+        when(etudiantRepository.findById(1)).thenReturn(Optional.of(etudiant)); 
+        when(departementRepository.findById(2)).thenReturn(Optional.of(departement)); 
 
         etudiantService.assignEtudiantToDepartement(1, 2);
         
