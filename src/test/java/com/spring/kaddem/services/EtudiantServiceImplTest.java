@@ -768,7 +768,7 @@ void testAddAndAssignEtudiantToEquipeAndContract_BothNotFound() {
         
         List<Etudiant> result = etudiantService.getEtudiantsByDepartement(departementId);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/getEtudiantsByDepartement/{idDepartement}", departementId)
+        mockMvc.perform(MockMvcRequestBuilders.get("/etudiant/getEtudiantsByDepartement/{idDepartement}", departementId)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"));
@@ -783,7 +783,7 @@ void testAddAndAssignEtudiantToEquipeAndContract_BothNotFound() {
         etudiant.setNomE("Doe");
         when(etudiantRepository.findById(1)).thenReturn(Optional.of(etudiant)); 
         Etudiant retrievedDepartement = etudiantService.retrieveEtudiant(1);
-        mockMvc.perform(MockMvcRequestBuilders.get("/retrieve-etudiant/{etudiantId}", etudiantId)
+        mockMvc.perform(MockMvcRequestBuilders.get("/etudiant/retrieve-etudiant/{etudiantId}", etudiantId)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"));
