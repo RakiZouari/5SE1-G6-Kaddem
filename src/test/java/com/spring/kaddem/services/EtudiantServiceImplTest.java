@@ -55,15 +55,15 @@ import com.spring.kaddem.controllers.EtudiantRestController;
 @AutoConfigureMockMvc
 class EtudiantServiceImplTest {
     
-    @Mock
+    @Autowired
     private EtudiantServiceImpl etudiantService;
-    @Mock
+    @MockBean
     private EtudiantRepository etudiantRepository;
-    @Mock
+    @MockBean
     private ContratRepository contratRepository;
-    @Mock
+    @MockBean
     private EquipeRepository equipeRepository; 
-    @Mock
+    @MockBean
     private DepartementRepository departementRepository;
     private Etudiant etudiant;
     private List<Etudiant> etudiants;
@@ -79,7 +79,6 @@ class EtudiantServiceImplTest {
     etudiant.setNomE("khlif");
     etudiant.setOp(Option.GAMIX);
     Mockito.reset(etudiantRepository, departementRepository);
-    MockitoAnnotations.initMocks(this);    
     }
     @BeforeEach
     void setEtudiants(){
