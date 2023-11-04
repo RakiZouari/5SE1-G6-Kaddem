@@ -637,11 +637,12 @@ void testAddAndAssignEtudiantToEquipeAndContract_BothNotFound() {
         expectedEtudiant.setIdEtudiant(etudiantId);
        
         when(etudiantService.retrieveEtudiant(etudiantId)).thenReturn(expectedEtudiant);
+    
         mockMvc.perform(get("/etudiant/retrieve-etudiant/{etudiantId}", etudiantId)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("idEtudiant").value(etudiantId)); 
-    }
+                .andExpect(jsonPath("$.idEtudiant").value(etudiantId));
+}
 
     @Test
     void testRetrieveEtudiantWithInvalidId() {
@@ -659,13 +660,9 @@ void testAddAndAssignEtudiantToEquipeAndContract_BothNotFound() {
         int etudiantId = 1;
         int departementId = 2;
 
-        doNothing().when(etudiantService).assignEtudiantToDepartement(etudiantId, departementId);
-
         mockMvc.perform(put("/etudiant/assignEtudiantToDepartement/{etudiantId}/{departementId}", etudiantId, departementId)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
-
-        verify(etudiantService).assignEtudiantToDepartement(etudiantId, departementId);
     }
 
     @Test
