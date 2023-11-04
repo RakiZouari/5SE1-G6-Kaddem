@@ -771,7 +771,6 @@ void testAddAndAssignEtudiantToEquipeAndContract_BothNotFound() {
         mockMvc.perform(MockMvcRequestBuilders.get("/etudiant/getEtudiantsByDepartement/{idDepartement}", departementId)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType("application/json"))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE));
 
     }
