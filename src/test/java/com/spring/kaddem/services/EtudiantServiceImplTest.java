@@ -742,7 +742,7 @@ void testAssignEtudiantToDepartement() {
         Departement departement = new Departement();
         departement.setIdDepartement(2);
 
-        when(etudiantService.assignEtudiantToDepartement(eq(1), eq(2))).thenReturn(new EtudiantDto());
+        doNothing().when(etudiantService.assignEtudiantToDepartement(eq(1), eq(2))).thenReturn(new EtudiantDto());
 
         mockMvc.perform(MockMvcRequestBuilders.put("/etudiant/assignEtudiantToDepartement/1/2")
                 .contentType(MediaType.APPLICATION_JSON))
