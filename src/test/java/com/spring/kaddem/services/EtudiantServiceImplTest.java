@@ -621,7 +621,7 @@ void testAddAndAssignEtudiantToEquipeAndContract_BothNotFound() {
             .andExpect(jsonPath("nomE").value("Doe"));
     
     etudiantDto.setPrenomE("Ismail");
-    mockMvc.perform(post("/etudiant/update-etudiant")
+    mockMvc.perform(put("/etudiant/update-etudiant")
             .contentType(MediaType.APPLICATION_JSON)
             .content(asJsonString(etudiantDto)))
             .andExpect(status().isOk())
