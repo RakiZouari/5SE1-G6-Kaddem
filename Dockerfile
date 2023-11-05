@@ -1,4 +1,4 @@
-FROM openjdk:11-jre-slim
+FROM maven:3.8.2-jdk-8
 ARG JAR_FILE=target/*.jar
 
 COPY ${JAR_FILE} kaddem-2.0.0.jar
