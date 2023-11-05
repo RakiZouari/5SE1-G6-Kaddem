@@ -801,5 +801,50 @@ void testAddAndAssignEtudiantToEquipeAndContract_BothNotFound() {
                 .andExpect(MockMvcResultMatchers.status().isOk());
 
     }
+    @Test
+void testToEntityWithNonNullDto() {
+    EtudiantDto etudiantDto = EtudiantDto.builder()
+            .idEtudiant(1)
+            .prenomE("John")
+            .nomE("Doe")
+            .op(Option.GAMIX)
+            .departement(new Departement())
+            .equipes(Arrays.asList(new Equipe()))
+            .contrats(Arrays.asList(new Contrat()))
+            .build();
+
+    Etudiant etudiant = EtudiantDto.toEntity(etudiantDto);
+
+    assertEquals(etudiantDto.getIdEtudiant(), etudiant.getIdEtudiant());
+    assertEquals(etudiantDto.getPrenomE(), etudiant.getPrenomE());
+    assertEquals(etudiantDto.getNomE(), etudiant.getNomE());
+    assertEquals(etudiantDto.getOp(), etudiant.getOp());
+    assertEquals(etudiantDto.getDepartement(), etudiant.getDepartement());
+    assertEquals(etudiantDto.getEquipes(), etudiant.getEquipes());
+    assertEquals(etudiantDto.getContrats(), etudiant.getContrats());
+}
+
+@Test
+void testToEntityWithNullDtoFields() {
+    EtudiantDto etudiantDto = EtudiantDto.builder()
+            .idEtudiant(1)
+            .prenomE("John")
+            .op(Option.GAMIX)
+            .equipes(null)
+            .contrats(Collections.emptyList())
+            .build();
+
+    Etudiant etudiant = EtudiantDto.toEntity(etudiantDto);
+
+    assertEquals(etudiantDto.getIdEtudiant(), etudiant.getIdEtudiant());
+    assertEquals(etudiantDto.getPrenomE(), etudiant.getPrenomE());
+    assertNull(etudiant.getNomE());
+    assertEquals(etudiantDto.getOp(), etudiant.getOp());
+    assertNull(etudiant.getDepartement());
+    assertNull(etudiant.getEquipes());
+    assertNotNull(etudiant.getContrats());
+    assertTrue(etudiant.getContrats().isEmpty());
+}
+
   
 }
