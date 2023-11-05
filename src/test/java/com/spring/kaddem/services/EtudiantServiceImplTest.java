@@ -794,7 +794,7 @@ void testAddAndAssignEtudiantToEquipeAndContract_BothNotFound() {
         int etudiantIdToRemove = 1;
 
         mockMvc.perform(MockMvcRequestBuilders
-                .delete("/removeEtudiant/{idEtudiant}", etudiantIdToRemove)
+                .delete("/etudiant/removeEtudiant/{idEtudiant}", etudiantIdToRemove)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk());
 
