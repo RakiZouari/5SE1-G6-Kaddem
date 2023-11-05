@@ -814,7 +814,6 @@ void testToEntityWithNonNullDto() {
             .build();
 
     Etudiant etudiant = EtudiantDto.toEntity(etudiantDto);
-
     assertEquals(etudiantDto.getIdEtudiant(), etudiant.getIdEtudiant());
     assertEquals(etudiantDto.getPrenomE(), etudiant.getPrenomE());
     assertEquals(etudiantDto.getNomE(), etudiant.getNomE());
@@ -835,16 +834,15 @@ void testToEntityWithNullDtoFields() {
             .build();
 
     Etudiant etudiant = EtudiantDto.toEntity(etudiantDto);
-
     assertEquals(etudiantDto.getIdEtudiant(), etudiant.getIdEtudiant());
     assertEquals(etudiantDto.getPrenomE(), etudiant.getPrenomE());
     assertNull(etudiant.getNomE());
     assertEquals(etudiantDto.getOp(), etudiant.getOp());
     assertNull(etudiant.getDepartement());
     assertNull(etudiant.getEquipes());
-    assertNotNull(etudiant.getContrats());
     assertTrue(etudiant.getContrats().isEmpty());
 }
+
 
   
 }
