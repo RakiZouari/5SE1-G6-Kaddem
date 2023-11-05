@@ -785,7 +785,8 @@ void testAddAndAssignEtudiantToEquipeAndContract_BothNotFound() {
         when(etudiantRepository.findById(1)).thenReturn(Optional.of(etudiant)); 
         Etudiant retrievedDepartement = etudiantService.retrieveEtudiant(1);
         mockMvc.perform(MockMvcRequestBuilders.get("/etudiant/retrieve-etudiant/{etudiantId}", etudiantId)
-                .contentType(MediaType.APPLICATION_JSON))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)) 
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"));
     }
