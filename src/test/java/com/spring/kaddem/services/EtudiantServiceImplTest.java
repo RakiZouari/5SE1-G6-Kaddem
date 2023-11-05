@@ -789,5 +789,16 @@ void testAddAndAssignEtudiantToEquipeAndContract_BothNotFound() {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"));
     }
+    @Test
+    void testRemoveEtudiantController() throws Exception {
+        int etudiantIdToRemove = 1;
+
+        mockMvc.perform(MockMvcRequestBuilders
+                .delete("/removeEtudiant/{idEtudiant}", etudiantIdToRemove)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+
+        verify(etudiantService).removeEtudiant(etudiantIdToRemove);
+    }
   
 }
