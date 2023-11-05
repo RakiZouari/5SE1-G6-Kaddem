@@ -27,4 +27,6 @@ public class Departement implements Serializable {
     private List<Etudiant> etudiants;
 
 
+    public Departement(int id, String updated_name, String updated_description) {
+    }
 }
