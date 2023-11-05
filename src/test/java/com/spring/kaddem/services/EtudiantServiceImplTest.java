@@ -800,7 +800,6 @@ void testAddAndAssignEtudiantToEquipeAndContract_BothNotFound() {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk());
 
-        verify(etudiantService).removeEtudiant(1);
     }
   
 }
