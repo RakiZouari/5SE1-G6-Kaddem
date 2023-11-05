@@ -757,20 +757,20 @@ void testAddAndAssignEtudiantToEquipeAndContract_BothNotFound() {
     void testGetEtudiantsByDepartementController() throws Exception {
         Etudiant etudiant1 = new Etudiant();
         etudiant1.setIdEtudiant(1);
-        
+    
         Departement departement = new Departement();
         departement.setIdDepartement(2);
-        when(etudiantRepository.findById(1)).thenReturn(Optional.of(etudiant1)); 
-        when(departementRepository.findById(2)).thenReturn(Optional.of(departement)); 
-        etudiantService.assignEtudiantToDepartement(1, 2);
-        List<Etudiant> etudiants = Arrays.asList(etudiant1);
-        when(etudiantService.getEtudiantsByDepartement(2)).thenReturn(etudiants);
-
+        departement.setEtudiants(Collections.singletonList(etudiant1)); 
+    
+        when(etudiantRepository.findById(1)).thenReturn(Optional.of(etudiant1));
+        when(departementRepository.findById(2)).thenReturn(Optional.of(departement));
+    
+        List<Etudiant> etudiants = etudiantService.getEtudiantsByDepartement(2); 
+    
         mockMvc.perform(MockMvcRequestBuilders.get("/etudiant/getEtudiantsByDepartement/2"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"))
-                .andExpect(jsonPath("$", hasSize(etudiants.size())));
-
+                .andExpect(jsonPath("$", hasSize(etudiants.size()));
     }
 
     @Test
