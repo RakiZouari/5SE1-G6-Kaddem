@@ -842,6 +842,56 @@ void testToEntityWithNullDtoFields() {
     assertNull(etudiant.getEquipes());
     assertTrue(etudiant.getContrats().isEmpty());
 }
+    @Test
+void testToEntityWithNullDepartementAndEquipes() {
+    EtudiantDto etudiantDto = EtudiantDto.builder()
+            .idEtudiant(1)
+            .prenomE("John")
+            .nomE("Doe")
+            .op(Option.GAMIX)
+            .departement(null)
+            .equipes(null)
+            .contrats(Collections.emptyList())
+            .build();
+
+    Etudiant etudiant = EtudiantDto.toEntity(etudiantDto);
+
+    assertEquals(etudiantDto.getIdEtudiant(), etudiant.getIdEtudiant());
+    assertEquals(etudiantDto.getPrenomE(), etudiant.getPrenomE());
+    assertEquals(etudiantDto.getNomE(), etudiant.getNomE());
+    assertEquals(etudiantDto.getOp(), etudiant.getOp());
+    assertNull(etudiant.getDepartement());
+    assertNull(etudiant.getEquipes());
+    assertTrue(etudiant.getContrats().isEmpty());
+}
+
+@Test
+void testToDtoWithNonNullDepartementAndEquipes() {
+    Departement departement = new Departement();
+    Equipe equipe1 = new Equipe();
+    Equipe equipe2 = new Equipe();
+    
+    Etudiant etudiant = Etudiant.builder()
+            .idEtudiant(1)
+            .prenomE("John")
+            .nomE("Doe")
+            .op(Option.GAMIX)
+            .departement(departement)
+            .equipes(Arrays.asList(equipe1, equipe2))
+            .contrats(Collections.emptyList())
+            .build();
+
+    EtudiantDto etudiantDto = EtudiantDto.toDto(etudiant);
+
+    assertEquals(etudiant.getIdEtudiant(), etudiantDto.getIdEtudiant());
+    assertEquals(etudiant.getPrenomE(), etudiantDto.getPrenomE());
+    assertEquals(etudiant.getNomE(), etudiantDto.getNomE());
+    assertEquals(etudiant.getOp(), etudiantDto.getOp());
+    assertEquals(departement, etudiantDto.getDepartement());
+    assertEquals(etudiant.getEquipes(), etudiantDto.getEquipes());
+    assertTrue(etudiant.getContrats().isEmpty());
+}
+
 
 
   
