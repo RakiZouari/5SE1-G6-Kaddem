@@ -791,14 +791,16 @@ void testAddAndAssignEtudiantToEquipeAndContract_BothNotFound() {
     }
     @Test
     void testRemoveEtudiantController() throws Exception {
-        int etudiantIdToRemove = 1;
-
+        Etudiant etudiant = new Etudiant();
+        etudiant.setIdEtudiant(1);
+        when(etudiantRepository.findById(1)).thenReturn(Optional.of(etudiant)); 
+        etudiantService.removeEtudiant(1);
         mockMvc.perform(MockMvcRequestBuilders
-                .delete("/etudiant/removeEtudiant/{idEtudiant}", etudiantIdToRemove)
+                .delete("/etudiant/removeEtudiant/1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk());
 
-        verify(etudiantService).removeEtudiant(etudiantIdToRemove);
+        verify(etudiantService).removeEtudiant(1);
     }
   
 }
