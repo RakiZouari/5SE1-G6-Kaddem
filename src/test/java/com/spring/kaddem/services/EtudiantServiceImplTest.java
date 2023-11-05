@@ -765,7 +765,7 @@ void testAddAndAssignEtudiantToEquipeAndContract_BothNotFound() {
         etudiantService.assignEtudiantToDepartement(1, 2);
         when(etudiantService.getEtudiantsByDepartement(2)).thenReturn(etudiants);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/etudiant/getEtudiantsByDepartement/2")
+        mockMvc.perform(MockMvcRequestBuilders.get("/etudiant/getEtudiantsByDepartement/2"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"))
                 .andExpect(jsonPath("$", hasSize(etudiants.size())));
