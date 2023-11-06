@@ -2,7 +2,7 @@
 FROM openjdk:11-jre-slim
 
 # Set the working directory in the container
-WORKDIR .
+WORKDIR /app
 
 # Copy the JAR file from your project into the container
 COPY ./target/Kaddem-0.0.1-SNAPSHOT.jar /app/Kaddem-0.0.1-SNAPSHOT.jar
