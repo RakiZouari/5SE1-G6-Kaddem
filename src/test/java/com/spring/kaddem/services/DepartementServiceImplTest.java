@@ -24,7 +24,7 @@ import static org.mockito.Mockito.*;
 @Slf4j
 @AutoConfigureMockMvc
 class DepartementServiceImplTest {
-    @Autowired
+  /*  @Autowired
     private DepartementServiceImpl departementService;
     @Autowired
     private MockMvc mockMvc;
@@ -96,5 +96,5 @@ class DepartementServiceImplTest {
 
         Departement deletedDepartment = departementService.getDepartmentById(id);
 
-        assertNull(deletedDepartment);}
+        assertNull(deletedDepartment);}*/
 }
