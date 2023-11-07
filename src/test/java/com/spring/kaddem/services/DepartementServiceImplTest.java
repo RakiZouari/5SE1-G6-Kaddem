@@ -44,7 +44,7 @@ class DepartementServiceImplTest {
 
         verify(departementRepository, times(1)).save(any(Departement.class));
     }
-
+// rihab
     @Test
     void getAllD() {
         when(departementRepository.findAll()).thenReturn(Arrays.asList(new Departement()));
