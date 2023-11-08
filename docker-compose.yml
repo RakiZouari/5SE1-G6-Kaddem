@@ -1,0 +1,27 @@
+version: "3"
+services:
+  spring-devops:
+    image: mohamedmouthanna1998/kadem_projet
+    ports:
+      - "8089:8089"
+    networks:
+      - devops
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysqldb/projDevOps
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+    depends_on:
+      - mysqldb
+
+  mysqldb:
+    image: mysql:latest
+    volumes:
+      -  /home/mysql/data:/var/lib/mysql:rw
+    networks:
+      - devops
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=projDevOps
+
+networks:
+  devops:
