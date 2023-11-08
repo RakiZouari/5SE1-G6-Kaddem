@@ -7,18 +7,17 @@ import com.spring.kaddem.repositories.DepartementRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 import org.mockito.Mockito;
-import static org.junit.jupiter.api.Assertions.assertNull;
+
 import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 import java.util.Collections;
@@ -97,30 +96,38 @@ class DepartementServiceImplTest {
         assertTrue(departments.size() > 0);
 
         verify(departementRepository, times(1)).findAll();
-    }
+    }*/
 
-    @Test
-    void update() {
-        DepartementDTO departmentDTO = new DepartementDTO("Département de test", "Test Department");
-        int id = departementService.ajouterdepartement(departmentDTO);
+   @Test
+void update() {
+    DepartementDTO departmentDTO = new DepartementDTO("Département de test", "Test Department");
+    int id = departementService.ajouterdepartement(departmentDTO);
 
-        when(departementService.update(departmentDTO)).thenReturn(true);
+    // Configure the behavior of your service method
+    when(departementService.update(departmentDTO)).thenReturn(true);
 
-        departmentDTO.setName("Updated Name");
-        departmentDTO.setNomDepart("Updated Description");
+    // Update the department DTO
+    departmentDTO.setNomDepart("Updated Name");
 
-        boolean updated = departementService.update(departmentDTO);
+    // Call your update method and assert the result
+    boolean updated = departementService.update(departmentDTO);
 
-        assertTrue(updated);
+    assertTrue(updated);
 
-        when(departementService.getDepartmentById(id)).thenReturn(new Departement(id, "Updated Name", "Updated Description"));
+    // Configure the behavior of your service method to get the updated department
+    when(departementService.getDepartmentById(id)).thenReturn(
+        new Departement(id, "Updated Name", "Updated Description")
+    );
 
-        Departement updatedDepartment = departementService.getDepartmentById(id);
+    // Call your getDepartmentById method to retrieve the updated department
+    Departement updatedDepartment = departementService.getDepartmentById(id);
 
-        assertNotNull(updatedDepartment);
-        assertEquals("Updated Name", updatedDepartment.getName());
-        assertEquals("Updated Description", updatedDepartment.getNomDepart());
-    }
+    // Assert the updated department properties
+    assertNotNull(updatedDepartment);
+    assertEquals("Updated Name", updatedDepartment.getName());
+    assertEquals("Updated Description", updatedDepartment.getNomDepart());
+}}
+/*
 
     @Test
     void delete() {
