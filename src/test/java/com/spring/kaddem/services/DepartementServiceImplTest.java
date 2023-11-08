@@ -4,6 +4,7 @@ import com.spring.kaddem.entities.Departement;
 import com.spring.kaddem.entities.DepartementDTO;
 import com.spring.kaddem.repositories.DepartementRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -24,13 +25,22 @@ import static org.mockito.Mockito.*;
 @Slf4j
 @AutoConfigureMockMvc
 class DepartementServiceImplTest {
-  /*  @Autowired
-    private DepartementServiceImpl departementService;
+
     @Autowired
-    private MockMvc mockMvc;
+    private DepartementServiceImpl departementService;
 
     @Mock
     private DepartementRepository departementRepository;
+
+    @Mock
+    private Departement departement;
+    private List<Departement> departements;
+
+    @BeforeEach
+    void setUp() {
+        departement = new Departement();
+        departement.setNomDepart("Test Department");
+    }
 
     @Test
     void ajouterdepartement() {
@@ -44,7 +54,7 @@ class DepartementServiceImplTest {
 
         verify(departementRepository, times(1)).save(any(Departement.class));
     }
-// rihab
+
     @Test
     void getAllD() {
         when(departementRepository.findAll()).thenReturn(Arrays.asList(new Departement()));
@@ -56,7 +66,6 @@ class DepartementServiceImplTest {
 
         verify(departementRepository, times(1)).findAll();
     }
-
 
     @Test
     void update() {
@@ -96,5 +105,6 @@ class DepartementServiceImplTest {
 
         Departement deletedDepartment = departementService.getDepartmentById(id);
 
-        assertNull(deletedDepartment);}*/
+        assertNull(deletedDepartment);
+    }
 }
