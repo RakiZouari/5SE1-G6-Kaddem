@@ -96,7 +96,7 @@ class DepartementServiceImplTest {
         assertTrue(departments.size() > 0);
 
         verify(departementRepository, times(1)).findAll();
-    }*/
+    }
 
    @Test
 void update() {
