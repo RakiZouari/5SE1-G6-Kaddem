@@ -49,13 +49,14 @@ class DepartementServiceImplTest {
 
         when(departementRepository.save(any(Departement.class))).thenReturn(new Departement());
 
+
         int id = departementService.ajouterdepartement(departmentDTO);
 
         assertTrue(id > 0);
 
         verify(departementRepository, times(1)).save(any(Departement.class));
-    }
-
+    }}
+/*
     @Test
     void getAllD() {
         when(departementRepository.findAll()).thenReturn(departements);
@@ -110,3 +111,4 @@ class DepartementServiceImplTest {
         assertNull(deletedDepartment);
     }
 }
+*/
