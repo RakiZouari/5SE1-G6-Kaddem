@@ -3,24 +3,50 @@ package com.spring.kaddem.services;
 import com.spring.kaddem.entities.Departement;
 import com.spring.kaddem.entities.DepartementDTO;
 import com.spring.kaddem.repositories.DepartementRepository;
+
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.web.servlet.MockMvc;
+import static org.mockito.Mockito.*;
+import org.mockito.Mockito;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import java.util.Arrays;
+import org.junit.jupiter.api.Test;
+import java.util.Collections;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 
+import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+import static org.hamcrest.Matchers.hasSize;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest
 @Slf4j
@@ -47,14 +73,19 @@ class DepartementServiceImplTest {
     void ajouterdepartement() {
         DepartementDTO departmentDTO = new DepartementDTO("Département de test", "Test Department");
 
-        when(departementRepository.save(any(Departement.class))).thenReturn(new Departement());
+        when(departementRepository.save(any(Departement.class))).thenAnswer(invocation -> {
+            Departement savedDepartement = invocation.getArgument(0);
+            savedDepartement.setIdDepartement(1); // Set the ID as it would be generated during save
+            return savedDepartement;
+        });
 
         int id = departementService.ajouterdepartement(departmentDTO);
 
-        //assertTrue(id > 0);
+        assertTrue(id > 0);
 
         verify(departementRepository, times(1)).save(any(Departement.class));
-    }}
+    }
+}
 /*
     @Test
     void getAllD() {
