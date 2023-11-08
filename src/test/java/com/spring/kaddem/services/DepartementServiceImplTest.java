@@ -95,7 +95,8 @@ class DepartementServiceImplTest {
         DepartementDTO departmentDTO = new DepartementDTO("Département de test", "Test Department");
         int id = departementService.ajouterdepartement(departmentDTO);
 
-        when(departementService.delete(departmentDTO)).thenReturn(true);
+        // No need to use 'when' for void methods
+        doNothing().when(departementService).delete(departmentDTO);
 
         boolean deleted = departementService.delete(departmentDTO);
 
@@ -107,4 +108,5 @@ class DepartementServiceImplTest {
 
         assertNull(deletedDepartment);
     }
+
 }
