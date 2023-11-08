@@ -15,7 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -40,6 +40,7 @@ class DepartementServiceImplTest {
     void setUp() {
         departement = new Departement();
         departement.setNomDepart("Test Department");
+        departements = new ArrayList<>(); // Initialize departements list
     }
 
     @Test
@@ -95,8 +96,8 @@ class DepartementServiceImplTest {
         DepartementDTO departmentDTO = new DepartementDTO("Département de test", "Test Department");
         int id = departementService.ajouterdepartement(departmentDTO);
 
-        // No need to use 'when' for void methods
-        doNothing().when(departementService).delete(departmentDTO);
+        // Set the expected behavior for deleteById in the repository
+        doNothing().when(departementRepository).deleteById(id);
 
         boolean deleted = departementService.delete(departmentDTO);
 
@@ -108,5 +109,4 @@ class DepartementServiceImplTest {
 
         assertNull(deletedDepartment);
     }
-
 }
