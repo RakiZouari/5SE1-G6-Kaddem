@@ -129,27 +129,26 @@ void update() {
 }
 
 
-   @Test
-void delete() {
-    DepartementDTO departmentDTO = new DepartementDTO("Département de test", "Test Department");
-    int id = departementService.ajouterdepartement(departmentDTO);
+    @Test
+    void delete() {
+        DepartementDTO departmentDTO = new DepartementDTO("Département de test", "Test Department");
+        int id = departementService.ajouterdepartement(departmentDTO);
 
-    // Set the expected behavior for deleteById in the repository
-    doNothing().when(departementRepository).deleteById(id);
+        // Set the expected behavior for deleteById in the repository
+        doNothing().when(departementRepository).deleteById(id);
 
-    // Call your delete method and assert the result
-    boolean deleted = departementService.delete(departmentDTO);
+        boolean deleted = departementService.delete(departmentDTO);
 
-    assertTrue(deleted);
+        assertTrue(deleted);
 
-    // Configure the behavior of your service method to get the department (should return null after deletion)
-    when(departementService.getDepartmentById(id)).thenReturn(null);
+        // Configure the behavior of your service method to get the department (should return null after deletion)
+        when(departementService.getDepartmentById(id)).thenReturn(null);
 
-    // Call your getDepartmentById method to retrieve the deleted department
-    Departement deletedDepartment = departementService.getDepartmentById(id);
+        // Call your getDepartmentById method to retrieve the deleted department
+        Departement deletedDepartment = departementService.getDepartmentById(id);
 
-    // Assert that the department is null, indicating it has been deleted
-    assertNull(deletedDepartment);
-}
+        // Assert that the department is null, indicating it has been deleted
+        assertNull(deletedDepartment);
+    }
 
 }
