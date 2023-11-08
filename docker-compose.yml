@@ -1,6 +1,18 @@
-version: '3'
+version: '3.8'
 
 services:
+  # MySQL database service
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: devops
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  # Spring Boot application service
   app:
     build:
       context: .
@@ -8,16 +20,20 @@ services:
     ports:
       - "8089:8089"
     depends_on:
-      - db
+      - mysql
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/projDevOps?useUnicode=true&createDatabaseIfNotExist=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
-      SPRING_DATASOURCE_USERNAME: mahmoud
-      SPRING_DATASOURCE_PASSWORD: mahmoud
-  db:
-    image: mysql:latest
-    ports:
-      - "3307:3306"
-    environment:
-      MYSQL_DATABASE: projDevOps
-      MYSQL_USER: mahmoud
-      MYSQL_PASSWORD: mahmoud
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/devops?createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: '*'
+      MANAGEMENT_ENDPOINT_PROMETHEUS_ENABLED: 'true'
+      MANAGEMENT_METRICS_EXPORT_PROMETHEUS_ENABLED: 'true'
+
+
+
+
+
+
+
+volumes:
+  mysql-data:
