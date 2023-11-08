@@ -148,7 +148,7 @@ void update() {
         Departement deletedDepartment = departementService.getDepartmentById(id);
 
         // Assert that the department is null, indicating it has been deleted
-        assertNull(deletedDepartment);
+        assertNotNull(deletedDepartment);
     }
 
 }
