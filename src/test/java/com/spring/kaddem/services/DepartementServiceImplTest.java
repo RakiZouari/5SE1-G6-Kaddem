@@ -57,7 +57,7 @@ class DepartementServiceImplTest {
 
     @Test
     void getAllD() {
-        when(departementRepository.findAll()).thenReturn(Arrays.asList(new Departement()));
+        when(departementRepository.findAll()).thenReturn(departements);
 
         List<Departement> departments = departementService.getAllD();
 
