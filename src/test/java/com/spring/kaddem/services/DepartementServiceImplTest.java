@@ -132,7 +132,7 @@ void update() {
     @Test
     void delete() {
         DepartementDTO departmentDTO = new DepartementDTO("Département de test", "Test Department");
-        int id = departementService.ajouterdepartement(departmentDTO);
+        int id = 1; // Assume the ID of the department to delete
 
         // Configure the behavior of findById in the repository to return a non-null value
         when(departementRepository.findById(id)).thenReturn(Optional.of(new Departement(id, "Test Name", "Test Description")));
@@ -152,6 +152,7 @@ void update() {
 
         assertNull(deletedDepartment);
     }
+
 
 
 }
