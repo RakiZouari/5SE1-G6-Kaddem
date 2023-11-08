@@ -84,8 +84,8 @@ class DepartementServiceImplTest {
 
         verify(departementRepository, times(1)).save(any(Departement.class));
     }
-}
-/*
+
+
     @Test
     void getAllD() {
         when(departementRepository.findAll()).thenReturn(departements);
@@ -96,7 +96,7 @@ class DepartementServiceImplTest {
         assertTrue(departments.size() > 0);
 
         verify(departementRepository, times(1)).findAll();
-    }*/
+    }
 
    @Test
 void update() {
