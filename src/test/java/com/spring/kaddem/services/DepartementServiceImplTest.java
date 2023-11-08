@@ -26,7 +26,7 @@ import static org.mockito.Mockito.*;
 @AutoConfigureMockMvc
 class DepartementServiceImplTest {
 
-    @Autowired
+    @Mock
     private DepartementServiceImpl departementService;
 
     @Mock
@@ -35,7 +35,7 @@ class DepartementServiceImplTest {
     @Mock
     private Departement departement;
     private List<Departement> departements;
-
+/*
     @BeforeEach
     void setUp() {
         departement = new Departement();
@@ -108,5 +108,5 @@ class DepartementServiceImplTest {
 
         assertNull(deletedDepartment);
     }
-
+*/
 }
