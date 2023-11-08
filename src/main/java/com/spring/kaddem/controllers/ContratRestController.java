@@ -6,9 +6,7 @@ import com.spring.kaddem.entities.Contrat;
 import com.spring.kaddem.services.IContratService;
 import lombok.AllArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.Date;
 import java.util.List;
 
@@ -16,6 +14,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/contrat")
+@CrossOrigin(origins = "*")
 public class ContratRestController {
     IContratService contratService;
 
@@ -66,13 +65,6 @@ public class ContratRestController {
         return contratService.nbContratsValides(startDate, endDate);
     }
 
-    //Only no-arg methods may be annotated with @Scheduled
-    @Scheduled(cron="0 0 13 * * *")//(cron="0 0 13 * * ?")(fixedRate =21600)
-    //  @Scheduled(cron="45 * * * * *")//(cron="0 0 13 * * ?")(fixedRate =21600)
-    @PutMapping(value = "/majStatusContrat")
-    public void majStatusContrat (){
-
-    }
 
     //public float getChiffreAffaireEntreDeuxDate(Date startDate, Date endDate)
 
