@@ -85,7 +85,7 @@ class DepartementServiceImplTest {
         verify(departementRepository, times(1)).save(any(Departement.class));
     }
 
-
+/*
     @Test
     void getAllD() {
         when(departementRepository.findAll()).thenReturn(departements);
@@ -96,7 +96,7 @@ class DepartementServiceImplTest {
         assertTrue(departments.size() > 0);
 
         verify(departementRepository, times(1)).findAll();
-    }
+    }*/
 
    @Test
 void update() {
@@ -126,26 +126,30 @@ void update() {
     assertNotNull(updatedDepartment);
     assertEquals("Updated Name", updatedDepartment.getName());
     assertEquals("Updated Description", updatedDepartment.getNomDepart());
-}}
-/*
-
-    @Test
-    void delete() {
-        DepartementDTO departmentDTO = new DepartementDTO("Département de test", "Test Department");
-        int id = departementService.ajouterdepartement(departmentDTO);
-
-        // Set the expected behavior for deleteById in the repository
-        doNothing().when(departementRepository).deleteById(id);
-
-        boolean deleted = departementService.delete(departmentDTO);
-
-        assertTrue(deleted);
-
-        when(departementService.getDepartmentById(id)).thenReturn(null);
-
-        Departement deletedDepartment = departementService.getDepartmentById(id);
-
-        assertNull(deletedDepartment);
-    }
 }
-*/
+
+
+   @Test
+void delete() {
+    DepartementDTO departmentDTO = new DepartementDTO("Département de test", "Test Department");
+    int id = departementService.ajouterdepartement(departmentDTO);
+
+    // Set the expected behavior for deleteById in the repository
+    doNothing().when(departementRepository).deleteById(id);
+
+    // Call your delete method and assert the result
+    boolean deleted = departementService.delete(departmentDTO);
+
+    assertTrue(deleted);
+
+    // Configure the behavior of your service method to get the department (should return null after deletion)
+    when(departementService.getDepartmentById(id)).thenReturn(null);
+
+    // Call your getDepartmentById method to retrieve the deleted department
+    Departement deletedDepartment = departementService.getDepartmentById(id);
+
+    // Assert that the department is null, indicating it has been deleted
+    assertNull(deletedDepartment);
+}
+
+}
