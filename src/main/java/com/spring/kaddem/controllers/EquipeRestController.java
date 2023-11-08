@@ -17,8 +17,7 @@ public class EquipeRestController {
     @GetMapping("/retrieve-all-equipes")
     @ResponseBody
     public List<Equipe> getEquipes() {
-        List<Equipe> listEquipes = equipeService.retrieveAllEquipes();
-        return listEquipes;
+        return equipeService.retrieveAllEquipes();
     }
 
 
@@ -34,17 +33,17 @@ public class EquipeRestController {
     @PostMapping("/add-equipe")
     @ResponseBody
     public Equipe addEquipe(@RequestBody Equipe e) {
-        Equipe equipe = equipeService.addEquipe(e);
-        return equipe;
+        return equipeService.addEquipe(e);
     }
+
 
     // http://localhost:8089/Kaddem/equipe/update-equipe
     @PutMapping("/update-equipe")
     @ResponseBody
-    public Equipe updateEtudiant(@RequestBody Equipe e) {
-        Equipe equipe= equipeService.updateEquipe(e);
-        return equipe;
+    public Equipe updateEquipe(@RequestBody Equipe e) {
+        return equipeService.updateEquipe(e);
     }
+
 
     // @Scheduled(cron="0 0 13 * * *")
     @Scheduled(cron="* * 13 * * *")

@@ -48,64 +48,68 @@ public class EquipeServiceImpl implements IEquipeService{
         return   equipeRepository.findById(idEquipe).get();
     }
 
-    public void evoluerEquipes(){
+    public void evoluerEquipes() {
         log.info("debut methode evoluerEquipes");
-        // t1 : recuperer date a linstant t1
+
         List<Equipe> equipes = (List<Equipe>) equipeRepository.findAll();
-        log.debug("nombre equipes : "+equipes.size());
+        log.debug("nombre équipes : " + equipes.size());
+
         for (Equipe equipe : equipes) {
-            if (equipe.getEtudiants()!=null && equipe.getEtudiants().size() > 0) {
-                log.debug("vérification niveau équipe");
-                if ((equipe.getNiveau().equals(Niveau.JUNIOR)) || (equipe.getNiveau().equals(Niveau.SENIOR))) {
-                    List<Etudiant> etudiants = equipe.getEtudiants();
+            processEquipe(equipe);
+        }
 
-                    Integer nbEtudiantsAvecContratsActifs = 0;
-                    for (Etudiant etudiant : etudiants) {
-                        log.debug("in for etudiants");
-                        //  List<Contrat> contrats = etudiant.getContrats();
-                        List<Contrat> contrats = contratRepository.findByEtudiantIdEtudiant(etudiant.getIdEtudiant())  ;
-                        for (Contrat contrat : contrats) {
-                            log.debug("in contrat");
+        log.info("fin methode evoluerEquipes");
+    }
 
-                            Date dateSysteme = new Date();
-                            long differenceInTime = contrat.getDateFinContrat().getTime() -contrat.getDateDebutContrat().getTime() ;
-                            long differenceInYears = (differenceInTime / (1000l * 60 * 60 * 24 * 365));
-                            log.debug("differenceInYears: "+differenceInYears);
-                            if ((contrat.getArchived() == null || contrat.getArchived() == false) && (differenceInYears > 1)) {
-                                //	contratsActifs.add(contrat);
-                                nbEtudiantsAvecContratsActifs++;
-                                break;
-                            }
-                            if (nbEtudiantsAvecContratsActifs >= 3) break;
-                        }
-// t2 : recuperer date a linstant t2 : te=t2-t1
-                    }
-                    log.info("nbEtudiantsAvecContratsActifs: " + nbEtudiantsAvecContratsActifs);
-                    if (nbEtudiantsAvecContratsActifs >= 3) {
-                        if (equipe.getNiveau().equals(Niveau.JUNIOR)) {
-                            log.info("mise a jour du niveau de l equipe " + equipe.getNomEquipe() +
-                                    " du niveau " + equipe.getNiveau() + " vers le niveau supérieur SENIOR");
-                            equipe.setNiveau(Niveau.SENIOR);
-                            equipeRepository.save(equipe);
-                            // t2 : recuperer date a linstant t2 : te=t2-t1
-                            break;
-                        }
-                        if (equipe.getNiveau().equals(Niveau.SENIOR)) {
-                            log.info("mise a jour du niveau de l equipe " + equipe.getNomEquipe() +
-                                    " du niveau " + equipe.getNiveau() + " vers le niveau supérieur EXPERT");
-                            equipe.setNiveau(Niveau.EXPERT);
-                            equipeRepository.save(equipe);
-                            // t2 : recuperer date a linstant t2 : te=t2-t1
-                            break;
-                        }
-                    }
-                }
+    private void processEquipe(Equipe equipe) {
+        if (equipe.getEtudiants() == null || equipe.getEtudiants().isEmpty()) {
+            return;
+        }
 
+        log.debug("vérification niveau équipe");
+
+        if (equipe.getNiveau().equals(Niveau.JUNIOR) || equipe.getNiveau().equals(Niveau.SENIOR)) {
+            for (Etudiant etudiant : equipe.getEtudiants()) {
+                processEtudiant(etudiant, equipe);
             }
         }
-        log.info("fin methode evoluerEquipes");
-        // t2 : recuperer date a linstant t2 : te=t2-t1
     }
+
+    private void processEtudiant(Etudiant etudiant, Equipe equipe) {
+        log.debug("in for etudiants");
+        List<Contrat> contrats = contratRepository.findByEtudiantIdEtudiant(etudiant.getIdEtudiant());
+
+        for (Contrat contrat : contrats) {
+            processContrat(contrat, equipe);
+        }
+    }
+
+    private void processContrat(Contrat contrat, Equipe equipe) {
+        log.debug("in contrat");
+
+        long differenceInTime = contrat.getDateFinContrat().getTime() - contrat.getDateDebutContrat().getTime();
+        long differenceInYears = (differenceInTime / (1000L * 60 * 60 * 24 * 365));
+        log.debug("differenceInYears: " + differenceInYears);
+
+        if ((contrat.getArchived() == null || !contrat.getArchived()) && (differenceInYears > 1)) {
+            updateEquipeNiveau(equipe);
+        }
+    }
+
+    private void updateEquipeNiveau(Equipe equipe) {
+        if (equipe.getNiveau().equals(Niveau.JUNIOR)) {
+            log.info("mise à jour du niveau de l'équipe " + equipe.getNomEquipe() +
+                    " du niveau " + equipe.getNiveau() + " vers le niveau supérieur SENIOR");
+            equipe.setNiveau(Niveau.SENIOR);
+            equipeRepository.save(equipe);
+        } else if (equipe.getNiveau().equals(Niveau.SENIOR)) {
+            log.info("mise à jour du niveau de l'équipe " + equipe.getNomEquipe() +
+                    " du niveau " + equipe.getNiveau() + " vers le niveau supérieur EXPERT");
+            equipe.setNiveau(Niveau.EXPERT);
+            equipeRepository.save(equipe);
+        }
+    }
+
 
 }
 
