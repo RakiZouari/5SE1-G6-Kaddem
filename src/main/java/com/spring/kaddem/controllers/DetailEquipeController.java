@@ -19,8 +19,7 @@ import java.util.Optional;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/detailsequipe")
-@Getter
-@Setter
+@CrossOrigin(origins = "http://localhost:4200")
 public class DetailEquipeController {
     IDetailEquipeService iDetailEquipeService;
     DetailEquipeService detailEquipeService;
