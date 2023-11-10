@@ -1,21 +1,13 @@
 package com.spring.kaddem.controllers;
 
 
-import com.spring.kaddem.entities.Contrat;
-import com.spring.kaddem.services.IContratService;
-import lombok.AllArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.Date;
-import java.util.List;
-
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@AllArgsConstructor
 @RequestMapping("/contrat")
 public class ContratRestController {
+
     IContratService contratService;
 
     // http://localhost:8089/Kaddem/contrat/retrieve-all-contrats

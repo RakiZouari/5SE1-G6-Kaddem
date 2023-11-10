@@ -3,7 +3,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -28,7 +28,7 @@ public class Contrat implements Serializable {
     private Boolean archived;
     private Integer montantContrat;
     @ManyToOne
-    // @JsonIgnore
+    @JsonIgnore
     private  Etudiant etudiant;
     //Palestine
 
