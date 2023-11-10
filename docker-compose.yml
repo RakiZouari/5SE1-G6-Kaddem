@@ -22,6 +22,7 @@ services:
     depends_on:
       - mysql
     environment:
+      spring.datasource.driver-class-name: com.mysql.jdbc.Driver
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/devops?createDatabaseIfNotExist=true
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
