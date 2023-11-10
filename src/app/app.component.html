@@ -1,0 +1,88 @@
+<div class="row">
+  <div class="col-md-11" style="margin-left: 20px">
+    <h3 style="margin-top: 20px">List Contrat </h3>
+    <hr>
+    <button class="btn btn-round btn-sm btn-success" (click)="open(mymodal1,null)">Add new Contrat</button>
+    <br><br>
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th>idContrat</th>
+        <th>dateDebutContrat</th>
+        <th>dateFinContrat</th>
+        <th>specialite</th>
+        <th>archived</th>
+        <th>montantContrat</th>
+      </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor='let p of listContrats'>
+          <td>{{p.idContrat}}</td>
+          <td>{{p.dateDebutContrat}}</td>
+          <td>{{p.dateFinContrat}}</td>
+          <td>{{p.specialite}}</td>
+          <td>{{p.archived}}</td>
+          <td>{{p.montantContrat}}</td>
+        <td>
+          <button type="button" class="btn btn-outline-primary"
+                  (click)="open(mymodal1,p)">Edit
+          </button>
+          &nbsp;
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+  </div>
+</div>
+<ng-template #mymodal1 let-modal1>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Add new Contrat</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal1.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="mb-3">
+        <label for="contrat-dateDebutContrat">dateDebutContrat</label>
+        <div class="input-group">
+          <input id="contrat-dateDebutContrat" class="form-control" type="date" placeholder="dateDebutContrat"
+                 [(ngModel)]="contrat.dateDebutContrat"
+                 [ngModelOptions]="{standalone : true}"></div>
+      </div>
+      <div class="mb-3">
+        <label for="contrat-dateFinContrat">dateFinContrat</label>
+        <div class="input-group">
+          <input id="contrat-dateFinContrat" class="form-control" type="date" placeholder="dateFinContrat"
+                 [(ngModel)]="contrat.dateFinContrat"
+                 [ngModelOptions]="{standalone : true}"></div>
+      </div>
+      <div class="mb-3">
+        <label for="contrat-specialite">specialite</label>
+        <div class="input-group">
+          <input id="contrat-specialite" class="form-control" type="text" placeholder="specialite"
+                 [(ngModel)]="contrat.specialite"
+                 [ngModelOptions]="{standalone : true}"></div>
+      </div>
+      <div class="mb-3">
+        <label for="contrat-archived">archived</label>
+        <div class="input-group">
+          <input id="contrat-archived" class="form-control" type="checkbox" placeholder="archived"
+                 [(ngModel)]="contrat.archived"
+                 [ngModelOptions]="{standalone : true}"></div>
+      </div>
+      <div class="mb-3">
+        <label for="contrat-montantContrat">montantContrat</label>
+        <div class="input-group">
+          <input id="contrat" class="form-control" type="number" placeholder="montantContrat"
+                 [(ngModel)]="contrat.montantContrat"
+                 [ngModelOptions]="{standalone : true}"></div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-success" (click)="addContrat(contrat)"
+            (click)="modal1.close('Save click')">Add
+    </button>
+    <button type="button" class="btn btn-danger" (click)="modal1.close('Save click')">Cancel</button>
+  </div>
+</ng-template>
