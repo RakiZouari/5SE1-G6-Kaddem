@@ -1,6 +1,7 @@
 package com.spring.kaddem.controllers;
 
 
+
 import com.spring.kaddem.dto.ContratDTO;
 import com.spring.kaddem.entities.Contrat;
 import com.spring.kaddem.services.IContratService;
@@ -11,11 +12,12 @@ import java.util.Date;
 import java.util.List;
 
 
+
 @RestController
-@AllArgsConstructor
 @RequestMapping("/contrat")
 @CrossOrigin("*")
 public class ContratRestController {
+
     IContratService contratService;
 
     // http://localhost:8089/Kaddem/contrat/retrieve-all-contrats
