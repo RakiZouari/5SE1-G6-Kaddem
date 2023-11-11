@@ -1,5 +1,5 @@
 # Utilisez l'image OpenJDK pour construire votre application Spring
-FROM openjdk:11
+FROM openjdk:11-jre-slim
 
 # Copiez le jar de l'application Spring dans le conteneur
 COPY target/Kaddem-1.0.jar .
