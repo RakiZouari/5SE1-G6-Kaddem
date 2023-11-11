@@ -1,11 +1,21 @@
 package com.spring.kaddem.controllers;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+
+import com.spring.kaddem.dto.ContratDTO;
+import com.spring.kaddem.entities.Contrat;
+import com.spring.kaddem.services.IContratService;
+import lombok.AllArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.bind.annotation.*;
+import java.util.Date;
+import java.util.List;
+
+
 
 @RestController
 @RequestMapping("/contrat")
+@CrossOrigin("*")
 public class ContratRestController {
 
     IContratService contratService;
@@ -27,23 +37,26 @@ public class ContratRestController {
     // http://localhost:8089/Kaddem/contrat/add-contrat
     @PostMapping("/add-contrat")
     @ResponseBody
-    public Contrat addContrat(@RequestBody Contrat c) {
+    public ContratDTO addContrat(@RequestBody ContratDTO contratDTO) {
 
-        return contratService.addContrat(c);
+        return contratService.addUpdateContrat(contratDTO);
     }
 
     // http://localhost:8089/Kaddem/contrat/update-contrat
     @PutMapping("/update-contrat")
     @ResponseBody
-    public Contrat updateEtudiant(@RequestBody Contrat cont) {
-        return contratService.updateContrat(cont);
+    public ContratDTO updateContrat(@RequestBody ContratDTO contratDTO) {
+        return contratService.addUpdateContrat(contratDTO);
     }
 
     // http://localhost:8089/Kaddem/contrat/addAndAffectContratToEtudiant/salah/ahmed
     @PostMapping("/addAndAffectContratToEtudiant/{nomE}/{prenomE}")
     @ResponseBody
-    public Contrat addAndAffectContratToEtudiant(@RequestBody Contrat contrat,@PathVariable("nomE") String nomE,@PathVariable("prenomE") String prenomE) {
-        return contratService.addAndAffectContratToEtudiant(contrat,nomE,prenomE);
+    public ContratDTO addAndAffectContratToEtudiant(@RequestBody ContratDTO contratDTO,
+                                                    @PathVariable("nomE") String nomE,
+                                                    @PathVariable("prenomE") String prenomE) {
+
+        return contratService.addAndAffectContratToEtudiant(contratDTO, nomE, prenomE);
     }
 
     //The most common ISO Date Format yyyy-MM-dd — for example, "2000-10-31".
@@ -54,13 +67,6 @@ public class ContratRestController {
         return contratService.nbContratsValides(startDate, endDate);
     }
 
-    //Only no-arg methods may be annotated with @Scheduled
-    @Scheduled(cron="0 0 13 * * *")//(cron="0 0 13 * * ?")(fixedRate =21600)
-    //  @Scheduled(cron="45 * * * * *")//(cron="0 0 13 * * ?")(fixedRate =21600)
-    @PutMapping(value = "/majStatusContrat")
-    public void majStatusContrat (){
-        contratService.retrieveAndUpdateStatusContrat();
-    }
 
     //public float getChiffreAffaireEntreDeuxDate(Date startDate, Date endDate)
 
