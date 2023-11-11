@@ -1,15 +1,12 @@
 package com.spring.kaddem.repositories;
 
-
 import com.spring.kaddem.entities.Contrat;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.Date;
-
-
-
 
 @Repository
 public interface ContratRepository extends JpaRepository<Contrat, Integer> {
@@ -18,6 +15,4 @@ public interface ContratRepository extends JpaRepository<Contrat, Integer> {
     public Integer getnbContratsValides(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
 
    // List<Contrat> findByEtudiantIdEtudiant(Integer idEtudiant);
-
-
 }
