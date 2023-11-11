@@ -11,10 +11,10 @@ ARG ARTIFACT_ID=Kaddem
 ARG VERSION=1.2
 
 # Download the JAR file from Nexus using curl
-RUN curl -o app.jar "$NEXUS_REPO_URL/$GROUP_ID/$ARTIFACT_ID/$VERSION/$ARTIFACT_ID-$VERSION.jar"
+RUN curl -o ${ARTIFACT_ID}-${VERSION}.jar "$NEXUS_REPO_URL/$GROUP_ID/$ARTIFACT_ID/$VERSION/${ARTIFACT_ID}-${VERSION}.jar"
 
 # Expose the port that your Spring Boot application will run on
 EXPOSE 8089
 
 # Define the command to run your Spring Boot application
-CMD ["java", "-jar", "app.jar"]
+CMD ["java", "-jar", "${ARTIFACT_ID}-${VERSION}.jar"]
