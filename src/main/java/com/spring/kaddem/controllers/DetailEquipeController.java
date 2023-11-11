@@ -20,7 +20,6 @@ import java.util.Optional;
 @AllArgsConstructor
 @RequestMapping("/detailsequipe")
 @CrossOrigin(origins = "http://192.168.153.128:4200")
-
 public class DetailEquipeController {
     IDetailEquipeService iDetailEquipeService;
     DetailEquipeService detailEquipeService;
