@@ -2,10 +2,10 @@
 FROM openjdk:11
 
 # Copiez le jar de l'application Spring dans le conteneur
-COPY target/Kaddem-1.2.jar .
+COPY target/Kaddem-1.0.jar .
 
 # Exposez le port sur lequel votre application Spring s'exécute (par défaut 8080)
 EXPOSE 8089
 
 # Commande pour lancer l'application Spring
-CMD ["java", "-jar", "Kaddem-1.2.jar"]
+CMD ["java", "-jar", "Kaddem-1.0.jar"]
