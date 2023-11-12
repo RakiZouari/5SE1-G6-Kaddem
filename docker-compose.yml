@@ -15,7 +15,7 @@ services:
 
   mysqldb:
     image: mysql:latest
-     ports:
+    ports:
       - "3306:3306"
     volumes:
       -  /home/mysql/data:/var/lib/mysql:rw
