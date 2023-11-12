@@ -2,6 +2,7 @@ version: "3"
 services:
   spring-devops:
     image: kadem_projet
+    restart: on-failure
     ports:
       - "8089:8089"
     networks:
@@ -15,6 +16,7 @@ services:
 
   mysqldb:
     image: mysql:latest
+    restart: always
     ports:
       - "3306:3306"
     volumes:
