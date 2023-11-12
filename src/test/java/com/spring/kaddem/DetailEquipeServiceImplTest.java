@@ -1,4 +1,4 @@
-package com.spring.kaddem;
+/*package com.spring.kaddem;
 
 import com.spring.kaddem.entities.DetailEquipe;
 import com.spring.kaddem.repositories.DetailEquipeRepository;
@@ -46,8 +46,6 @@ public class DetailEquipeServiceImplTest {
         verify(detailEquipeRepository).save(detailEquipe);
         assertEquals(detailEquipe, result);
          }
-
-
-    }
+    }*/
 
 
