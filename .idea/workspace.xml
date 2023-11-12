@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="af781896-0054-4a08-85c3-5d0a6aed71ef" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JUnit5 Test Class" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="JpbToolWindowState">
+    <option name="isToolWindowVisible" value="false" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="2X8Kya2qhx8O0tC0ZaoMXhkkQ6h" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/USER/Desktop/projet devops/5SE1-G6-Kaddem&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;ff7d64a3406cfb46babda7d68612a090&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="com.spring.kaddem.services" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="KaddemApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="Kaddem" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.spring.kaddem.KaddemApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="af781896-0054-4a08-85c3-5d0a6aed71ef" name="Changes" comment="" />
+      <created>1698005528493</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1698005528493</updated>
+      <workItem from="1698005531654" duration="2353000" />
+      <workItem from="1698012768203" duration="757000" />
+      <workItem from="1698059336942" duration="1060000" />
+      <workItem from="1698083531217" duration="5121000" />
+      <workItem from="1698610437034" duration="22000" />
+      <workItem from="1698615004269" duration="48000" />
+      <workItem from="1698616168536" duration="92000" />
+      <workItem from="1698616424756" duration="558000" />
+      <workItem from="1698689247470" duration="3908000" />
+      <workItem from="1698696415176" duration="968000" />
+      <workItem from="1698697768130" duration="3560000" />
+      <workItem from="1698752371282" duration="2299000" />
+      <workItem from="1699209540459" duration="1533000" />
+      <workItem from="1699359628613" duration="778000" />
+      <workItem from="1699362757688" duration="409000" />
+      <workItem from="1699364253641" duration="316000" />
+      <workItem from="1699364977230" duration="4404000" />
+      <workItem from="1699445712244" duration="2256000" />
+      <workItem from="1699463350373" duration="712000" />
+      <workItem from="1699472642522" duration="5979000" />
+      <workItem from="1699480139958" duration="1704000" />
+      <workItem from="1699525175418" duration="2618000" />
+      <workItem from="1699645429942" duration="617000" />
+      <workItem from="1699657575870" duration="1628000" />
+      <workItem from="1699700415102" duration="217000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.spring.kaddem.services.DepartementServiceImplTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 14.048 s - in com.spring.kaddem.services.DepartementServiceImplTest
