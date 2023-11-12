@@ -1,7 +1,7 @@
 version: "3"
 services:
   spring-devops:
-    image: mohamedmouthanna1998/kadem_projet
+    image: kadem_projet
     ports:
       - "8089:8089"
     networks:
