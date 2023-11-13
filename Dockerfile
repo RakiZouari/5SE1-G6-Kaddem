@@ -20,4 +20,4 @@ RUN curl -o ${ARTIFACT_ID}-${VERSION}.jar "$NEXUS_REPO_URL/$GROUP_ID/$ARTIFACT_I
 EXPOSE 8089
 
 # Define the command to run your Spring Boot application
-CMD java -jar ${ARTIFACT_ID}-${VERSION}.jar
+CMD java -jar /${ARTIFACT_ID}-${VERSION}.jar
