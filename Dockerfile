@@ -11,7 +11,7 @@ WORKDIR /app
 ARG NEXUS_REPO_URL=http://localhost:8081/repository/maven-kaddem-repository
 ARG GROUP_ID=com/spring
 ARG ARTIFACT_ID=Kaddem
-ARG VERSION=1.2
+ARG VERSION=1.3
 
 # Download the JAR file from Nexus using curl
 RUN curl -o ${ARTIFACT_ID}-${VERSION}.jar "$NEXUS_REPO_URL/$GROUP_ID/$ARTIFACT_ID/$VERSION/${ARTIFACT_ID}-${VERSION}.jar"
@@ -20,4 +20,4 @@ RUN curl -o ${ARTIFACT_ID}-${VERSION}.jar "$NEXUS_REPO_URL/$GROUP_ID/$ARTIFACT_I
 EXPOSE 8089
 
 # Define the command to run your Spring Boot application
-CMD ["java", "-jar", "/app/Kaddem-1.2.jar"]
+CMD ["java", "-jar", "/app/Kaddem-1.3.jar"]
