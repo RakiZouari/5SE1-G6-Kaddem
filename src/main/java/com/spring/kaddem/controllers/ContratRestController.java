@@ -1,14 +1,9 @@
 package com.spring.kaddem.controllers;
 
-
-
 import com.spring.kaddem.dto.ContratDTO;
 import com.spring.kaddem.entities.Contrat;
 import com.spring.kaddem.services.IContratService;
-import lombok.AllArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
-import java.util.Date;
 import java.util.List;
 
 
@@ -59,23 +54,5 @@ public class ContratRestController {
         return contratService.addAndAffectContratToEtudiant(contratDTO, nomE, prenomE);
     }
 
-    //The most common ISO Date Format yyyy-MM-dd — for example, "2000-10-31".
-    @GetMapping(value = "/getnbContratsValides/{startDate}/{endDate}")
-    public Integer getnbContratsValides(@PathVariable(name = "startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date startDate,
-                                        @PathVariable(name = "endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date endDate) {
-
-        return contratService.nbContratsValides(startDate, endDate);
-    }
-
-
-    //public float getChiffreAffaireEntreDeuxDate(Date startDate, Date endDate)
-
-    @GetMapping("/calculChiffreAffaireEntreDeuxDate/{startDate}/{endDate}")
-    @ResponseBody
-    public float calculChiffreAffaireEntreDeuxDates(@PathVariable(name = "startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date startDate,
-                                                    @PathVariable(name = "endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date endDate) {
-
-        return contratService.getChiffreAffaireEntreDeuxDates(startDate, endDate);
-    }
 
 }
