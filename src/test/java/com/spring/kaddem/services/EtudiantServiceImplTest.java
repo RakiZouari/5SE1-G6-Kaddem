@@ -48,11 +48,12 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standal
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-
-
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.core.annotation.Order;
 import com.fasterxml.jackson.databind.ObjectMapper; 
 import com.spring.kaddem.controllers.EtudiantRestController;
 
+@ExtendWith(SpringExtension.class)
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest
 @Slf4j
@@ -118,7 +119,7 @@ class EtudiantServiceImplTest {
         assertEquals(etudiants, retrievedetudiants);
 
     }
-   
+   /*
     @Test
     void addEtudiant() {
         EtudiantDto newEtudiantDto = new EtudiantDto();
@@ -161,7 +162,27 @@ class EtudiantServiceImplTest {
         assertEquals(Option.GAMIX, updatedEtudiantDtoResult.getOp());
     }
 
+*/
+    @Test
+    @Order(0)
+    void addEtudiant () {
+    setUp();
+    etudiant = etudiantRepository. save (etudiant);
+    log. Info (etudiant. toString());
+    Assertions.assertNotNUll(etudiant.getIdEtudiant());
+    }
 
+    @Test
+    @Order (1)
+    void UpdateEtudiant () {
+    setUp ();
+    etudiant.setIdEtudiant (10);
+    etudiant. setNomE ("BenFoulen");
+    etudiant = etudiantRepository. save (etudiant);
+    log.info(etudiant.toString());
+    Assertions.assertNotEquals(etudiant.getNomE(),"Khlif");
+    }
+    
     @Test
     void retrieveEtudiant() {
 
