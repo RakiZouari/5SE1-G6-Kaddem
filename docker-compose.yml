@@ -31,6 +31,10 @@ services:
       MANAGEMENT_METRICS_EXPORT_PROMETHEUS_ENABLED: 'true'
 
 
+  front:
+    image: mahmoudlakhal/devops:front
+    ports:
+      - "80:80"
 
 
 
