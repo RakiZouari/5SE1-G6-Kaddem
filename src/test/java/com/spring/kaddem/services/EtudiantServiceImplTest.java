@@ -83,7 +83,7 @@ class EtudiantServiceImplTest {
     etudiant.setPrenomE("ismail");
     etudiant.setNomE("khlif");
     etudiant.setOp(Option.GAMIX);
-    Mockito.reset(etudiantRepository, departementRepository);
+    Mockito.reset( departementRepository);
     }
     @BeforeEach
     void setEtudiants(){
