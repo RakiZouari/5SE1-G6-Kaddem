@@ -169,7 +169,7 @@ class EtudiantServiceImplTest {
         setUp();
         etudiant = etudiantRepository.save(etudiant);
         log.info(etudiant.toString());
-        Assertions.assertNotNull(etudiant.getIdEtudiant());
+        assertNotNull(etudiant.getIdEtudiant());
     }
     
     @Test
@@ -180,7 +180,7 @@ class EtudiantServiceImplTest {
         etudiant.setNomE("BenFoulen");
         etudiant = etudiantRepository.save(etudiant);
         log.info(etudiant.toString());
-        Assertions.assertNotEquals(etudiant.getNomE(), "Khlif");
+        assertNotEquals(etudiant.getNomE(), "Khlif");
     }
 
     
