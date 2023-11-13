@@ -167,8 +167,8 @@ class EtudiantServiceImplTest {
     @Order(0)
     void addEtudiant () {
     setUp();
-    etudiant = etudiantRepository. save (etudiant);
-    log. Info (etudiant. toString());
+    etudiant = etudiantRepository.save(etudiant);
+    log.info(etudiant.toString());
     Assertions.assertNotNUll(etudiant.getIdEtudiant());
     }
 
@@ -176,9 +176,9 @@ class EtudiantServiceImplTest {
     @Order (1)
     void UpdateEtudiant () {
     setUp ();
-    etudiant.setIdEtudiant (10);
-    etudiant. setNomE ("BenFoulen");
-    etudiant = etudiantRepository. save (etudiant);
+    etudiant.setIdEtudiant(10);
+    etudiant.setNomE("BenFoulen");
+    etudiant = etudiantRepository.save(etudiant);
     log.info(etudiant.toString());
     Assertions.assertNotEquals(etudiant.getNomE(),"Khlif");
     }
