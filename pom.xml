@@ -23,7 +23,7 @@
         <sonar.language>java</sonar.language>
     </properties>
     <dependencies>
-        <dependency>
+         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
@@ -39,19 +39,9 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-
-    
-          
-            
-    
-
-          
-          Expand Down
-    
-    
-  
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+             
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
@@ -83,7 +73,7 @@
              <artifactId>mockito-core</artifactId>
              <version>3.12.4</version> 
              <scope>test</scope>
-         </dependency>
+</dependency>
     </dependencies>
 
     <build>
