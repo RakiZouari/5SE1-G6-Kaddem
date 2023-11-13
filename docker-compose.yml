@@ -4,7 +4,7 @@ services:
     image: rihabhamoudi/backend
     ports:
       - '8089:8089'
-       networks:
+    networks:
       - kaddem
     depends_on:
       - mysql
@@ -26,6 +26,10 @@ services:
       - mynetwork
     volumes:
       - mysql-data:/var/lib/mysql
+
+networks:
+  mynetwork:
+  kaddem:
 
 volumes:
   mysql-data:
