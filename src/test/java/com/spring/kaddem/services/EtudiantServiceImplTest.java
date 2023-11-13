@@ -165,23 +165,24 @@ class EtudiantServiceImplTest {
 */
     @Test
     @Order(0)
-    void addEtudiant () {
-    setUp();
-    etudiant = etudiantRepository.save(etudiant);
-    log.info(etudiant.toString());
-    Assertions.assertNotNUll(etudiant.getIdEtudiant());
+    void addEtudiant() {
+        setUp();
+        etudiant = etudiantRepository.save(etudiant);
+        log.info(etudiant.toString());
+        Assertions.assertNotNull(etudiant.getIdEtudiant());
+    }
+    
+    @Test
+    @Order(1)
+    void updateEtudiant() {
+        setUp();
+        etudiant.setIdEtudiant(10);
+        etudiant.setNomE("BenFoulen");
+        etudiant = etudiantRepository.save(etudiant);
+        log.info(etudiant.toString());
+        Assertions.assertNotEquals(etudiant.getNomE(), "Khlif");
     }
 
-    @Test
-    @Order (1)
-    void UpdateEtudiant () {
-    setUp ();
-    etudiant.setIdEtudiant(10);
-    etudiant.setNomE("BenFoulen");
-    etudiant = etudiantRepository.save(etudiant);
-    log.info(etudiant.toString());
-    Assertions.assertNotEquals(etudiant.getNomE(),"Khlif");
-    }
     
     @Test
     void retrieveEtudiant() {
