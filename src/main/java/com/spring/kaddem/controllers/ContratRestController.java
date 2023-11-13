@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/contrat")
-@CrossOrigin(origins = "http://localhost:80")
+@CrossOrigin("*")
 public class ContratRestController {
 
     IContratService contratService;
