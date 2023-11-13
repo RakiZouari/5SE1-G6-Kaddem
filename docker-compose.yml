@@ -8,8 +8,6 @@ services:
       - kaddem
     depends_on:
       - mysql
-    networks:
-      - mynetwork
     volumes:
       - .m2:/root/.m2
   mysql:
