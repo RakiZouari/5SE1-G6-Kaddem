@@ -8,7 +8,7 @@ RUN apt-get update && apt-get install -y curl
 WORKDIR /app
 
 # Specify the Nexus repository URL and the Maven coordinates of your artifact
-ARG NEXUS_REPO_URL=http://localhost:8081/repository/maven-releases/
+ARG NEXUS_REPO_URL=http://localhost:8081/repository/maven-kaddem-repository/
 ARG GROUP_ID=com.spring
 ARG ARTIFACT_ID=Kaddem
 ARG VERSION=1.2
