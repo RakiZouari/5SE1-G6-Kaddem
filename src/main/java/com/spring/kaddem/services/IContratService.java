@@ -23,6 +23,7 @@ public interface IContratService {
     public float getChiffreAffaireEntreDeuxDates(Date startDate, Date endDate);
 
 
+
 }
 
 

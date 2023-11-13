@@ -9,16 +9,33 @@
     </parent>
     <groupId>com.spring</groupId>
     <artifactId>Kaddem</artifactId>
-    <version>2.0.0</version>
+    <version>1.2</version>
     <name>Kaddem</name>
     <description>Kaddem</description>
+        
     <properties>
-        <java.version>1.8</java.version>
+        <java.version>8</java.version>
+        <!-- JaCoCo Properties -->
+        <jacoco.version>0.8.11</jacoco.version>
+        <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
+        <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+        <sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
+        <sonar.language>java</sonar.language>
     </properties>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+             <groupId>org.springframework.boot</groupId>
+             <artifactId>spring-boot-starter-actuator</artifactId>
+             <version>2.7.16</version>
+        </dependency>
+        <dependency>
+             <groupId>io.micrometer</groupId>
+             <artifactId>micrometer-registry-prometheus</artifactId>
+             <version>1.9.15</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -27,7 +44,7 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>3.12.4</version> <!-- La dernière version de Mockito -->
+            <version>3.12.4</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -39,6 +56,11 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <version>0.8.11</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -74,7 +96,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
-                <version>3.1.0</version> <!-- Version de Maven -->
+                <version>3.1.0</version> 
             </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -90,8 +112,35 @@
                 </excludes>
             </configuration>
             </plugin>
+                 <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${jacoco.version}</version>
+                <executions>
+                    <execution>
+                        <id>jacoco-initialize</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>jacoco-site</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
+    <distributionManagement>
+         <repository>
+                 <id>deploymentRepo</id>
+                  <name>Nexus Repository</name>
+                 <url>http://localhost:8081/repository/maven-releases/</url>
+          </repository>
+    </distributionManagement>
 
 
 </project>

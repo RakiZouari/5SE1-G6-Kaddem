@@ -6,6 +6,7 @@ import com.spring.kaddem.entities.Etudiant;
 import com.spring.kaddem.entities.Specialite;
 import com.spring.kaddem.repositories.ContratRepository;
 import com.spring.kaddem.repositories.EtudiantRepository;
+
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -17,9 +18,10 @@ import java.util.List;
 import java.util.Optional;
 
 
+
 @Service
-@Slf4j
 @AllArgsConstructor
+@Slf4j
 public class ContratServiceImpl implements  IContratService{
 
 
@@ -203,7 +205,4 @@ public class ContratServiceImpl implements  IContratService{
 
 
     }
-
-
-
 }

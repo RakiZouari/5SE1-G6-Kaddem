@@ -6,29 +6,28 @@ import com.spring.kaddem.entities.Etudiant;
 import com.spring.kaddem.entities.Specialite;
 import com.spring.kaddem.repositories.ContratRepository;
 import com.spring.kaddem.repositories.EtudiantRepository;
+
 import com.spring.kaddem.services.IContratService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-
-
 import org.springframework.boot.test.mock.mockito.MockBean;
-
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-
 import static org.mockito.Mockito.when;
+
 
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest
@@ -248,13 +247,5 @@ class ContratServiceImplTest {
 	}
 
  */
-
-
-
-
-
-
-
-
 
 }
