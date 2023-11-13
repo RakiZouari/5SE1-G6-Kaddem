@@ -5,21 +5,14 @@ import com.spring.kaddem.entities.Contrat;
 import com.spring.kaddem.entities.Etudiant;
 import com.spring.kaddem.entities.Specialite;
 import com.spring.kaddem.repositories.ContratRepository;
-import com.spring.kaddem.repositories.EtudiantRepository;
-
-import com.spring.kaddem.services.IContratService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
+
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -40,29 +33,7 @@ class ContratServiceImplTest {
 
 	@Autowired
 	IContratService contratService;
-	@Mock
-	private Contrat contrat;
-	private List<Contrat> contrats;
-	@BeforeEach
-	void setUpp() {
-		contrat = new Contrat();
 
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-
-		try {
-			Date dateDebutContrat = dateFormat.parse("2022/04/22");
-			Date dateFinContrat = dateFormat.parse("2022/06/24");
-
-			contrat.setDateDebutContrat(dateDebutContrat);
-			contrat.setDateFinContrat(dateFinContrat);
-			contrat.setMontantContrat(1000);
-			contrat.setArchived(true);
-			contrat.setSpecialite(Specialite.IA);
-		} catch (ParseException e) {
-			// Handle the ParseException, e.g., log it or throw a custom exception
-			e.printStackTrace();
-		}
-	}
 	@BeforeEach
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
@@ -153,7 +124,7 @@ class ContratServiceImplTest {
 		System.err.println("UpdateContratTest : Ok");
 	}
 	@Test
-	void retrieveContrat() {
+	void testRetrieveContrat() {
 
 
 		Contrat contrat1 = new Contrat();
@@ -165,7 +136,7 @@ class ContratServiceImplTest {
 
 	}
 	@Test
-	void removeEtudiant() {
+	void testRemoveEtudiant() {
 		int ContratIdToRemove = 1;
 		contratService.removeContrat(ContratIdToRemove);
 		verify(contratRepository).deleteById(ContratIdToRemove);

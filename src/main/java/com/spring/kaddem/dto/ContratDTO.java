@@ -42,22 +42,5 @@ public class ContratDTO {
                 .etudiant(etudiant1)
                 .build();
     }
-    public static ContratDTO toDto(Contrat contrat){
-        if(contrat==null){
-            return null;
-        }
-        Etudiant etudiantDto = contrat.getEtudiant();
-
-
-        return  ContratDTO.builder()
-                .idContrat(contrat.getIdContrat())
-                .dateDebutContrat(contrat.getDateDebutContrat())
-                .dateFinContrat(contrat.getDateFinContrat())
-                .montantContrat(contrat.getMontantContrat())
-                .archived(contrat.getArchived())
-                .specialite(contrat.getSpecialite())
-                .etudiant(etudiantDto)
-                .build();
-    }
 
 }
