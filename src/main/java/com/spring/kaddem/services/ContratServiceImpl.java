@@ -128,42 +128,7 @@ public class ContratServiceImpl implements  IContratService{
     public 	Integer nbContratsValides(Date startDate, Date endDate){
         return contratRepository.getnbContratsValides(startDate, endDate);
     }
-    /*
-        public void retrieveAndUpdateStatusContrat(){
-            log.info("debut methode retrieveAndUpdateStatusContrat");
-            List<Contrat>contrats=contratRepository.findAll();
-            log.info("total contrats :"+contrats.size());
 
-            for (Contrat contrat : contrats) {
-                log.info("id: "+contrat.getIdContrat());
-                log.info("date fin"+contrat.getDateFinContrat());
-                log.info("archived "+contrat.getArchived());
-
-                Date dateSysteme = new Date();
-
-                if (contrat.getArchived()==null || !contrat.getArchived()) {
-                    long timeDifferenceInMilliseconds = contrat.getDateFinContrat().getTime()-dateSysteme.getTime();
-                    long differenceInDays = (timeDifferenceInMilliseconds / (1000 * 60 * 60 * 24)) % 365;
-                    // il est préférable d'utiliser des méthodes prédéfinis de comparaison
-                    log.info("difference in days : "+differenceInDays);
-
-                    if (differenceInDays==15){  // pour 15 jours exactement
-                        log.info(" Contrat Commencant le : " + contrat.getDateDebutContrat()+"pour l'etudiant "+contrat.getEtudiant().getNomE()+
-                                " "+contrat.getEtudiant().getPrenomE()+"  va bientot s achever le "
-                                +contrat.getDateFinContrat());
-                    }
-                    if (differenceInDays==0) {
-                        log.info("jour j: " + contrat.getIdContrat());
-                        contrat.setArchived(true);
-                        contratRepository.save(contrat);
-                    }
-                }
-
-                log.info("debut methode retrieveAndUpdateStatusContrat");
-            }
-        }
-
-     */
     public float getChiffreAffaireEntreDeuxDates(Date startDate, Date endDate){
         float timeDifferenceInMilliseconds =(float) endDate.getTime() - startDate.getTime();
         float differenceInDays = (timeDifferenceInMilliseconds / (1000 * 60 * 60 * 24)) % 365;
