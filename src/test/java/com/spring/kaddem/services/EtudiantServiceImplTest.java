@@ -26,7 +26,6 @@ import java.util.Collections;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -48,12 +47,10 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standal
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.core.annotation.Order;
+
 import com.fasterxml.jackson.databind.ObjectMapper; 
 import com.spring.kaddem.controllers.EtudiantRestController;
 
-@ExtendWith(SpringExtension.class)
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest
 @Slf4j
@@ -83,7 +80,7 @@ class EtudiantServiceImplTest {
     etudiant.setPrenomE("ismail");
     etudiant.setNomE("khlif");
     etudiant.setOp(Option.GAMIX);
-    Mockito.reset( departementRepository);
+    Mockito.reset( etudiantRepository,departementRepository);
     }
     @BeforeEach
     void setEtudiants(){
@@ -119,7 +116,7 @@ class EtudiantServiceImplTest {
         assertEquals(etudiants, retrievedetudiants);
 
     }
-   /*
+   
     @Test
     void addEtudiant() {
         EtudiantDto newEtudiantDto = new EtudiantDto();
@@ -161,28 +158,6 @@ class EtudiantServiceImplTest {
         assertEquals("BenFoulen", updatedEtudiantDtoResult.getNomE());
         assertEquals(Option.GAMIX, updatedEtudiantDtoResult.getOp());
     }
-
-*/
-    @Test
-    @Order(0)
-    void addEtudiant() {
-        setUp();
-        etudiant = etudiantRepository.save(etudiant);
-        log.info(etudiant.toString());
-        assertNotNull(etudiant.getIdEtudiant());
-    }
-    
-    @Test
-    @Order(1)
-    void updateEtudiant() {
-        setUp();
-        etudiant.setIdEtudiant(10);
-        etudiant.setNomE("BenFoulen");
-        etudiant = etudiantRepository.save(etudiant);
-        log.info(etudiant.toString());
-        assertNotEquals(etudiant.getNomE(), "Khlif");
-    }
-
     
     @Test
     void retrieveEtudiant() {
