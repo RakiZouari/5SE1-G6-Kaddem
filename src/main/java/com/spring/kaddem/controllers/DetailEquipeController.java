@@ -53,6 +53,7 @@ public class DetailEquipeController {
         return iDetailEquipeService.updateDetailEquipe(idDetailEquipe, detailEquipe);
     }
     @GetMapping("/all")
+    @ResponseBody
     public List<DetailEquipe> getAllEquipes() {
         return iDetailEquipeService.getAllEquipes();
     }
