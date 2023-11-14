@@ -14,11 +14,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
 @AllArgsConstructor
 @RequestMapping("/detailsequipe")
+@CrossOrigin("*")
 public class DetailEquipeController {
     IDetailEquipeService iDetailEquipeService;
     DetailEquipeService detailEquipeService;
@@ -50,5 +52,8 @@ public class DetailEquipeController {
     public DetailEquipe updateDetailEquipe(@PathVariable("idDetailEquipe") Long idDetailEquipe, @RequestBody DetailEquipe detailEquipe) {
         return iDetailEquipeService.updateDetailEquipe(idDetailEquipe, detailEquipe);
     }
-
+    @GetMapping("/all")
+    public List<DetailEquipe> getAllEquipes() {
+        return iDetailEquipeService.getAllEquipes();
+    }
 }

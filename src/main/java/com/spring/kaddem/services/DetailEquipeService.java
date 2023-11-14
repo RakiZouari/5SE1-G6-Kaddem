@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -44,8 +45,11 @@ public class DetailEquipeService implements IDetailEquipeService{
         detailEquipe1.setSalle(detailEquipe.getSalle());
         detailEquipe1.setThematique(detailEquipe.getThematique());
 
-
-
         return detailEquipeRepository.save(detailEquipe1);
+    }
+    @Override
+    public List<DetailEquipe> getAllEquipes() {
+        List<DetailEquipe> detailEquipes = detailEquipeRepository.findAll();
+        return detailEquipes;
     }
 }
